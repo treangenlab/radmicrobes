@@ -10,6 +10,7 @@
     * Running AUGUSTUS
     * Glimpse on BRAKER
   * Understanding the output: the gff file
+  * Visualization
 
 * Accessory Genomes
 
@@ -37,6 +38,26 @@ my_genome.gff  | Pre-generated gff output | /pathway/Session4
 ```
 prokka --outdir prokka_test --prefix my_genome --rfam genome.fasta
 ```
+**Flag explanation**
+**--outdir** [name]      Output folder (in this case it will be a folder created as prokka_test in your current location)
+**--prefix** [name]      Filename output prefix (in this case it will name your files with the my_genome prefix, e.g. my_genome.gff)
+**--rfam**               Enable searching also for ncRNAs with Infernal+Rfam and not just protein-coding genes
+
+
 ### Eukaryotic Annotation using AUGUSTUS
+
+There are several options of instances available:
+- [WEBAUGUSTUS](https://bioinf.uni-greifswald.de/webaugustus/) (Web application used in this boot-camp)
+- [Original AUGUSTUS](https://github.com/Gaius-Augustus/Augustus) (Can be installed on your server or local machine)
+- [COMPANION](https://companion.gla.ac.uk/) (automated pipeline for eukaryotic pathogens)
+
+#### Files to be used in this hands-on
+File name  | Description | Location in the cluster
+------------- | ------------- | ------------- 
+Reference.fasta  | Close related reference genome used for training | /pathway/Session4
+Euk_genome.gff  | Genome to be annotated | /pathway/Session4
+Protein_ref.fasta  | Reference protein evidence for training | /pathway/Session4
+Euk_genome.gff  | Pre-generated gff output | /pathway/Session4
+
 
 #### Training dataset for prediction
