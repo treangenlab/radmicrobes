@@ -1,4 +1,4 @@
-# Session 4 - Functional Annotation Accessory Genomes, and Pan Genomes
+# Session 4 - Functional Annotation, Accessory Genomes, and Pan Genomes
 *by Rodrigo de Paula Baptista*
 
 **This sesssion will be divided in three parts:**
