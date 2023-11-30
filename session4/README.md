@@ -1,22 +1,41 @@
 # Session 4 - Functional Annotation, Accessory Genomes, and Pan Genomes
 *by Rodrigo de Paula Baptista*
 
-**This sesssion will be divided in three parts:**
-* Genome Annotation
-  * Prokaryotic annotation
-    * Running Prokka
-  * Eukaryotic Annotation
-    * Training your prediction dataset
-    * Running AUGUSTUS
-    * Glimpse on BRAKER
-  * Understanding the output:
-    * prokka output files
-    * the gff file
-  * Visualization
+<details>
+ <summary>Session Summary</summary>
+ <p></p>
 
-* Accessory Genomes
+ * Genome Annotation
+ 
+   * Prokaryotic annotation
+  
+     * Running Prokka
+  
+   * Eukaryotic Annotation
+  
+     * Training your prediction dataset
 
-* Pan Genomes
+     * Running AUGUSTUS
+
+     * Glimpse on BRAKER
+  
+   * Understanding the output:
+
+     * prokka output files
+
+     * the gff file
+
+   * Visualization
+  
+   * Using your annotation in Variant Call Format files (VCF)
+
+* Pan-Genomes
+   * Core Genomes
+
+   * Accessory Genomes
+
+   * Running Roary the Pan-Genome pipeline
+</details>
 
 ## Genome Annotation
 Genome annotation involves the identification of functional elements along the sequence of a genome, assigning meaning to it. This process is essential because DNA sequencing often yields sequences of unknown function. Over the past three decades, genome annotation has transformed from computationally annotating long protein-coding genes in single genomes (one per species) and experimentally annotating short regulatory elements on a limited number of them, to the population-wide annotation of individual nucleotides across thousands of genomes (many per species). This enhanced resolution and inclusivity in genome annotations, spanning from genotypes to phenotypes, are providing precise insights into the biology of species, populations, and individuals.
@@ -28,17 +47,19 @@ A key distinction between prokaryotic and eukaryotic genes lies in their structu
 
 The focus here is to demonstrate the methodology for gene prediction (annotation) in both prokaryotic and eukaryotic genomes.
 
-### PROKARYOTIC gene Annotation
+### PROKARYOTIC Gene Annotation
 
 There are several options of instances available:
 - [PROKKA](https://github.com/tseemann/prokka) (Which will be used in this boot camp)
 - [RAST](https://rast.nmpdr.org/) (Webserver application)
 - [PGAP](https://github.com/ncbi/pgap) (Usually the best option, but runs slow)
 
+<details>
+<summary>RUNNING PROKKA</summary>
+<p></p>
+ Prokka is a software tool designed for the rapid annotation of bacterial, archaeal, and viral genomes, generating output files that adhere to standard specifications.
 
-#### PROKKA
-Prokka is a software tool designed for the rapid annotation of bacterial, archaeal, and viral genomes, generating output files that adhere to standard specifications.
-Prokka documentation can be found at this [link](https://github.com/tseemann/prokka)
+ [Prokka documentation](https://github.com/tseemann/prokka)
 
 ##### Files to be used in this hands-on
 File name  | Description | Location in the cluster
@@ -58,6 +79,7 @@ prokka --outdir prokka_test --prefix my_genome --rfam genome.fasta
 
 **--rfam**               Enable searching also for ncRNAs with Infernal+Rfam and not just protein-coding genes
 
+</details>
 
 ### Eukaryotic Annotation using AUGUSTUS
 
@@ -74,5 +96,41 @@ Euk_genome.gff  | Genome to be annotated | /pathway/Session4
 Protein_ref.fasta  | Reference protein evidence for training | /pathway/Session4
 Euk_genome.gff  | Pre-generated gff output | /pathway/Session4
 
+<details>
+<summary>RUNNING WEBAUGUSTUS</summary>
+<p></p>
+ 
+##### Training dataset for prediction
 
-#### Training dataset for prediction
+##### Running the prediction using your trained dataset
+
+##### Brief look at differences between Prokaryotic and Eukaryotic gff Features
+
+</details>
+
+#### Glimpse on BRAKER
+
+#### Understanding the output:
+##### prokka output files
+##### the gff file
+#### Visualization
+#### Using your annotation in Variant Call Format files (VCF)
+
+## Pan-Genomes
+
+In molecular biology and genetics, a pan-genome refers to the complete collection of genes found across all strains within a clade. Broadly speaking, it represents the integration of all genomes within a clade. The pan-genome can be dissected into a 'core pangenome,' comprising genes present in all individuals, and an 'accessory genome', which encompasses genes found in only a subset of the strains, including strain-specific genes.
+
+### Core Genome
+
+### Accessory Genome
+
+The accessory genome is frequently divided into the shell genome, which comprises genes shared by more than 15% of the strains but less than 95% of the strains, and the cloud genome, encompassing genes shared by less than 15% of the strains but present in more than one strain.
+These genes have the potential to confer distinctive characteristics to a strain and/or offer a niche-specific advantage to the host strains. Acquisition of these genes may occur through horizontal gene transfer (HGT), and they are sustained by a subset of all the strains within a species.
+
+<details>
+<summary>RUNNING ROARY</summary>
+<p></p>
+ 
+#### [Roary Documentation](https://sanger-pathogens.github.io/Roary/)
+
+</details>
