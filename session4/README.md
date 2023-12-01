@@ -30,8 +30,6 @@
    * Gene Ontology and InterproScan (adding functions)
      
    * Visualization
-  
-   * Using your annotation in Variant Call Format files (VCF)
 
 * Pan-Genomes
    * Core Genomes
@@ -95,6 +93,62 @@ prokka --outdir prokka_test --prefix my_genome --rfam genome.fasta
 
 **--rfam**               Enable searching also for ncRNAs with Infernal+Rfam and not just protein-coding genes
 
+For more options type:
+
+```prokka -h```
+
+<details>
+ <summary>prokka options</summary>
+
+```
+General:
+  --help            This help
+  --version         Print version and exit
+  --citation        Print citation for referencing Prokka
+  --quiet           No screen output (default OFF)
+  --debug           Debug mode: keep all temporary files (default OFF)
+Setup:
+  --listdb          List all configured databases
+  --setupdb         Index all installed databases
+  --cleandb         Remove all database indices
+  --depends         List all software dependencies
+Outputs:
+  --outdir [X]      Output folder [auto] (default '')
+  --force           Force overwriting existing output folder (default OFF)
+  --prefix [X]      Filename output prefix [auto] (default '')
+  --addgenes        Add 'gene' features for each 'CDS' feature (default OFF)
+  --locustag [X]    Locus tag prefix (default 'PROKKA')
+  --increment [N]   Locus tag counter increment (default '1')
+  --gffver [N]      GFF version (default '3')
+  --compliant       Force Genbank/ENA/DDJB compliance: --genes --mincontiglen 200 --centre XXX (default OFF)
+  --centre [X]      Sequencing centre ID. (default '')
+Organism details:
+  --genus [X]       Genus name (default 'Genus')
+  --species [X]     Species name (default 'species')
+  --strain [X]      Strain name (default 'strain')
+  --plasmid [X]     Plasmid name or identifier (default '')
+Annotations:
+  --kingdom [X]     Annotation mode: Archaea|Bacteria|Mitochondria|Viruses (default 'Bacteria')
+  --gcode [N]       Genetic code / Translation table (set if --kingdom is set) (default '0')
+  --prodigaltf [X]  Prodigal training file (default '')
+  --gram [X]        Gram: -/neg +/pos (default '')
+  --usegenus        Use genus-specific BLAST databases (needs --genus) (default OFF)
+  --proteins [X]    Fasta file of trusted proteins to first annotate from (default '')
+  --hmms [X]        Trusted HMM to first annotate from (default '')
+  --metagenome      Improve gene predictions for highly fragmented genomes (default OFF)
+  --rawproduct      Do not clean up /product annotation (default OFF)
+Computation:
+  --fast            Fast mode - skip CDS /product searching (default OFF)
+  --cpus [N]        Number of CPUs to use [0=all] (default '8')
+  --mincontiglen [N] Minimum contig size [NCBI needs 200] (default '1')
+  --evalue [n.n]    Similarity e-value cut-off (default '1e-06')
+  --rfam            Enable searching for ncRNAs with Infernal+Rfam (SLOW!) (default '0')
+  --norrna          Don't run rRNA search (default OFF)
+  --notrna          Don't run tRNA search (default OFF)
+  --rnammer         Prefer RNAmmer over Barrnap for rRNA prediction (default OFF)
+```
+</details>
+
 </details>
 
 ### Eukaryotic Annotation using AUGUSTUS
@@ -114,50 +168,91 @@ There are several options of instances available:
 File name  | Description | Location in the cluster
 ------------- | ------------- | ------------- 
 Reference.fasta  | Close related reference genome used for training | /pathway/Session4
-Euk_genome.gff  | Genome to be annotated | /pathway/Session4
+Euk_genome.fasta  | Genome to be annotated | /pathway/Session4
 Protein_ref.fasta  | Reference protein evidence for training | /pathway/Session4
 Euk_genome.gff  | Pre-generated gff output | /pathway/Session4
 
-##### Training dataset for prediction
+#### Training dataset for prediction
 
-##### Running the prediction using your trained dataset
+![WEBAUGUSTUS](https://github.com/treangenlab/radmicrobes/assets/28576450/79878937-e7f5-4001-b37b-dcd95e38e515)
 
-##### Brief look at differences between Prokaryotic and Eukaryotic gff Features
+#### Submission Form
+
+For the training submission you need:
+* Your Reference Genome in Fasta format: Reference.fasta
+* Your Reference Genome Protein file in fasta format:  Protein_ref.fasta
+<img width="448" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/28576450/d801936b-2037-4da8-8693-6344e0d4514a">
+
+
+#### Running the prediction using your trained dataset
+
+#### Brief look at differences between Prokaryotic and Eukaryotic gff Features
 
 </details>
 
 <details>
 <summary>
 
-#### Glimpse on BRAKER</summary>
+### Glimpse on BRAKER</summary>
 <p></p>
 </details>
 <details>
 <summary>
  
-#### Understanding the output:</summary>
+### Understanding the Annotation output:</summary>
 <p></p>
 
-##### Prokka output files
+#### Prokka output files
 
-##### The gff file
+Many files are generated in prokka:
+<details>
+<summary> Output details</summary>
+<p></p>
+ 
+Extension	| Description
+------------- | ------------- 
+.gff	| This is the master annotation in GFF3 format, containing both sequences and annotations. It can be viewed directly in Artemis or IGV.
+.gbk	| This is a standard Genbank file derived from the master .gff. If the input to prokka was a multi-FASTA, then this will be a multi-Genbank, with one record for each sequence.
+.fna	| Nucleotide FASTA file of the input contig sequences.
+.faa	| Protein FASTA file of the translated CDS sequences.
+.ffn	| Nucleotide FASTA file of all the prediction transcripts (CDS, rRNA, tRNA, tmRNA, misc_RNA)
+.sqn	| An ASN1 format "Sequin" file for submission to Genbank. It needs to be edited to set the correct taxonomy, authors, related publication etc.
+.fsa	| Nucleotide FASTA file of the input contig sequences, used by "tbl2asn" to create the .sqn file. It is mostly the same as the .fna file, but with extra Sequin tags in the sequence description lines.
+.tbl	| Feature Table file, used by "tbl2asn" to create the .sqn file.
+.err	| Unacceptable annotations - the NCBI discrepancy report.
+.log	| Contains all the output that Prokka produced during its run. This is a record of what settings you used, even if the --quiet option was enabled.
+.txt	| Statistics relating to the annotated features found.
+.tsv	| Tab-separated file of all features: locus_tag,ftype,len_bp,gene,EC_number,COG,product
+
+</details>
+#### The gff file
 </details>
 <details>
 <summary>
 
- #### Gene Ontology and InterproScan (adding functions)
+ ### Gene Ontology and InterproScan (adding functions)
 </summary> 
 </details>
 <details>
 <summary>
   
- #### Visualization</summary>
+ ### Visualization</summary>
+ <p> </p>
+ 
+Integrative Genomics Viewer ([IGV](https://igv.org/app/)) <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/dc1b3be9-9f71-4b33-b2b8-d5e55cc9c9b7" width="30" height="30">
+
+* To visualize your genome and annotation:
+
+  * Upload your genome:
+
+![image](https://github.com/treangenlab/radmicrobes/assets/28576450/37fbc409-7192-4c2c-b988-094ee9fde4fc)
+
+  * Upload your gff track: 
+
+![image](https://github.com/treangenlab/radmicrobes/assets/28576450/a5d7ba21-7707-475f-8c0d-0e1428b3db75)
+
 </details>
-<details>
- <summary>
-  
-#### Using your annotation in Variant Call Format files (VCF)</summary>
-</details>
+
 
 ## Pan-Genomes
 
