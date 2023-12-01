@@ -2,7 +2,9 @@
 *by Rodrigo de Paula Baptista*
 
 <details>
- <summary>Session Summary</summary>
+ <summary>
+  
+  ## Session Summary</summary>
  <p></p>
 
  * Genome Annotation
@@ -25,6 +27,8 @@
 
      * the gff file
 
+   * Gene Ontology and InterproScan (adding functions)
+     
    * Visualization
   
    * Using your annotation in Variant Call Format files (VCF)
@@ -35,6 +39,16 @@
    * Accessory Genomes
 
    * Running Roary the Pan-Genome pipeline
+      
+      * preparing dataset
+      
+      * Running Roary
+      
+      * Output files
+      
+      * Running Raxml to make a phylogenetic tree  
+ 
+   * Visualization using ITOL
 </details>
 
 ## Genome Annotation
@@ -55,7 +69,9 @@ There are several options of instances available:
 - [PGAP](https://github.com/ncbi/pgap) (Usually the best option, but runs slow)
 
 <details>
-<summary>RUNNING PROKKA</summary>
+<summary>
+ 
+ #### RUNNING PROKKA</summary>
 <p></p>
  Prokka is a software tool designed for the rapid annotation of bacterial, archaeal, and viral genomes, generating output files that adhere to standard specifications.
 
@@ -88,6 +104,12 @@ There are several options of instances available:
 - [Original AUGUSTUS](https://github.com/Gaius-Augustus/Augustus) (Can be installed on your server or local machine)
 - [COMPANION](https://companion.gla.ac.uk/) (automated pipeline for eukaryotic pathogens)
 
+<details>
+<summary>
+ 
+#### RUNNING WEBAUGUSTUS</summary>
+<p></p>
+
 #### Files to be used in this hands-on
 File name  | Description | Location in the cluster
 ------------- | ------------- | ------------- 
@@ -96,10 +118,6 @@ Euk_genome.gff  | Genome to be annotated | /pathway/Session4
 Protein_ref.fasta  | Reference protein evidence for training | /pathway/Session4
 Euk_genome.gff  | Pre-generated gff output | /pathway/Session4
 
-<details>
-<summary>RUNNING WEBAUGUSTUS</summary>
-<p></p>
- 
 ##### Training dataset for prediction
 
 ##### Running the prediction using your trained dataset
@@ -108,13 +126,38 @@ Euk_genome.gff  | Pre-generated gff output | /pathway/Session4
 
 </details>
 
-#### Glimpse on BRAKER
+<details>
+<summary>
 
-#### Understanding the output:
-##### prokka output files
-##### the gff file
-#### Visualization
-#### Using your annotation in Variant Call Format files (VCF)
+#### Glimpse on BRAKER</summary>
+<p></p>
+</details>
+<details>
+<summary>
+ 
+#### Understanding the output:</summary>
+<p></p>
+
+##### Prokka output files
+
+##### The gff file
+</details>
+<details>
+<summary>
+
+ #### Gene Ontology and InterproScan (adding functions)
+</summary> 
+</details>
+<details>
+<summary>
+  
+ #### Visualization</summary>
+</details>
+<details>
+ <summary>
+  
+#### Using your annotation in Variant Call Format files (VCF)</summary>
+</details>
 
 ## Pan-Genomes
 
@@ -132,5 +175,38 @@ These genes have the potential to confer distinctive characteristics to a strain
 <p></p>
  
 #### [Roary Documentation](https://sanger-pathogens.github.io/Roary/)
+
+##### Preparing dataset
+
+###### Files to be used in this hands-on
+File name  | Description | Location in the cluster
+------------- | ------------- | ------------- 
+*.gff  | all pre made annotations using prokka for our analysis | /pathway/Session4/roary_files/
+my_genome_ST.tsv | Strain type from the assembled genome from sessions 1 and 3 | /pathway/Session4/roary_files
+
+```
+mkdir roary_analysis
+cp /path/session4/roary_files/* roary_analysis
+cd roary_analysis
+```
+##### Running Roary
+```
+roary -p 5 -n -e -v *.gff
+```
+##### Output files
+
+##### Running Raxml to make a phylogenetic tree
+
+```
+raxml-ng --msa core_gene_alignment.aln --model GTR+G --all --bs-trees 10
+```
+
+</details>
+
+<details>
+<summary>Visualization using ITOL</summary>
+<p></p>
+ 
+#### [ITOL Website](https://itol.embl.de/)
 
 </details>
