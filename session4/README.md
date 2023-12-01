@@ -21,7 +21,7 @@
 
      * Glimpse on BRAKER
     
-     * Direct RNA sequencing for annotation
+   * Direct RNA sequencing for annotation
   
    * Understanding the output:
 
@@ -73,7 +73,7 @@ There are several options of instances available:
 <details>
 <summary>
  
- #### RUNNING PROKKA</summary>
+ #### RUNNING PROKKA <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20"></summary>
 <p></p>
  Prokka is a software tool designed for the rapid annotation of bacterial, archaeal, and viral genomes, generating output files that adhere to standard specifications.
 
@@ -165,7 +165,7 @@ There are several options of instances available:
 <details>
 <summary>
  
-#### RUNNING WEBAUGUSTUS</summary>
+#### RUNNING WEBAUGUSTUS <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20"></summary>
 <p></p>
 
 #### Files to be used in this hands-on
@@ -213,7 +213,7 @@ For the training submission you need:
 ### Understanding the Annotation output:</summary>
 <p></p>
 
-#### Prokka output files
+#### Prokka output files 
 
 Many files are generated in prokka:
 <details>
@@ -236,18 +236,20 @@ Extension	| Description
 .tsv	| Tab-separated file of all features: locus_tag,ftype,len_bp,gene,EC_number,COG,product
 
 </details>
-#### The gff file
+<summary> 
+ 
+ ### The GFF File <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20"> </summary>
 </details>
 <details>
 <summary>
 
- ### Gene Ontology and InterproScan (adding functions)
+ ### Gene Ontology and InterproScan (adding functions) <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20">
 </summary> 
 </details>
 <details>
 <summary>
   
- ### Visualization</summary>
+ ### Visualization <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20"> </summary>
  <p> </p>
  
 Integrative Genomics Viewer ([IGV](https://igv.org/app/)) <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/dc1b3be9-9f71-4b33-b2b8-d5e55cc9c9b7" width="30" height="30">
@@ -277,7 +279,9 @@ The accessory genome is frequently divided into the shell genome, which comprise
 These genes have the potential to confer distinctive characteristics to a strain and/or offer a niche-specific advantage to the host strains. Acquisition of these genes may occur through horizontal gene transfer (HGT), and they are sustained by a subset of all the strains within a species.
 
 <details>
-<summary>RUNNING ROARY</summary>
+<summary>
+ 
+ ### RUNNING ROARY <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20"></summary>
 <p></p>
  
 #### [Roary Documentation](https://sanger-pathogens.github.io/Roary/)
@@ -295,13 +299,13 @@ mkdir roary_analysis
 cp /path/session4/roary_files/* roary_analysis
 cd roary_analysis
 ```
-##### Running Roary
+##### Running Roary <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20">
 ```
 roary -p 5 -n -e -v *.gff
 ```
 ##### Output files
 
-##### Running Raxml to make a phylogenetic tree
+##### Running Raxml to make a phylogenetic tree <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20">
 
 ```
 raxml-ng --msa core_gene_alignment.aln --model GTR+G --all --bs-trees 10
@@ -310,7 +314,9 @@ raxml-ng --msa core_gene_alignment.aln --model GTR+G --all --bs-trees 10
 </details>
 
 <details>
-<summary>Visualization using ITOL</summary>
+<summary>
+ 
+ ### Visualization using ITOL <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20"></summary>
 <p></p>
  
 #### [ITOL Website](https://itol.embl.de/)
