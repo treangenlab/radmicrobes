@@ -20,6 +20,8 @@
      * Running AUGUSTUS
 
      * Glimpse on BRAKER
+    
+     * Direct RNA sequencing for annotation
   
    * Understanding the output:
 
@@ -30,6 +32,8 @@
    * Gene Ontology and InterproScan (adding functions)
      
    * Visualization
+  
+   
 
 * Pan-Genomes
    * Core Genomes
@@ -198,7 +202,14 @@ For the training submission you need:
 </details>
 <details>
 <summary>
- 
+
+### Direct RNA sequencing for annotation using Oxford Nanopore sequencing
+
+</summary>
+</details>
+<details>
+<summary>
+
 ### Understanding the Annotation output:</summary>
 <p></p>
 
