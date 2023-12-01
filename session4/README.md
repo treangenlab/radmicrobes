@@ -73,13 +73,13 @@ There are several options of instances available:
 <details>
 <summary>
  
- #### RUNNING PROKKA <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20"></summary>
+ ### RUNNING PROKKA <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20"></summary>
 <p></p>
  Prokka is a software tool designed for the rapid annotation of bacterial, archaeal, and viral genomes, generating output files that adhere to standard specifications.
 
  [Prokka documentation](https://github.com/tseemann/prokka)
 
-##### Files to be used in this hands-on
+#### <ins>Files to be used in this hands-on</ins>
 File name  | Description | Location in the cluster
 ------------- | ------------- | ------------- 
 Genome.fasta  | Assembled genome generated on session 1 | /pathway/Session4
@@ -97,7 +97,7 @@ prokka --outdir prokka_test --prefix my_genome --rfam genome.fasta
 
 **--rfam**               Enable searching also for ncRNAs with Infernal+Rfam and not just protein-coding genes
 
-For more options type:
+<ins>For more options type:</ins>
 
 ```prokka -h```
 
@@ -165,10 +165,10 @@ There are several options of instances available:
 <details>
 <summary>
  
-#### RUNNING WEBAUGUSTUS <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20"></summary>
+### RUNNING WEBAUGUSTUS <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20"></summary>
 <p></p>
 
-#### Files to be used in this hands-on
+#### <ins>Files to be used in this hands-on</ins>
 File name  | Description | Location in the cluster
 ------------- | ------------- | ------------- 
 Reference.fasta  | Close related reference genome used for training | /pathway/Session4
@@ -176,11 +176,11 @@ Euk_genome.fasta  | Genome to be annotated | /pathway/Session4
 Protein_ref.fasta  | Reference protein evidence for training | /pathway/Session4
 Euk_genome.gff  | Pre-generated gff output | /pathway/Session4
 
-#### Training dataset for prediction
+#### <ins>Training dataset for prediction</ins>
 
 ![WEBAUGUSTUS](https://github.com/treangenlab/radmicrobes/assets/28576450/79878937-e7f5-4001-b37b-dcd95e38e515)
 
-#### Submission Form
+#### <ins>Submission Form</ins>
 
 For the training submission you need:
 * Your Reference Genome in Fasta format: Reference.fasta
@@ -188,9 +188,9 @@ For the training submission you need:
 <img width="448" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/28576450/d801936b-2037-4da8-8693-6344e0d4514a">
 
 
-#### Running the prediction using your trained dataset
+#### <ins>Running the prediction using your trained dataset</ins>
 
-#### Brief look at differences between Prokaryotic and Eukaryotic gff Features
+#### <ins>Brief look at differences between Prokaryotic and Eukaryotic gff Features</ins>
 
 </details>
 
