@@ -205,6 +205,7 @@ BRAKER mainly features semi-unsupervised, extrinsic evidence data (RNA-Seq and/o
 <br>
 <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/d554241d-b7a3-441e-95d8-32cd7d53e37f" width="350" height="300">
 
+
 **Basic usage using protein data or/and RNAseq data:**
 ```
 braker.pl --genome=genome.fa --prot_seq=orthodb.fa --bam=/path/to/SRA_ID1.bam
@@ -221,7 +222,7 @@ Nanopore direct RNA sequencing (DRS) involves the continuous reading of native R
 
  
 <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/d0fc0990-fb26-4dd7-b99e-641c0d12f83c" >
-
+<em>(Parker et al., 2020)</em>
 </details>
 
 <details>
