@@ -190,8 +190,30 @@ For the training submission you need:
 
 #### <ins>Running the prediction using your trained dataset</ins>
 
-#### <ins>Brief look at differences between Prokaryotic and Eukaryotic gff Features</ins>
+Very Similar to submitting the Training but now providing the training parameter file generated from your training
 
+![image](https://github.com/treangenlab/radmicrobes/assets/28576450/65a10cb5-7ec0-4f9a-ad7c-07244558589a)
+
+
+**The parameters.tar.gz archive has a folder containing the following files is required for predicting genes in a new genome with pre-trained parameters that as observed have the probabilities for the feature prediction in your sample**
+
+* species/species_parameters.cfg
+* species/species_metapars.cfg
+* species/species_metapars.utr.cfg
+* species/species_exon_probs.pbl.withoutCRF
+* species/species_exon_probs.pbl
+* species/species_weightmatrix.txt
+* species/species_intron_probs.pbl
+* species/species_intron_probs.pbl.withoutCRF
+* species/species_igenic_probs.pbl
+* species/species_igenic_probs.pbl.withoutCRF
+
+#### <ins>Expected differences between Prokaryotic and Eukaryotic GFF Features</ins>
+
+* Prokaryotic Expected Features:
+   * Gene, exon, CDS, short UTR length
+* Eukaryotic expected Feature:
+   * Gene, more than one exon per gene (single exon are also expected), intron, CDS (including splice variants), longer and more complex UTR lengths
 </details>
 
 <details>
@@ -223,20 +245,32 @@ Nanopore direct RNA sequencing (DRS) involves the continuous reading of native R
  
 <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/d0fc0990-fb26-4dd7-b99e-641c0d12f83c" >
 <em>(Parker et al., 2020)</em>
+
+Since the results from this assay would give you full-length transcripts, there is no need to perform a prediction or transcriptome assembly. Usually, you run [minimap2](https://github.com/lh3/minimap2) against your assembled genome and curate the annotation using tools such as [Webapollo2](https://github.com/GMOD/Apollo).
+
+To run the alignment using minmap2 and DRS reads against a reference genome:
+
+```
+./minimap2 -ax splice -uf -k14 reference.fa reads.fq > aln.sam
+```
+
 </details>
 
 <details>
 <summary>
 
-### Understanding the Annotation output:</summary>
+### Understanding the Annotation output:
+</summary>
 <p></p>
 
 #### Prokka output files 
 
 Many files are generated in prokka:
-<details>
-<summary> Output details</summary>
-<p></p>
+
+
+ 
+##### Output details</summary>
+
  
 Extension	| Description
 ------------- | ------------- 
@@ -253,10 +287,33 @@ Extension	| Description
 .txt	| Statistics relating to the annotated features found.
 .tsv	| Tab-separated file of all features: locus_tag,ftype,len_bp,gene,EC_number,COG,product
 
-</details>
-<summary> 
- 
- ### The GFF File <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20"> </summary>
+
+#### The GFF File <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20"> </summary>
+
+The GFF (General Feature Format) format consists of one line per feature, each containing 9 columns of data, plus optional track definition lines. 
+
+![image](https://github.com/treangenlab/radmicrobes/assets/28576450/b71471f4-e603-4d17-886c-f64733865ae6)
+
+**Fields must be tab-separated. Also, all but the final field in each feature line must contain a value; "empty" columns should be denoted with a '.'**
+
+**1. seqname -** name of the chromosome or scaffold; chromosome names can be given with or without the 'chr' prefix.
+
+**2. source -** name of the program that generated this feature, or the data source (database or project name)
+
+**3. feature -** feature type name, e.g. gene, mRNA, exon, CDS, ncRNA, UTR, etc.
+
+**4. start -** Start position of the feature, with sequence numbering starting at 1.
+
+**5. end -** End position of the feature, with sequence numbering starting at 1.
+
+**6. score -** A floating point value. (not important here)
+
+**7. strand -** defined as + (forward) or - (reverse).
+
+**8. frame -** One of '0', '1' or '2'. '0' indicates that the first base of the feature is the first base of a codon, '1' that the second base is the first base of a codon, and so on.
+
+**9. attribute -** A semicolon-separated list of tag-value pairs, providing additional information about each feature.
+    
 </details>
 <details>
 <summary>
