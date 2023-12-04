@@ -320,6 +320,26 @@ The GFF (General Feature Format) format consists of one line per feature, each c
 
  ### Gene Ontology and InterproScan (adding functions) <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20">
 </summary> 
+
+The Gene Ontology (GO) serves as a framework and set of concepts for delineating the functions of gene products across various organisms. Tailored for supporting the computational representation of biological systems, GO annotations establish associations between specific gene products and GO concepts. Together, these annotations create statements relevant to the function of the respective genes.
+
+
+Practically, an ontology serves as a representation of our knowledge about a subject. In the context of biology, 'ontologies' encompass representations of detectable or directly observable entities and the relationships between them. The lack of a universal standard terminology in biology and related fields results in varied term usage specific to species, research areas, or even individual research groups, creating challenges in communication and data sharing.
+
+To address this, the Gene Ontology project offers an ontology comprising defined terms that represent properties of gene products. This ontology spans three domains:
+
+**1. Cellular component:** Encompassing the parts of a cell or its extracellular environment.
+
+**2. Molecular function:** Describing the elemental activities of a gene product at the molecular level, such as binding or catalysis.
+
+**3. Biological process:** Defining operations or sets of molecular events with a clear beginning and end, relevant to the functioning of integrated living units, including cells, tissues, organs, and organisms.
+
+#### Interproscan
+Using [InterproScan](https://www.ebi.ac.uk/interpro/search/sequence/) ou can also look for other features such as domain location transmembrane domains, signal peptides.
+
+![image](https://github.com/treangenlab/radmicrobes/assets/28576450/0ae73a5e-8eda-4a50-b8d5-3fdad1057eef)
+
+
 </details>
 <details>
 <summary>
