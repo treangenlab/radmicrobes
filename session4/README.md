@@ -199,12 +199,16 @@ For the training submission you need:
 
 ### Glimpse on BRAKER</summary>
 <p></p>
-BRAKER mainly features semi-unsupervised, extrinsic evidence data (RNA-Seq and/or protein spliced alignment information) supported the training of GeneMark-ES/ET/EP/ETP and subsequent training of AUGUSTUS with the integration of extrinsic evidence in the final gene prediction step.
+BRAKER mainly features semi-unsupervised, extrinsic evidence data (RNA-Seq and/or protein spliced alignment information) supported by the training of GeneMark-ES/ET/EP/ETP and subsequent training of AUGUSTUS with the integration of extrinsic evidence in the final gene prediction step. It automates all the AUGUSTUS prediction process.
 
 [BRAKER Documentation](https://github.com/Gaius-Augustus/BRAKER)
 <br>
 <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/d554241d-b7a3-441e-95d8-32cd7d53e37f" width="350" height="300">
 
+**Basic usage using protein data or/and RNAseq data:**
+```
+braker.pl --genome=genome.fa --prot_seq=orthodb.fa --bam=/path/to/SRA_ID1.bam
+```
 </details>
 <details>
 <summary>
