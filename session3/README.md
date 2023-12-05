@@ -6,10 +6,15 @@
   Session Summary</summary>
     <p></p>
   * Genomic Epidemiology
-   * History
-    * London Cholera Epidemic of 1850s
-      - RStudio example
+   
+    * History
+    
+      * London Cholera Epidemic of 1850s
+      
+        * RStudio example
+  
   * Strain-level Analyses
+  
   * Phylogenomics
 
 </details>
