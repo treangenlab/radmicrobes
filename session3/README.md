@@ -3,7 +3,7 @@
 
 <details>
   <summary>
-  ## Session Summary</summary>
+  Session Summary</summary>
     <p></p>
   * Genomic Epidemiology
    * History
