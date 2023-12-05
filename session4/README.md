@@ -334,8 +334,15 @@ To address this, the Gene Ontology project offers an ontology comprising defined
 
 **3. Biological process:** Defining operations or sets of molecular events with a clear beginning and end, relevant to the functioning of integrated living units, including cells, tissues, organs, and organisms.
 
+
+#### Blast2GO
+
+[Blast2GO](https://www.blast2go.com/) is one of the best tools available to look for gene functions. (Besides being paid as part of OMICs Box it has a free trial and for some cases free limited academic accounts)
+* Simple usage with all analysis needed to add GO terms into your genome
+
+
 #### Interproscan
-Using [InterproScan](https://www.ebi.ac.uk/interpro/search/sequence/) ou can also look for other features such as domain location transmembrane domains, signal peptides.
+Using [InterproScan](https://www.ebi.ac.uk/interpro/search/sequence/) ou can also look for other features such as domain location transmembrane domains, and signal peptides.
 
 ![image](https://github.com/treangenlab/radmicrobes/assets/28576450/0ae73a5e-8eda-4a50-b8d5-3fdad1057eef)
 
