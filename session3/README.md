@@ -2,9 +2,11 @@
 *by William Shropshire, PhD*
 
 <details>
-  <summary>
-  Session Summary</summary>
-    <p></p>
+ <summary>
+  
+  ## Session Summary</summary>
+ <p></p>
+ 
   * Genomic Epidemiology
    
     * History
