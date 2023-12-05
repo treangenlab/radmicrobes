@@ -266,12 +266,9 @@ To run the alignment using minmap2 and DRS reads against a reference genome:
 #### Prokka output files 
 
 Many files are generated in prokka:
-
-
  
 ##### Output details</summary>
 
- 
 Extension	| Description
 ------------- | ------------- 
 .gff	| This is the master annotation in GFF3 format, containing both sequences and annotations. It can be viewed directly in Artemis or IGV.
@@ -337,12 +334,20 @@ To address this, the Gene Ontology project offers an ontology comprising defined
 
 #### Blast2GO
 
-[Blast2GO](https://www.blast2go.com/) is one of the best tools available to look for gene functions. (Besides being paid as part of OMICs Box it has a free trial and for some cases free limited academic accounts)
+[Blast2GO](https://www.blast2go.com/) is one of the best tools available to look for gene functions. (Besides being paid as part of OMICs Box it has a free trial and for some cases free basic versiohn for non-profit organization accounts)
+
 * Simple usage with all analysis needed to add GO terms into your genome
+
+* Basic worflow:
+
+![image](https://github.com/treangenlab/radmicrobes/assets/28576450/beb2ca28-ca3c-4dec-aa5f-ebfb528ee4de)
 
 
 #### Interproscan
-Using [InterproScan](https://www.ebi.ac.uk/interpro/search/sequence/) ou can also look for other features such as domain location transmembrane domains, and signal peptides.
+
+Using [InterproScan](https://www.ebi.ac.uk/interpro/search/sequence/) ou can also visualize for other features such as domain location transmembrane domains, and signal peptides in your proteins.
+
+**You just need to submit your protein sequence:**
 
 ![image](https://github.com/treangenlab/radmicrobes/assets/28576450/0ae73a5e-8eda-4a50-b8d5-3fdad1057eef)
 
