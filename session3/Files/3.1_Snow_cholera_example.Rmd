@@ -90,6 +90,7 @@ ggplot(df1, aes(x = date)) +
 
 ggsave("fictional_hist_w_serotype.pdf")
 ```
+
 ```{r clean up, echo=FALSE}
 # Clear data
 rm(list = ls())  
