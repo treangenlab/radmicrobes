@@ -1,27 +1,19 @@
 # Session 3 - Genomic Epidemiology, Strain-Level Analyses, and Phylogenomics
 *by William Shropshire, PhD*
 
-<details>
- <summary>
-  
-  ## Session Summary</summary>
- <p></p>
- 
-  * Genomic Epidemiology
-   
-    * Traditional 'OG' Epidemiology
-    
-      * London Cholera Epidemic of 1850s
-      
-        * RStudio example
-       
-      * Precision Public Health 
-  
-  * Strain-level Analyses
-  
-  * Phylogenomics
+## Table of contents
 
-</details>
+  * [Preparation](#preparation)
+  * [Genomic Epidemiology](#genomic-epidemiology)
+     * [Traditional 'OG' Epidemiology](#traditional-og-epidemiology)
+     * [Precision Public Health](#precision-public-health)
+  * [Strain Level Analysis](#strain-level-analysis)
+  * [Phylogenetics](#phylogenetics)
+  * [Tips](#tips)
+  * [License](#license)
+
+
+
 
 ## Preparation
 
@@ -63,4 +55,9 @@ The application of genomics to traditional epidemiology has revolutionized how w
 <em>(Armstrong et al., 2019)</em>
 </p>
 
-This figure succinctly demonstrates the added value of whole genome sequencing in aiding the detection of a particular outbreak of the foodborne-pathogen *Salmonella enterica* 
+This figure succinctly demonstrates the added value of whole genome sequencing in aiding the detection of a particular outbreak of the foodborne-pathogen *Salmonella enterica* that occurred in a region of the United States in 2018. Panel A represents unsorted cases of gastroenteritis, with each dot representing a singular case, that without proper molecular typing, provides insufficient information as to the source of differential outbreaks
+
+
+## License
+
+[GNU General Public License, version 3](https://www.gnu.org/licenses/gpl-3.0.html)
