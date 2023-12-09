@@ -11,6 +11,7 @@
      * [Case Study 2 - Cephalosporin Resistant Escherichia coli Surveillance](#case-study-2---cephalosporin-resistant-escherichia-coli-surveillance)
 * [Strain Level Analysis](#strain-level-analysis)
   * [Genotyping - Measures of Genetic Relatedness](#genotyping---measures-of-genetic-relatedness)
+  * [Databases and Query-based Tools](#databases-and-query-based-tools)
 * [Phylogenetics](#phylogenetics)
   * [Introduction and Terminology](#introduction-and-terminology)  
 * [Tips](#tips)
@@ -87,12 +88,51 @@ Panels A and B show proportion and absolute frequency for isolates sequenced ove
 
 ### Genotyping - Measures of Genetic Relatedness
 
-This section is going to focus on how genetic relatedness is defined and the tools that we can use to measure genetic relatedness. As alluded to in the previous section, we can achieve increasing levels of resolution to increase probability that we can discern if two or more isolates likely descended from a common recent ancestor. 
+This section is going to focus on how genetic relatedness is defined and the tools that we can use to measure genetic relatedness. As alluded to in the previous section, we can achieve increasing levels of resolution to increase probability that we can discern if two or more isolates likely descended from a common recent ancestor: 
 
 <p align="center">
-<img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/genetic_relatedness.jpeg" width="500" height="450">
+<img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/Genetic_Relatedness.jpg" width="750" height="450">
 <em>(Shropshire et al., 2023 mSphere)</em>
 </p>
+
+Multi-locus sequence typing (MLST) is based on a PCR assay that would identify 7-8 single copy, housekeeping genes omnipresent in a particular species. Typically, these schema correlate well with phenotype/serotype of the organism, however, there is certainly less than ideal one-to-one correlations. Core genome MLST consists of identifying a set of genes found in nearly all organisms of a specific taxa whereas whole genome MLST includes accessory genome content which includes the union of all genes found within a particular group. cgMLST and wgMLST schema are very complex and only well curated for a handful of organisms such as *E. coli*. We will now be going through the databases responsible for curating bacterial typing schemes as well as some tools we can use to perform *in silico* typing of bacterial WGS data. 
+
+## Databases and Query-based Tools
+
+### Databases
+
+There are three primary databases for the curation of microbial typing schemes used across the microbinfie (*i.e.*, microbioinformatics) community: 
+  
+  - [PubMLST](https://pubmlst.org/)
+  - [BIGSdb-Pasteur](https://bigsdb.pasteur.fr/)
+  - [Enterobase](https://enterobase.warwick.ac.uk/)
+
+Each of these databases curate specific genus/species combinations of taxa with a little overlap. For example, **Enterobase** is the primary repository for *Escherichia coli* typing information, however, **PubMLST** also hosts data from Enterobase. Each of these databases host web interfaces for querying taxa schema, typing assembly input files, as well as performing other analyses. **PubMLST** also provides an [Application Programming Interface](https://bigsdb.readthedocs.io/en/latest/rest.html#db-isolates-search) that allows for scripting in specific queries based on the user's needs. 
+
+### Tools
+
+One of the most simple and user-friendly tools for MLST typing is Torsten Seemann's [mlst tool](https://github.com/tseemann/mlst). The command line parameterization is very simple: 
+
+```
+% mlst contigs.fa
+contigs.fa  neisseria  11149  abcZ(672) adk(3) aroE(4) fumC(3) gdh(8) pdhC(4) pgm(6)
+
+% mlst genome.gbk.gz
+genome.gbk.gz  sepidermidis  184  arcC(16) aroE(1) gtr(2) mutS(1) pyrR(2) tpiA(1) yqiL(1)
+
+% mlst --label Anthrax GCF_001941925.1_ASM194192v1_genomic.fna.bz2
+Anthrax  bcereus  -  glp(24) gmk(1) ilv(~83) pta(1) pur(~71) pyc(37) tpi(41)
+
+% mlst --nopath /opt/data/refseq/S_pyogenes/*.fna
+NC_018936.fna  spyogenes  28   gki(4)   gtr(3)   murI(4)   mutS(4)  recP(4)    xpt(2)   yqiL(4)
+NC_017596.fna  spyogenes  11   gki(2)   gtr(6)   murI(1)   mutS(2)  recP(2)    xpt(2)   yqiL(2)
+NC_008022.fna  spyogenes  55   gki(11)  gtr(9)   murI(1)   mutS(9)  recP(2)    xpt(3)   yqiL(4)
+NC_006086.fna  spyogenes  382  gki(5)   gtr(52)  murI(5)   mutS(5)  recP(5)    xpt(4)   yqiL(3)
+NC_008024.fna  spyogenes  -    gki(5)   gtr(11)  murI(8)   mutS(5)  recP(15?)  xpt(2)   yqiL(1)
+NC_017040.fna  spyogenes  172  gki(56)  gtr(24)  murI(39)  mutS(7)  recP(30)   xpt(2)   yqiL(33)
+```
+
+
 
 ## Phylogenetics
 
