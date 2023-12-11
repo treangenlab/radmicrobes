@@ -310,7 +310,24 @@ The GFF (General Feature Format) format consists of one line per feature, each c
 **8. frame -** One of '0', '1' or '2'. '0' indicates that the first base of the feature is the first base of a codon, '1' that the second base is the first base of a codon, and so on.
 
 **9. attribute -** A semicolon-separated list of tag-value pairs, providing additional information about each feature.
-    
+
+<details>
+<summary>
+ 
+##### **Lets do some exercises!**</summary>
+
+```
+###How does your GFF file looks like?
+less my_genome.gff
+
+###How many features are in your gff file?
+cat my_genome.gff | cut -f 3| sort| uniq -c
+
+###Do we have a "Carbapenem-hydrolyzing beta-lactamase KPC" gene annotated in this genome?
+more my_genome.gff| grep "KPC"
+
+```
+</details>
 </details>
 <details>
 <summary>
