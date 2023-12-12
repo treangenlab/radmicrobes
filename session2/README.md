@@ -31,11 +31,15 @@ To install:
 
 ****
 
+
 **To install Gingr**,   
 (Interactive visualization of alignments, trees and variants)  
-*For MacOS: 
-[gingr-OSX64-v1.3.zip](https://github.com/marbl/gingr/releases/download/v1.3/gingr-OSX64-v1.3.app.zip)
-*For Linux:  
+*For MacOS:   
+
+[gingr-OSX64-v1.3.zip](https://github.com/marbl/gingr/releases/download/v1.3/gingr-OSX64-v1.3.app.zip)  
+
+*For Linux:    
+
 [gingr-Linux64-v1.3.tar.gz](https://github.com/marbl/gingr/releases/download/v1.3/gingr-Linux64-v1.3.tar.gz/)  
    
 
