@@ -12,6 +12,10 @@
 * [Strain Level Analysis](#strain-level-analysis)
   * [Genotyping - Measures of Genetic Relatedness](#genotyping---measures-of-genetic-relatedness)
   * [Databases and Query-based Tools](#databases-and-query-based-tools)
+   * [Databases](#databases)
+     * [Example 1 - Species Identification](#example-1---species-identification)
+     * [Example 2 - Multilocus sequence typing](#example-2---multilocus-sequence-typing) 
+   * [MLST](#mlst) 
 * [Phylogenetics](#phylogenetics)
   * [Introduction and Terminology](#introduction-and-terminology)  
 * [Tips](#tips)
@@ -22,15 +26,17 @@
 
 ## Preparation
 
-If you have not already done so, please download R and RStudio from the following site: [RStudio](https://posit.co/download/rstudio-desktop/). 
+If you have not already done so, please download:
+  * R and RStudio from the following site: [RStudio](https://posit.co/download/rstudio-desktop/). 
+  * Python: [Python](https://www.python.org/downloads/).
 
-As an aside, there are multiple data analysis software that you can choose to perform genomic analyses (*e.g.*, [Python](https://www.python.org/downloads/)). 
-Additionally, there are multiple interactive development environments you can choose to work from such as:
+This is **NOT** a coding class, so we won't be going over in detail first principles of programming (*i.e.*, coding syntax, structure, etc.);however, background on R/Python will be helpful when we go through some basic code that we will use to execute scripts from a command line interface. 
 
+As an aside, there are multiple data analysis software that you can choose to perform genomic analyses. Additionally, there are multiple interactive development environments you can choose to work from such as:
  - [PyCharm](https://www.jetbrains.com/pycharm/) 
 - [JupyterLab](https://jupyter.org/)
 
-However, for consistency and time's sake, I will be focusing on useful command line interface (CLI) tools in addition to data analysis using R packages, as R typically has what I find useful for genomic epidemiology. Python is wonderful for other data science applications (*e.g.*, prediction modeling), but is beyond the scope of this workshop. 
+If you're just getting started, I suggest testing out multiple platforms to see what feels most intuitive to you in conjunction of what serves your analytical needs the best. That being said, this section of the workshop is going to focus on high level theory in addition to some tools I find useful in my own work. 
 
 ## Genomic Epidemiology
 
@@ -88,7 +94,7 @@ Panels A and B show proportion and absolute frequency for isolates sequenced ove
 
 ### Genotyping - Measures of Genetic Relatedness
 
-This section is going to focus on how genetic relatedness is defined and the tools that we can use to measure genetic relatedness. As alluded to in the previous section, we can achieve increasing levels of resolution to increase probability that we can discern if two or more isolates likely descended from a common recent ancestor: 
+As alluded to in the previous section, we can achieve increasing levels of genetic resolution to increase probability that we can discern if two or more isolates likely descended from a common recent ancestor: 
 
 <p align="center">
 <img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/Genetic_Relatedness.jpg" width="750" height="450">
@@ -107,9 +113,46 @@ There are three primary databases for the curation of microbial typing schemes u
   - [BIGSdb-Pasteur](https://bigsdb.pasteur.fr/)
   - [Enterobase](https://enterobase.warwick.ac.uk/)
 
-Each of these databases curate specific genus/species combinations of taxa with a little overlap. For example, **Enterobase** is the primary repository for *Escherichia coli* typing information, however, **PubMLST** also hosts data from Enterobase. Each of these databases host web interfaces for querying taxa schema, typing assembly input files, as well as performing other analyses. **PubMLST** also provides an [Application Programming Interface](https://bigsdb.readthedocs.io/en/latest/rest.html#db-isolates-search) that allows for scripting in specific queries based on the user's needs. 
+Each of these databases curate specific genus/species combinations of taxa with a little overlap. For example, **Enterobase** is the primary repository for *Escherichia coli* typing information, however, **PubMLST** also hosts data from Enterobase. The underlying software that is used for both **PubMLST** and **BIGSdb-Pasteur** is the [Bacterial Isolate Genome Sequence database (BIGSdb)](https://pubmlst.org/software/bigsdb). Each of these databases host web interfaces for querying taxa schema, typing assembly input files, as well as performing other analyses. **PubMLST** also provides an [Application Programming Interface](https://bigsdb.readthedocs.io/en/latest/rest.html#db-isolates-search) that allows for scripting in specific queries based on the user's needs. We will use three examples to demonstrate the powerful utility of these databases using the PubMLST RESTful API tool.
 
-### Tools
+#### Example 1 - Species identification
+
+A colleague has sent you a fasta file letting you know that he believes that he has a bacterial assembly, but has no idea as to what it is. While you are curious as to why the colleague doesn't know what bacterial species it is, you say no problem, Dr. Keith Jolley has created a very simple python script that queries fasta assemblies against the ribosomal Multilocus Sequence Type (rMLST) database through the PubMLST RESTful API using the ```curl``` command.
+
+```
+python3 ./species_api_upload.py -f ARLG-3179_consensus_assembly.fasta
+```
+
+If we want to loop through two or more assemblies, we can use a ```for``` loop structure: 
+
+```
+for file in *fasta; do python3 ./species_api_upload.py -f $file;done
+```
+
+Given that said colleague is Dr. Hanson, who had told us previously that we were working on *K. pneumoniae* and he just had a momentary lapse recalling what project we were working with during this workshop 😉 (Dr. Hanson is *very* busy), we are happy to see that these isolates belong to the *K. pneumoniae* taxa. 
+
+#### Example 2 - Multilocus sequence typing
+
+Now that you have successfully identified these isolates as *K. pneumoniae*, you want to quickly check what sequence type these isolates belong to using their assembly files. As mentioned before, *in silico* multilocus sequence typing (MLST) is based on a simple PCR assay where you target 7-8 single copy housekeeping genes within a bacterial chromosome that is typically species specific. Many schema are available in the aforementioned databases. Fortunately, with some simple understanding of the key:value dictionary structure of the [JSON file format](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON), we can modify Dr. Keith Jolley's Python script to do ```curl``` API calls using the *K. pneumoniae* MLST schema:
+
+```
+python3 ./kpneumoniae_mlst_api_upload.py -f ARLG-3180_consensus_assembly.fasta
+```
+
+We can see based on the stdout that we have exact matches for ARLG3179 (ST258) and ARLG3180 (ST307), which corresponds to the two most commonly detected *K. pneumoniae* sequence types that were circulating in Houston, TX from 2016 to 2017. For those scared of the commandline (**which you shouldn't be!!!**), I will now demonstrate how we could upload a fasta file to [BIGSdb-Pasteur](https://bigsdb.pasteur.fr/) to determine the sequence type of the organism. 
+
+#### Example 3 - Downloading schemes
+
+Another useful API utility is you can download files to create your own local databases you may want to utilize for screening. For example, you can use a simple ```curl``` command to first download (1) a tab delimited list of *K. pneumoniae* MLST schemes and (2) multi-sequence fasta files for each respective housekeeping gene, where each sequence represents a unique allele:
+
+```
+sh download_kpneumoniae_mlst.sh
+```
+Now you have a directory that has all the up-to-date *K. pneumoniae* MLST information! I hope these three examples demonstrate the power and flexibility of interfacing with these databases and how one can potentially incorporate these API commands into bespoke scripts that serve your needs! Remember, these databases host a wealth of additional information beyond simple taxa typing (*e.g.,* **PubMLST** also has antimicrobial resistance genes, plasmid replicon types, etc.), in addition to other functionalities (re: Enterobase 
+
+### Strain-level analysis tools
+
+## MLST
 
 One of the most simple and user-friendly tools for MLST typing is Torsten Seemann's [mlst tool](https://github.com/tseemann/mlst). The command line parameterization is very simple: 
 
@@ -132,7 +175,7 @@ NC_008024.fna  spyogenes  -    gki(5)   gtr(11)  murI(8)   mutS(5)  recP(15?)  x
 NC_017040.fna  spyogenes  172  gki(56)  gtr(24)  murI(39)  mutS(7)  recP(30)   xpt(2)   yqiL(33)
 ```
 
-
+The only required argument is a FASTA/GenBank/E formatted assembly or assemblies. 
 
 ## Phylogenetics
 
