@@ -22,7 +22,8 @@ Have ParSNP installed. ParSNP can be run on macOS / linux
    `tar -xvf parsnp-Linux64-v1.2.tar.gz`  
 
 
-**From CONDA**
+**From CONDA**  
+
 ParSNP is available on the bioconda channel.   
 To install: 
 `conda install parsnp
@@ -30,8 +31,12 @@ To install:
 
 ****
 
-
-   
+**To install Gingr**,   
+(Interactive visualization of alignments, trees and variants)  
+*For MacOS: 
+[gingr-OSX64-v1.3.zip](https://github.com/marbl/gingr/releases/download/v1.3/gingr-OSX64-v1.3.app.zip)
+*For Linux:  
+[gingr-Linux64-v1.3.tar.gz](https://github.com/marbl/gingr/releases/download/v1.3/gingr-Linux64-v1.3.tar.gz/)  
    
 
    1) <a name="part3e1">Example 1: 49 MERS Coronavirus genomes </a>
