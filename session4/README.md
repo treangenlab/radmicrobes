@@ -483,4 +483,45 @@ raxml-ng --msa core_gene_alignment.aln --model GTR+G --all --bs-trees 10
  
 #### [ITOL Website](https://itol.embl.de/)
 
+##### Visualizing your core tree
+
+* **Step 1:** Upload your raxml tree [here](https://itol.embl.de/upload.cgi)
+
+![image](https://github.com/treangenlab/radmicrobes/assets/28576450/c693b51a-5fd1-438d-8b6f-20bb433cc9c6)
+
+* **Step 2:** In the control panel select Advanced and then click on midpoint root
+
+  ![image](https://github.com/treangenlab/radmicrobes/assets/28576450/9effbbd9-438b-47e5-98e6-e2162cf9f922)
+
+##### Adding Information (Sequencing types)
+
+* **Create a dataset:**
+
+![image](https://github.com/treangenlab/radmicrobes/assets/28576450/a92a7726-88fa-42a4-93ec-6907e3c7686e)
+
+* **Add information about your samples (my_genomes_STs.tsv):**
+
+![image](https://github.com/treangenlab/radmicrobes/assets/28576450/8ccd2440-960c-4815-91e2-232bc0984276)
+
+   * **Input file**
+
+      * Contains three columns (see example below):
+
+
+Sample name  | Color code | Information (ST)
+------------- | ------------- | ------------- 
+C1016_genome | #0A11C8 | 307
+C1069_genome | #048B52 | 258
+C1122_genome | #0A11C8 | 307
+C1151_genome | #0A11C8 | 307         
+
+* **Core gene tree**
+
+{image}
+
+##### How about the Accessory?
+
+![image](https://github.com/treangenlab/radmicrobes/assets/28576450/ab3dc488-7a2f-438b-8b79-23982aaf201e)
+
+
 </details>
