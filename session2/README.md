@@ -21,7 +21,14 @@ Have ParSNP installed. ParSNP can be run on macOS / linux
    
    `tar -xvf parsnp-Linux64-v1.2.tar.gz`  
 
+
+**From CONDA **
+ParSNP is available on the bioconda channel. To install: 
+`conda install parsnp
+`
+
 ****
+
 
    
    
