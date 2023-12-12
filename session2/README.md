@@ -7,12 +7,15 @@ This tutorial is to go over how to use ParSNP for multiple genome alignment (cor
 
 **Requirements**
 Have ParSNP installed. ParSNP can be run on macOS / linux
-* Download & install ParSNP on MacOS
-   wget https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-OSX64-v1.2.tar.gz
-   tar -xvf parsnp-OSX64-v1.2.tar.gz
-* Download & install ParSNP on Linux
-   wget https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-Linux64-v1.2.tar.gz
-   tar -xvf parsnp-Linux64-v1.2.tar.gz
+*** Download & install ParSNP on MacOS
+**
+   `wget https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-OSX64-v1.2.tar.gz`
+   `tar -xvf parsnp-OSX64-v1.2.tar.gz`
+  
+*** Download & install ParSNP on Linux**
+
+   `wget https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-Linux64-v1.2.tar.gz`
+   `tar -xvf parsnp-Linux64-v1.2.tar.gz`
 
    
    
