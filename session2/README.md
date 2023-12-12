@@ -5,17 +5,17 @@ Microbial Reference Genomes, Variant Calling, and Multiple Genome Alignment
 
 This tutorial is to go over how to use ParSNP for multiple genome alignment (core). The first dataset is a MERS coronavirus outbreak dataset involving 49 isolates. The second dataset is a selected set of 31 Streptococcus pneumoniae genomes. For reference, both of these datasets should run on modestly equipped laptops in a few minutes or less.
 
-###Installation  
+## <a name ="first">Installations</a> 
 
 Have ParSNP installed. ParSNP can be run on macOS / linux  
 
-Download & install ParSNP on MacOS
+1)Download & install ParSNP on MacOS
 
    `wget https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-OSX64-v1.2.tar.gz`  
    
    `tar -xvf parsnp-OSX64-v1.2.tar.gz`
   
-Download & install ParSNP on Linux
+2)Download & install ParSNP on Linux
 
    `wget https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-Linux64-v1.2.tar.gz`   
    
