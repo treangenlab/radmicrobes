@@ -517,11 +517,15 @@ C1151_genome | #0A11C8 | 307
 
 * **Core gene tree**
 
-{image}
+![image](https://github.com/treangenlab/radmicrobes/assets/28576450/f26ffaa9-c76b-41f7-b54d-8fb8db2e1723)
+
 
 ##### How about the Accessory?
 
 ![image](https://github.com/treangenlab/radmicrobes/assets/28576450/ab3dc488-7a2f-438b-8b79-23982aaf201e)
 
+##### Discussion
+
+* What are the differences that you see between core and Accessory trees? What information you can extract from it?
 
 </details>
