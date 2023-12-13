@@ -8,7 +8,7 @@
 
  * Kick-off (Todd)
    
- * Fantastic reference genomes and where to find them (lecture, Todd)
+ * Fantastic reference genomes and where to find them (hands on: Mike, Natalie)
  
    * RefSeq
        
@@ -16,25 +16,34 @@
   
    * SRA
      
-* Bespoke Strain-level analyses (lecture, Mike)
+* Bespoke Strain-level analyses (lecture: Mike)
 
-* Multiple Genome Alignment (hands on, Mike + Natalie)
    * Core Genome Alignment
 
-   * Whole Genome Alignment 
+   * Whole Genome Alignment
+     
+* Multiple Genome Alignment (hands on: Mike, Natalie)
 
    * Running Parsnp 
  
    * Visualization with Gingr
      
-* Mapping reads to reference genomes for variant calling (lecture, Daniel)
+* Mapping reads to reference genomes for variant calling (lecture: Daniel)
+
+   * Short-reads
+
+   * Long-reads
+     
+   * SNVs
+     
+   * SVs
   
 </details>
 
  <details>
  <summary> 
   
-## Fantastic reference genomes and where to find them </summary>
+## Fantastic reference genomes and where to find them (lectures + hands on, Todd) </summary>
 * NCBI
   * SRA 		 _[https://www\.ncbi\.nlm\.nih\.gov/sra](https://www.ncbi.nlm.nih.gov/sra)_
   * Taxonomy		 _[https://www\.ncbi\.nlm\.nih\.gov/taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy)_
@@ -128,7 +137,7 @@ NCBI Entrez API allows advanced searches of records in multiple NCBI database as
  <details>
  <summary>
   
-## Bespoke Strain-Level Analysis of Bacterial Genomes
+## Bespoke Strain-Level Analysis of Bacterial Genomes (lecture, Mike)
  
 </summary>
 
@@ -356,12 +365,15 @@ _1\.\) Open the \*\._  _ggr_  _ file created in the _  _parsnp_  _ output folder
 _2\.\) Once it is open\, go back to the “Open” dialogue and open the \*\.tree file in the same folder\._
 
 ![](img/Bespoke_StrainLevel_Comparative_Genomics_202325.png)
+
+_3\.\) This will give you the standard _  _Gingr_  _ view\. Other options to re\-root the tree or to switch to Synteny view are available under the “Tree” and “View” menus\._
+
 </details>
 
 <details>
  <summary>
   
- ## Multiple Genome Alignment (hands-on) </summary>
+ ## Multiple Genome Alignment (hands-on, Mike and Natalie) </summary>
  <p></p>
 ========
 
@@ -500,8 +512,7 @@ This last step requires you to download software and is to highlight the ability
 <details>
  <summary>
   
- ## Mapping reads to reference genomes for variant calling (lecture) </summary>
+ ## Mapping reads to reference genomes for variant calling (lecture, Daniel) </summary>
  <p></p>
  
-_3\.\) This will give you the standard _  _Gingr_  _ view\. Other options to re\-root the tree or to switch to Synteny view are available under the “Tree” and “View” menus\._
 
