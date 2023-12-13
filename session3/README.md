@@ -27,9 +27,9 @@
 * [Phylogenetics](#phylogenetics)
   * [Introduction and Terminology](#introduction-and-terminology)
      * [Dissecting a Tree](#dissecting-a-tree)
-     * [Maximum Parsimony vs. Maximum Likelihood](#maximum-parsimony-vs.-maximum-likelihood)
+     * [Maximum Parsimony vs. Maximum Likelihood](#maximum-parsimony-vs-maximum-likelihood)
   * [Inferring Phylogenies Using Maximum-Likelihood](#inferring-phylogenies-using-maximum-likelihood)
-     * [IQTREE 2](#iqtree-2)  
+     * [IQ-TREE 2](#iq-tree-2)  
   * [Bayesian Analysis to Infer Time-Dated Phylogenies](#bayesian-analysis-to-infer-time-dated-phylogenies)
   * [Phylogeny Visualization Tools](#phylogeny-visualization-tools) 
 * [Tips](#tips)
@@ -267,7 +267,7 @@ While non-exhaustive, I hope that these strain-level analysis tools serve as a g
 
 ### Measuring Genomic Distance
 
-One of the last concepts I want to bring up before jumping into phylogenetics is how we measure genetic distances across populations. There are many ways we can estimate genetic distance based on a comparison of genetic relatedness inferred from an alignment or amongst two or more samples. Yesterday, we discussed variant calling against a reference. Estimating distance based on variant calls is perhaps the most powerful means to compare multiple sequences to then infer genetic distance. I want to close this section by going over some genetic distance heuristics, that are very helpful in estimating relatedness within a population in a computationally short amount of time with very low computational resources required. 
+One of the last concepts I want to bring up before jumping into phylogenetics is how we measure genetic distances across populations. There are many ways we can estimate genetic distance based on a comparison of genetic relatedness inferred from an alignment of amongst two or more samples. Yesterday, we discussed variant calling against a reference. Estimating distance based on variant calls is perhaps the most powerful means to compare multiple sequences to then infer genetic distance. I want to close this section by going over (1) some genetic distance heuristics, that are very helpful in estimating relatedness within a population in a computationally short amount of time with very low computational resources required and (2) a popular variant calling pipeline that can be used for generating an alignment that can subsequently used as input for phylogenetic analyses. 
 
 #### Mash
 
@@ -291,11 +291,11 @@ cat distances.ndist distances.tab.temp > kpneumo.mash.phylip
 rm distances.ndist distances.tab.temp
 ```
 
-[FastANI](https://github.com/ParBLiSS/FastANI) is another great heuristic for estimating Average Nucleotide Identity (ANI) in a population, for future reference. We will use the PHYLIP file in the following [Phylogenetics](#phylogenetics) section. 
+[FastANI](https://github.com/ParBLiSS/FastANI) is another great heuristic for estimating Average Nucleotide Identity (ANI) in a population, for future reference. We will use the `kpneumo.mash.phylip` PHYLIP file in the following [Phylogenetics](#phylogenetics) section. 
 
 #### Snippy 
 
-During session two, Dr. Treangen went over variant calling in great detail. There are a plethora of variant calling pipelines available that have advantages and disadvantages based on read size, coverage depth, species, etc.. For a full review of how different variant calling pipelines perform, I suggest reading this [Bush et al. *GigaScience*](https://academic.oup.com/gigascience/article/9/2/giaa007/5728470) where the authors systematically tested over 200 variant calling pipelines. One of the highest performing pipelines is again from the ***Torstyverse*** called [Snippy](https://github.com/tseemann/snippy). Underneath the hood, it simply is a pipeline that utilizes a short-read alignment using `bwa mem` followed by variant calling using `FreeBayes`. It works incredibly well for multiple tasks, but in particular, it's a great, reproducible tool to create a clonal frame input to use for inferring evolutionary relationships with a phylogenetic tree. I have created a simple text file that goes through the steps to create the proper input for running the `snippy-multi` pipeline in the `./Files/phylogenetics` folder
+During session two, Dr. Treangen went over variant calling in great detail. There are a plethora of variant calling pipelines available that have advantages and disadvantages based on a multitude of factors, many of which were described yesterday. For a full review of how different variant calling pipelines perform, I suggest reading this [Bush et al. *GigaScience*](https://academic.oup.com/gigascience/article/9/2/giaa007/5728470) study where the authors systematically tested over 200 variant calling pipelines. One of the highest performing pipelines is again from the ***Torstyverse*** called [Snippy](https://github.com/tseemann/snippy). Underneath the hood, it simply is a pipeline that utilizes a short-read alignment using `bwa mem` followed by variant calling using `FreeBayes`. It works incredibly well for multiple tasks, but in particular, it's a great, reproducible tool to create a clonal frame input to use for inferring evolutionary relationships with a phylogenetic tree. I have created a simple text file that goes through the steps to create the proper input for running the `snippy-multi` pipeline in the `./Files/phylogenetics` folder named `snippy-core-instructions.txt` in addition to a pre-generated `kpneumo.clean.full.aln`, which will be used for our phylogenetics analysis. 
 
 
 ## Phylogenetics
