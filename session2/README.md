@@ -31,9 +31,8 @@
   
 </details>
 
- <summary>
  <details>
- 
+ <summary> 
 ## Fantastic reference genomes and where to find them </summary>
 * NCBI
   * SRA 		 _[https://www\.ncbi\.nlm\.nih\.gov/sra](https://www.ncbi.nlm.nih.gov/sra)_
