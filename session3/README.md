@@ -5,7 +5,8 @@
 
 * [Preparation](#preparation)
 * [Genomic Epidemiology](#genomic-epidemiology)
-* [Traditional 'OG' Epidemiology](#traditional-og-epidemiology)
+  * [Traditional 'OG' Epidemiology](#traditional-og-epidemiology)
+     * [Exercise 1 - Using R](#exercise-1---using-r)
   * [Precision Public Health](#precision-public-health)
      * [Case Study 1 - Salmonellosis Outbreak](#case-study-1---salmonellosis-outbreak)
      * [Case Study 2 - Cephalosporin Resistant *Escherichia coli* Surveillance](#case-study-2---cephalosporin-resistant-escherichia-coli-surveillance)
@@ -38,7 +39,7 @@ If you have not already done so, please download:
   * R and RStudio from the following site: [RStudio](https://posit.co/download/rstudio-desktop/). 
   * Python: [Python](https://www.python.org/downloads/).
 
-This is **NOT** a coding class, so we won't be going over in detail first principles of programming (*i.e.*, coding syntax, structure, etc.);however, background on R/Python will be helpful when we go through some basic code that we will use to execute scripts from a command line interface. 
+This is **NOT** a coding class, so we won't be going over in detail first principles of programming (*i.e.*, coding syntax, structure, etc.); however, background on R/Python will be helpful when we go through some basic code that we will use to execute scripts from a command line interface. 
 
 As an aside, there are multiple data analysis software that you can choose to perform genomic analyses. Additionally, there are multiple interactive development environments you can choose to work from such as:
  - [PyCharm](https://www.jetbrains.com/pycharm/) 
@@ -62,6 +63,8 @@ This led to John Snow being able to convince London authorities to remove the pu
 <p align="center">
 <img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/cholera_deaths_time.jpg" width="600" height="400">
 </p>
+
+#### Exercise 1 - Using R
 
 While John Snow was certainly ahead of his time, had he known that a microorganism called *Vibrio cholerae* was responsible for this life-threatening diarrheal illness and that one could culture it using a nutrient rich medium (*e.g.*, lysogeny broth which hadn't been created yet), he may have been able to more definitively demonstrate that 'fool-air' was not the causative agent for cholera. Furthermore, had John Snow been familiar with serotyping via agglutination of antisera to type specific O-antigens, he may have found an interesting correlation between genotype and phenotype. The first exercise is designed to become familiar with using R and RStudio using [this R Markdown file](https://github.com/treangenlab/radmicrobes/blob/main/session3/Files/3.1_Snow_cholera_example.Rmd) and [this dataset](https://github.com/treangenlab/radmicrobes/blob/main/session3/Files/cholera_fictional_data.csv). We will be using: (1) the package **HistData**, which can be used to load the historical data collected from the 1854 London cholera epidemic; (2) generate epidemiological curves using fictional cholera attack/death data from a two year timeframe.
 
@@ -119,20 +122,20 @@ There are three primary databases for the curation of microbial typing schemes u
   - [BIGSdb-Pasteur](https://bigsdb.pasteur.fr/)
   - [Enterobase](https://enterobase.warwick.ac.uk/)
 
-Each of these databases curate specific genus/species combinations of taxa with a little overlap. For example, **Enterobase** is the primary repository for *Escherichia coli* typing information, however, **PubMLST** also hosts data from Enterobase. The underlying software that is used for both **PubMLST** and **BIGSdb-Pasteur** is the [Bacterial Isolate Genome Sequence database (BIGSdb)](https://pubmlst.org/software/bigsdb). Each of these databases host web interfaces for querying taxa schema, typing assembly input files, as well as performing other analyses. **PubMLST** also provides an [Application Programming Interface](https://bigsdb.readthedocs.io/en/latest/rest.html#db-isolates-search) that allows for scripting in specific queries based on the user's needs. We will use three examples to demonstrate the powerful utility of these databases using the PubMLST RESTful API tool.
+Each of these databases curate specific genus/species combinations of taxa with a little overlap. For example, **Enterobase** is the primary repository for *Escherichia coli* typing information, however, **PubMLST** also hosts data from Enterobase. The underlying software that is used for both **PubMLST** and **BIGSdb-Pasteur** is the [Bacterial Isolate Genome Sequence database (BIGSdb)](https://pubmlst.org/software/bigsdb). Each of these databases host web interfaces for querying taxa schema, typing assembly input files, as well as performing other analyses. **PubMLST** also provides an [Application Programming Interface](https://bigsdb.readthedocs.io/en/latest/rest.html#db-isolates-search) that allows for scripting in specific queries based on the user's needs. We will use three examples to demonstrate the powerful utility of these databases using the PubMLST RESTful API tool. I also want to briefly go into each script to see if we can determine how the code works. 
 
 #### Example 1 - Species identification
 
 A colleague has sent you a fasta file letting you know that he believes that he has a bacterial assembly, but has no idea as to what it is. While you are curious as to why the colleague doesn't know what bacterial species it is, you say no problem, Dr. Keith Jolley has created a very simple python script that queries fasta assemblies against the ribosomal Multilocus Sequence Type (rMLST) database through the PubMLST RESTful API using the ```curl``` command.
 
 ```
-python3 ./species_api_upload.py -f ARLG-3179_consensus_assembly.fasta
+python3 ./species_api_upload.py -f ./../Files/assemblies/ARLG-3179_prokka_dir/ARLG-3179_prokka.fna
 ```
 
 If we want to loop through two or more assemblies, we can use a ```for``` loop structure: 
 
 ```
-for file in *fasta; do python3 ./species_api_upload.py -f $file;done
+for file in $(cat ./../Files/assembly_list.tsv);do echo $file; python ./species_api_upload.py -f ./../Files/assemblies/${file}_prokka_dir/${file}_prokka.fna;done
 ```
 
 Given that said colleague is Dr. Hanson, who had told us previously that we were working on *K. pneumoniae* and he just had a momentary lapse recalling what project we were working with during this workshop 😉 (Dr. Hanson is *very* busy), we are happy to see that these isolates belong to the *K. pneumoniae* taxa. 
@@ -142,10 +145,12 @@ Given that said colleague is Dr. Hanson, who had told us previously that we were
 Now that you have successfully identified these isolates as *K. pneumoniae*, you want to quickly check what sequence type these isolates belong to using their assembly files. As mentioned before, *in silico* multilocus sequence typing (MLST) is based on a simple PCR assay where you target 7-8 single copy housekeeping genes within a bacterial chromosome that is typically species specific. Many schema are available in the aforementioned databases. Fortunately, with some simple understanding of the key:value dictionary structure of the [JSON file format](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON), we can modify Dr. Keith Jolley's Python script to do ```curl``` API calls using the *K. pneumoniae* MLST schema:
 
 ```
-python3 ./kpneumoniae_mlst_api_upload.py -f ./ARLG-3180_consensus_assembly.fasta
+for file in $(cat ./../Files/assembly_list.tsv);do echo $file; python ./kpneumoniae_mlst_api_upload.py -f ./../Files/assemblies/${file}_prokka_dir/${file}_prokka.fna;done
 ```
 
-We can see based on the stdout that we have exact matches for ARLG-3179 (ST258) and ARLG-3180 (ST307), which corresponds to the two most commonly detected *K. pneumoniae* sequence types that were circulating in Houston, TX from 2016 to 2017. For those scared of the commandline (**which you shouldn't be!!!**), I will now demonstrate how we could upload a fasta file to [BIGSdb-Pasteur](https://bigsdb.pasteur.fr/) to determine the sequence type of the organism. 
+We can see based on the stdout that we have exact matches for ARLG-3179 (ST258) and ARLG-3180 (ST307), which corresponds to the two most commonly detected *K. pneumoniae* sequence types that were circulating in Houston, TX from 2016 to 2017. This is a great example of how you can modify pre-existing code to perform use-case functions necessary for your own work!
+
+For those scared of the commandline (**which you shouldn't be!!!**), I will now demonstrate how you could upload a fasta file using the website interface of [BIGSdb-Pasteur](https://bigsdb.pasteur.fr/) to determine the sequence type of the organism. 
 
 #### Example 3 - Downloading schemes
 
@@ -154,13 +159,13 @@ Another useful API utility is you can download files to create your own local da
 ```
 sh download_kpneumoniae_mlst.sh
 ```
-Now you have a directory that has all the up-to-date *K. pneumoniae* MLST information! I hope these three examples demonstrate the power and flexibility of interfacing with these databases and how one can potentially incorporate these API commands into bespoke scripts that serve your needs! Remember, these databases host a wealth of additional information beyond simple taxa typing (*e.g.,* **PubMLST** also has antimicrobial resistance genes, plasmid replicon types, etc.), in addition to other functionalities (re: Enterobase 
+Now you have a directory that has all the up-to-date *K. pneumoniae* MLST information! I hope these three examples demonstrate the power and flexibility of interfacing with these databases and how one can potentially incorporate these API commands into bespoke scripts that serve your needs! Remember, these databases host a wealth of additional information beyond simple taxa typing (*e.g.,* **PubMLST** also has antimicrobial resistance genes, plasmid replicon types, etc.) so I strongly encourage everyone to look through these sources. 
 
 ### Strain-level analysis tools
 
 #### MLST
 
-One of the most simple and user-friendly tools for MLST typing is Torsten Seemann's [mlst tool](https://github.com/tseemann/mlst). The command line parameterization is very simple: 
+While using APIs for typing is certainly handy, there are tools available that make this task even simpler. One of the most simple and user-friendly tools for MLST typing is Torsten Seemann's [mlst tool](https://github.com/tseemann/mlst). The command line parameterization is very simple: 
 
 ```
 % mlst contigs.fa
@@ -181,7 +186,7 @@ NC_008024.fna  spyogenes  -    gki(5)   gtr(11)  murI(8)   mutS(5)  recP(15?)  x
 NC_017040.fna  spyogenes  172  gki(56)  gtr(24)  murI(39)  mutS(7)  recP(30)   xpt(2)   yqiL(33)
 ```
 
-The only required argument is a FASTA/GenBank/E formatted assembly or assemblies. There are 144 schemas preloaded with the current version of mlst as of 2023-12-12, `mlst-v2.23.0`. Given that this release was over two years ago, it would be prudent to upbdate the pubmlst databases with the following companion script available in the mlst package: 
+The only required argument is a FASTA/GenBank/E formatted assembly or assemblies. There are 144 schemas preloaded with the current version of mlst as of 2023-12-12, `mlst-v2.23.0`. Given that this release was over two years ago, it would be prudent to upbdate the pubmlst databases with the following companion script available in the mlst package. This takes awhile, so I would suggest executing this command at a later time:  
 
 ```
 mlst-download_pub_mlst -d /opt/homebrew/Caskroom/miniforge/base/envs/radgenomics/db/pubmlst -j 2
@@ -190,17 +195,21 @@ mlst-download_pub_mlst -d /opt/homebrew/Caskroom/miniforge/base/envs/radgenomics
 For a quick example, we are going to use ARLG-3179 and ARLG-3180 assemblies as input for the mlst command using another `for loop` structure:
 
 ```
-for file in *fasta;do mlst $file >> kpneumoniae_mlst.tsv;done
+cd ~/Documents/GitHub/radmicrobes/session3/Files/assemblies
+for file in $(cat ./../assembly_list.tsv);do mlst ${file}_prokka_dir/${file}_prokka.fna >> ./../Analysis/kpneumoniae_mlst.tsv;done
 ```
+As you can see, this output provides a simple, tab delimited file with filename, species, ST, and allele IDs. Importantly, we can see that using both the PubMLST API as well as the MLST tool, that we get consistent results!
 
 #### AMRFinderPlus
 
-There are many database reference tools that can be used to detect antimicrobial resistance (AMR) genes such as: 
+When it comes to strain-level analysis, we are typically interested in genomic features of that specific organism. In the case of our current analysis, we know that our organisms of interest are multi-drug resistant, clinical *K. pneumoniae* isolates. Thus, we may be specifically interested in understanding (1) what the antimicrobial resistant (AMR) genomic determinants are and (2) are there any other genomic factors such as virulence genes that may be cause for concern. There are many database reference tools that can be used to detect AMR genes such as: 
 
   - [ABRicate](https://github.com/tseemann/abricate)
   - [ResFinder](https://cge.food.dtu.dk/services/ResFinder/)
 
-AMRFinderPlus has become a gold standard for the identification of AMR genes using bacterial genome assemblies. Hosted through the National Center for Biotechnology Information (NCBI), AMRFinderPlus provides additional tools for species specific point mutations conferring resistance as well as allows for the option of detecting stress response and virulence genes associated with particular organisms. We are again going to use ARLG-3179 and ARLG-3180 assemblies as input examples with `prokka-v1.14.5` annotated files as input (*N.B.*, Dr. Baptista will go through annotation and output files in the following section in more detail). One of the first good practice steps after setting up AMRFinderPlus is to update the database as NCBI regularly provides updates in between AMRFinderPlus releases:
+AMRFinderPlus has become one of my favorite tools for the identification of AMR genes using bacterial genome assemblies. Hosted through the National Center for Biotechnology Information (NCBI), AMRFinderPlus provides additional context to AMR that many previous AMR detection tools lacked. For example, in addition to detecting AMR genes that may be acquired through horizontal gene transfer (HGT), AMRFinderPlus allows for the detection of species specific point mutations conferring resistance as well as the option of detecting stress response and virulence genes associated with particular organisms. Importantly, this program and corresponding databases are updated consistently through NCBI. 
+
+We are again going to use ARLG-3179 and ARLG-3180 assemblies as examples with `prokka-v1.14.5` annotated files as input (*N.B.*, Dr. Baptista will go through annotation and output files in the following section in more detail). One of the first good practice steps after setting up AMRFinderPlus is to update the database as NCBI regularly provides updates in between AMRFinderPlus releases:
 
 `
 amrfinder --update
@@ -209,7 +218,7 @@ amrfinder --update
 The command line parameters to include AMR encoding genes, point mutations, and stress/virulence factors associated with *K. pneumoniae* look like this:
 
 `
-for file in *fasta;do amrfinder -p 
+for file in $(cat assembly_list.tsv);do amrfinder -p 
 `
 
 #### Kleborate
