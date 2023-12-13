@@ -134,13 +134,14 @@ Each of these databases curate specific genus/species combinations of taxa with 
 A colleague has sent you a fasta file letting you know that he believes that he has a bacterial assembly, but has no idea as to what it is. While you are curious as to why the colleague doesn't know what bacterial species it is, you say no problem, Dr. Keith Jolley has created a very simple python script that queries fasta assemblies against the ribosomal Multilocus Sequence Type (rMLST) database through the PubMLST RESTful API using the ```curl``` command.
 
 ```
-python3 ./species_api_upload.py -f ./../Files/assemblies/ARLG-3179_prokka_dir/ARLG-3179_prokka.fna
+cd ./session3/Scripts
+python3 ./species_api_upload.py -f ./../Files/assemblies/ARLG-3180_consensus_assembly.fasta.fna
 ```
 
 If we want to loop through two or more assemblies, we can use a ```for``` loop structure: 
 
 ```
-for file in $(cat ./../Files/assembly_list.tsv);do echo $file; python ./species_api_upload.py -f ./../Files/assemblies/${file}_prokka_dir/${file}_prokka.fna;done
+for file in $(cat ./../Files/lists/assembly_subset.tsv);do echo $file; python ./species_api_upload.py -f ./../Files/assemblies/${file}_consensus_assembly.fasta;done
 ```
 
 Given that said colleague is Dr. Hanson, who had told us previously that we were working on *K. pneumoniae* and he just had a momentary lapse recalling what project we were working with during this workshop 😉 (Dr. Hanson is *very* busy), we are happy to see that these isolates belong to the *K. pneumoniae* taxa. 
@@ -150,10 +151,10 @@ Given that said colleague is Dr. Hanson, who had told us previously that we were
 Now that you have successfully identified these isolates as *K. pneumoniae*, you want to quickly check what sequence type these isolates belong to using their assembly files. As mentioned before, *in silico* multilocus sequence typing (MLST) is based on a simple PCR assay where you target 7-8 single copy housekeeping genes within a bacterial chromosome that is typically species specific. Many schema are available in the aforementioned databases. Fortunately, with some simple understanding of the key:value dictionary structure of the [JSON file format](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON), we can modify Dr. Keith Jolley's Python script to do ```curl``` API calls using the *K. pneumoniae* MLST schema:
 
 ```
-for file in $(cat ./../Files/assembly_list.tsv);do echo $file; python ./kpneumoniae_mlst_api_upload.py -f ./../Files/assemblies/${file}_prokka_dir/${file}_prokka.fna;done
+for file in $(cat ./../Files/lists/assembly_subset.tsv);do echo $file; python ./kpneumoniae_mlst_api_upload.py -f ./../Files/assemblies/${file}_consensus_assembly.fasta;done
 ```
 
-We can see based on the stdout that we have exact matches for ARLG-3179 (ST258) and ARLG-3180 (ST307), which corresponds to the two most commonly detected *K. pneumoniae* sequence types that were circulating in Houston, TX from 2016 to 2017. This is a great example of how you can modify pre-existing code to perform use-case functions necessary for your own work!
+We can see based on the stdout that we have exact matches for ARLG-3180 (ST307) and ARLG-3181 (ST258), which corresponds to the two most commonly detected *K. pneumoniae* sequence types that were circulating in Houston, TX from 2016 to 2017. This is a great example of how you can modify pre-existing code to perform use-case functions necessary for your own work!
 
 For those scared of the commandline (**which you shouldn't be!!!**), I will now demonstrate how you could upload a fasta file using the website interface of [BIGSdb-Pasteur](https://bigsdb.pasteur.fr/) to determine the sequence type of the organism. 
 
@@ -164,7 +165,7 @@ Another useful API utility is you can download files to create your own local da
 ```
 sh download_kpneumoniae_mlst.sh
 ```
-Now you have a directory that has all the up-to-date *K. pneumoniae* MLST information! I hope these three examples demonstrate the power and flexibility of interfacing with these databases and how one can potentially incorporate these API commands into bespoke scripts that serve your needs! Remember, these databases host a wealth of additional information beyond simple taxa typing (*e.g.,* **PubMLST** also has antimicrobial resistance genes, plasmid replicon types, etc.) so I strongly encourage everyone to look through these sources. 
+Now you have a directory (`./../db/pubmlst/klebsiella`) that has all the up-to-date *K. pneumoniae* MLST information! I hope these three examples demonstrate the power and flexibility of interfacing with these databases and how one can potentially incorporate these API commands into bespoke scripts that serve your needs! Remember, these databases host a wealth of additional information beyond simple taxa typing (*e.g.,* **PubMLST** also has antimicrobial resistance genes, plasmid replicon types, etc.) so I strongly encourage everyone to look through these sources. 
 
 ### Strain-level analysis tools
 
@@ -197,13 +198,15 @@ The only required argument is a FASTA/GenBank/E formatted assembly or assemblies
 mlst-download_pub_mlst -d /opt/homebrew/Caskroom/miniforge/base/envs/radgenomics/db/pubmlst -j 2
 ```
 
-For a quick example, we are going to use ARLG-3179 and ARLG-3180 assemblies as input for the mlst command using another `for loop` structure:
+For a quick example, we are going to use ARLG-3179 and ARLG-3180 assemblies as input for the mlst command using another `for loop` structure. I'm also going to use **wildcard** notation, specifically `*` to have any matching number, string, or special character match following the assigned `for loop` variable up to **.fasta**. 
 
 ```
-cd ~/Documents/GitHub/radmicrobes/session3/Files/assemblies
-for file in $(cat ./../assembly_list.tsv);do mlst ${file}_prokka_dir/${file}_prokka.fna >> ./../Analysis/kpneumoniae_mlst.tsv;done
+cd ./session3/Files
+for file in $(cat ./lists/assembly_subset.tsv);do mlst assemblies/${file}_*.fasta >> ./results/kpneumoniae_mlst.tsv;done
+head ./results/kpneumoniae_mlst.tsv
 ```
-As you can see, this output provides a simple, tab delimited file with filename, species, ST, and allele IDs. Importantly, we can see that using both the PubMLST API as well as the MLST tool, that we get consistent results!
+
+As you can see, this output provides a simple, tab delimited file with filename, species, ST, and allele IDs. Importantly, we can see that using both the PubMLST API as well as the MLST tool, that we get consistent results! 
 
 #### AMRFinderPlus
 
@@ -229,10 +232,10 @@ amrfinder --list_organisms
 From the standard output, one can see that *Klebsiella_pneumoniae* is included as an available organism. In order to properly run AMRFinderPlus with the plus functions, you need to include a nucleotide file (.fna), a protein file (.faa), a gff file (.gff), and specify the organism, `-O`. Additionally set the `--plus` flag as well as the annotation format `-a` which is `prokka` for this case. Here is an example of code you can run with each parameter looping through our two assemblies in their respective prokka directories:
 
 ```
-for file in $(cat assembly_list.tsv);do amrfinder -p assemblies/${file}*_dir/${file}*.faa -g assemblies/${file}*_dir/${file}*.gff -n assemblies/${file}*_dir/${file}*.fna -a prokka --plus -O Klebsiella_pneumoniae --threads 2 -o ./../Analysis/${file}_AMRFinderPlus.tsv;done
+cd ./session3/Files
+for file in $(cat ./lists/assembly_subset.tsv);do amrfinder -p ./prokka_dirs/${file}*_dir/${file}*.faa -g ./prokka_dirs/${file}*_dir/${file}*.gff -n ./prokka_dirs/${file}*_dir/${file}*.fna -a prokka --plus -O Klebsiella_pneumoniae --threads 2 -o ./results/${file}_AMRFinderPlus.tsv;done
 
-cd ./../Analysis
-head ARLG-3179_AMRFinderPlus.tsv
+head ./results/*_AMRFinderPlus.tsv
 ```
 
 Let's go through the output to see what we can deduce from these two organisms. 
@@ -243,8 +246,8 @@ There are many *ad hoc* tools available to do analysis on your favorite organism
 
 ```
 cd ./../Files
-for file in $(cat assembly_list.tsv);do kleborate --all -a ./assemblies/${file}*dir/*${file}*.fna -o ./../Analysis/${file}_kleborate.tsv;done
-cd ./../Analysis
+for file in $(cat ./lists/assembly_list.tsv);do kleborate --all -a ./assemblies/${file}*dir/*${file}*.fna -o ./results/${file}_kleborate.tsv;done
+head ./results/*_kleborate.tsv
 
 ```
 
@@ -264,7 +267,7 @@ While non-exhaustive, I hope that these strain-level analysis tools serve as a g
 
 ### Measuring Genomic Distance
 
-One of the last concepts I want to bring up before jumping into phylogenetics is how we measure genetic distances across populations. There are many ways we can estimate genetic distance based on a comparison of genetic relatedness amongst two or more samples. Yesterday, we discussed variant calling against a reference. Estimating distance based on variant calls is perhaps the most powerful means to compare multiple sequences to then infer genetic distance. I want to close this section by going over some genetic distance heuristics, that are very helpful in estimating relatedness within a population in a computationally short amount of time with very low computational resources required. 
+One of the last concepts I want to bring up before jumping into phylogenetics is how we measure genetic distances across populations. There are many ways we can estimate genetic distance based on a comparison of genetic relatedness inferred from an alignment or amongst two or more samples. Yesterday, we discussed variant calling against a reference. Estimating distance based on variant calls is perhaps the most powerful means to compare multiple sequences to then infer genetic distance. I want to close this section by going over some genetic distance heuristics, that are very helpful in estimating relatedness within a population in a computationally short amount of time with very low computational resources required. 
 
 #### Mash
 
