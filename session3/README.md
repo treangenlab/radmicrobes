@@ -23,7 +23,6 @@
      * [Center for Genomic Epidemiology](#center-for-genomic-epidemiology)
   * [Measuring Genomic Distance](#measuring-genomic-distance)
      *  [Mash](#mash)
-     *  [FastANI](#fastani)
      *  [Snippy](#snippy)
 * [Phylogenetics](#phylogenetics)
   * [Introduction and Terminology](#introduction-and-terminology)
@@ -270,8 +269,6 @@ One of the last concepts I want to bring up before jumping into phylogenetics is
 #### Mash
 
 
-
-#### FastANI
 
 #### Snippy 
 
