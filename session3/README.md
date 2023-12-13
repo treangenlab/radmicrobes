@@ -71,7 +71,7 @@ This led to John Snow being able to convince London authorities to remove the pu
 
 #### Exercise 1 - Using R
 
-While John Snow was certainly ahead of his time, had he known that a microorganism called *Vibrio cholerae* was responsible for this life-threatening diarrheal illness and that one could culture it using a nutrient rich medium (*e.g.*, lysogeny broth which hadn't been created yet), he may have been able to more definitively demonstrate that 'fool-air' was not the causative agent for cholera. Furthermore, had John Snow been familiar with serotyping via agglutination of antisera to type specific O-antigens, he may have found an interesting correlation between genotype and phenotype. The first exercise is designed to become familiar with using R and RStudio using [this R Markdown file](https://github.com/treangenlab/radmicrobes/blob/main/session3/Files/3.1_Snow_cholera_example.Rmd) and [this dataset](https://github.com/treangenlab/radmicrobes/blob/main/session3/Files/cholera_fictional_data.csv). We will be using: (1) the package **HistData**, which can be used to load the historical data collected from the 1854 London cholera epidemic; (2) generate epidemiological curves using fictional cholera attack/death data from a two year timeframe.
+While John Snow was certainly ahead of his time, had he known that a microorganism called *Vibrio cholerae* was responsible for this life-threatening diarrheal illness and that one could culture it using a nutrient rich medium (*e.g.*, lysogeny broth which hadn't been created yet), he may have been able to more definitively demonstrate that 'fool-air' was not the causative agent for cholera. Furthermore, had John Snow been familiar with serotyping via agglutination of antisera to type specific O-antigens, he may have found an interesting correlation between genotype and phenotype. The first exercise is designed to become familiar with using R and RStudio using [this R Markdown file](https://github.com/treangenlab/radmicrobes/blob/main/session3/RScripts/3.1_Snow_cholera_example.Rmd) and [this dataset](https://github.com/treangenlab/radmicrobes/blob/main/session3/Files/datasets/cholera_fictional_data.csv). We will be using: (1) the package **HistData**, which can be used to load the historical data collected from the 1854 London cholera epidemic; (2) generate epidemiological curves using fictional cholera attack/death data from a two year timeframe.
 
 ### Precision Public Health 
 
@@ -127,7 +127,7 @@ There are three primary databases for the curation of microbial typing schemes u
   - [BIGSdb-Pasteur](https://bigsdb.pasteur.fr/)
   - [Enterobase](https://enterobase.warwick.ac.uk/)
 
-Each of these databases curate specific genus/species combinations of taxa with a little overlap. For example, **Enterobase** is the primary repository for *Escherichia coli* typing information, however, **PubMLST** also hosts data from Enterobase. The underlying software that is used for both **PubMLST** and **BIGSdb-Pasteur** is the [Bacterial Isolate Genome Sequence database (BIGSdb)](https://pubmlst.org/software/bigsdb). Each of these databases host web interfaces for querying taxa schema, typing assembly input files, as well as performing other analyses. **PubMLST** also provides an [Application Programming Interface](https://bigsdb.readthedocs.io/en/latest/rest.html#db-isolates-search) that allows for scripting in specific queries based on the user's needs. We will use three examples to demonstrate the powerful utility of these databases using the PubMLST RESTful API tool. I also want to briefly go into each script to see if we can determine how the code works. 
+Each of these databases curate specific genus/species combinations of taxa with a little overlap. For example, **Enterobase** is the primary repository for *Escherichia coli* typing information, however, **PubMLST** also hosts data from Enterobase. The underlying software that is used for both **PubMLST** and **BIGSdb-Pasteur** is the [Bacterial Isolate Genome Sequence database (BIGSdb)](https://pubmlst.org/software/bigsdb). Each of these databases host web interfaces for querying taxa schema, typing assembly input files, as well as performing other analyses. **PubMLST** also provides an [Application Programming Interface](https://bigsdb.readthedocs.io/en/latest/rest.html#db-isolates-search) that allows for scripting in specific queries based on the user's needs. We will use three examples to demonstrate the powerful utility of these databases using the PubMLST RESTful API tool. I also want to briefly go into each script to see if we can determine how the code works.
 
 #### Example 1 - Species identification
 
@@ -271,9 +271,32 @@ One of the last concepts I want to bring up before jumping into phylogenetics is
 
 #### Mash
 
+[Mash](https://github.com/marbl/Mash) is a MinHash-based tool designed for genomics applications, offering a powerful approach to sequence comparison with minimal computational requirements. Mash leverages MinHash for constructing, manipulating, and comparing genomic data sketches, with applications ranging from genome assembly and 16S rDNA gene clustering to metagenomic sequence clustering. By introducing a novel significance test and the Mash distance metric, it distinguishes chance matches during database searches and estimates mutation rates between sequences directly from MinHash sketches. This distance metric allows for rapid computation from size-reduced sketches, offering accurate comparisons between large genomes and metagenomes. The tool supports various inputs, including whole genomes, metagenomes, nucleotide and amino acid sequences, or raw sequencing reads, making it versatile for diverse genomics applications. 
 
+There are a total of 11 *K. pneumoniae* assemblies that are available in the `./Files/assemblies` directory. I'm going to demonstrate how simple it is to create a all-to-all Mash estimated distance matrix. 
+
+```
+cd ./Files/assemblies
+
+# Create a reduced sketch file of all 11 assemblies that will be used to estimate distance
+mash sketch -o ./reference -s 100000 *.fasta
+
+# Do an all-vs-all estimate of distance across each of the 11 assemblies to create a distance matrix that correlates well with a Jaccard distance estimate using reference-based alignments
+mash dist ./reference.msh ./reference.msh -t > distances.tab
+
+# Borrowing a quick code snip-it from Ryan Wick's bacsort to format distance.tab into a PHYLIP formatted file
+tail -n +2 distances.tab > distances.tab.temp  # remove first line
+wc -l distances.tab.temp | awk '"[0-9]+ errors" {sum += $1}; END {print sum}' > distances.ndist  # get number for sample/line count
+cat distances.ndist distances.tab.temp > kpneumo.mash.phylip
+rm distances.ndist distances.tab.temp
+```
+
+[FastANI](https://github.com/ParBLiSS/FastANI) is another great heuristic for estimating Average Nucleotide Identity (ANI) in a population, for future reference. We will use the PHYLIP file in the following [Phylogenetics](#phylogenetics) section. 
 
 #### Snippy 
+
+During session two, Dr. Treangen went over variant calling in great detail. There are a plethora of variant calling pipelines available that have advantages and disadvantages based on read size, coverage depth, species, etc.. For a full review of how different variant calling pipelines perform, I suggest reading this [Bush et al. *GigaScience*](https://academic.oup.com/gigascience/article/9/2/giaa007/5728470) where the authors systematically tested over 200 variant calling pipelines. One of the highest performing pipelines is again from the ***Torstyverse*** called [Snippy](https://github.com/tseemann/snippy). Underneath the hood, it simply is a pipeline that utilizes a short-read alignment using `bwa mem` followed by variant calling using `FreeBayes`. It works incredibly well for multiple tasks, but in particular, it's a great, reproducible tool to create a clonal frame input to use for inferring evolutionary relationships with a phylogenetic tree. I have created a simple text file that goes through the steps to create the proper input for running the `snippy-multi` pipeline in the `./Files/phylogenetics` folder
+
 
 ## Phylogenetics
 
