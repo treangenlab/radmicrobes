@@ -273,7 +273,7 @@ One of the last concepts I want to bring up before jumping into phylogenetics is
 
 [Mash](https://github.com/marbl/Mash) is a MinHash-based tool designed for genomics applications, offering a powerful approach to sequence comparison with minimal computational requirements. Mash leverages MinHash for constructing, manipulating, and comparing genomic data sketches, with applications ranging from genome assembly and 16S rDNA gene clustering to metagenomic sequence clustering. By introducing a novel significance test and the Mash distance metric, it distinguishes chance matches during database searches and estimates mutation rates between sequences directly from MinHash sketches. This distance metric allows for rapid computation from size-reduced sketches, offering accurate comparisons between large genomes and metagenomes. The tool supports various inputs, including whole genomes, metagenomes, nucleotide and amino acid sequences, or raw sequencing reads, making it versatile for diverse genomics applications. 
 
-There are a total of 11 *K. pneumoniae* assemblies that are available in the `./Files/assemblies` directory. I'm going to demonstrate how simple it is to create a all-to-all Mash estimated distance matrix. 
+There are a total of 11 *K. pneumoniae* assemblies that are available in the `./Files/assemblies` directory. I'm going to demonstrate how simple it is to create an all-to-all Mash estimated distance matrix: 
 
 ```
 cd ./Files/assemblies
@@ -296,7 +296,6 @@ rm distances.ndist distances.tab.temp
 #### Snippy 
 
 During session two, Dr. Treangen went over variant calling in great detail. There are a plethora of variant calling pipelines available that have advantages and disadvantages based on a multitude of factors, many of which were described yesterday. For a full review of how different variant calling pipelines perform, I suggest reading this [Bush et al. *GigaScience*](https://academic.oup.com/gigascience/article/9/2/giaa007/5728470) study where the authors systematically tested over 200 variant calling pipelines. One of the highest performing pipelines is again from the ***Torstyverse*** called [Snippy](https://github.com/tseemann/snippy). Underneath the hood, it simply is a pipeline that utilizes a short-read alignment using `bwa mem` followed by variant calling using `FreeBayes`. It works incredibly well for multiple tasks, but in particular, it's a great, reproducible tool to create a clonal frame input to use for inferring evolutionary relationships with a phylogenetic tree. I have created a simple text file that goes through the steps to create the proper input for running the `snippy-multi` pipeline in the `./Files/phylogenetics` folder named `snippy-core-instructions.txt` in addition to a pre-generated `kpneumo.clean.full.aln`, which will be used for our phylogenetics analysis. 
-
 
 ## Phylogenetics
 
