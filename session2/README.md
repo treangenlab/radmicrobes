@@ -3,7 +3,7 @@ Microbial Reference Genomes, Variant Calling, and Multiple Genome Alignment
 <details>
  <summary>
   
-  ## Session Summary</summary>
+ # Session Summary</summary>
  <p></p>
 
  * Kick-off (Todd)
@@ -31,8 +31,9 @@ Microbial Reference Genomes, Variant Calling, and Multiple Genome Alignment
   
 </details>
 
-# Data Sources
-
+ <summary>
+  
+# Fantastic reference genomes and where to find them </summary>
 * NCBI
   * SRA 		 _[https://www\.ncbi\.nlm\.nih\.gov/sra](https://www.ncbi.nlm.nih.gov/sra)_
   * Taxonomy		 _[https://www\.ncbi\.nlm\.nih\.gov/taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy)_
@@ -42,7 +43,7 @@ Microbial Reference Genomes, Variant Calling, and Multiple Genome Alignment
 * Internal Sources
 * Other Sources
 
-# National Center for Biotechnology Information (NCBI)
+## National Center for Biotechnology Information (NCBI)
 
 _[https://www\.ncbi\.nlm\.nih\.gov/](https://www.ncbi.nlm.nih.gov/)_
 
@@ -64,7 +65,7 @@ __Comprehensive record of the sequence including annotations in genbank format__
 
 ![](img/genomedl4.png)
 
-# SARS-CoV-2 sequences currently available in GenBank and the Sequence Read Archive (SRA)
+## SARS-CoV-2 sequences currently available in GenBank and the Sequence Read Archive (SRA)
 
 Until Wed May 27 14:55:29 EDT 2020
 
@@ -78,7 +79,7 @@ _[https://www\.ncbi\.nlm\.nih\.gov/genbank/sars\-cov\-2\-seqs/](https://www.ncbi
 
 ![](img/genomedl5.png)
 
-# NCBI Advance Search Builder
+## NCBI Advance Search Builder
 
 ![](img/genomedl6.png)
 
@@ -88,7 +89,7 @@ Useful search terms including accession id\, bio project\, organism\, layout \(s
 
 Generating search string that can be used in Entrez API
 
-# Entrez Databases and Retrieval System
+## Entrez Databases and Retrieval System
 
 Available via  _[http://www\.ncbi\.nlm\.nih\.gov/Entrez/](http://www.ncbi.nlm.nih.gov/Entrez/)_
 
@@ -106,7 +107,7 @@ NCBI Entrez API allows advanced searches of records in multiple NCBI database as
 
 ![](img/genomedl8.png)
 
-# SRA Toolkit
+## SRA Toolkit
 
 * Entrez package can be used to retrieve small files
 * SRA Toolkit is required to download large read datasets  _[https://trace\.ncbi\.nlm\.nih\.gov/Traces/sra/sra\.cgi?view=software](https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=software)_
@@ -120,22 +121,22 @@ NCBI Entrez API allows advanced searches of records in multiple NCBI database as
     * 3rd file\, often small\, contains unpaired orphaned reads\, typically ignored\.
 
 
-# <a name="first">Microbial Reference Genomes, Variant Calling, and Multiple Genome Alignment</a>
+# <a name="first">Multiple Genome Alignment</a>
 ========
 
 This tutorial is to go over how to use Parsnp for multiple genome alignment (core). The first dataset is a MERS coronavirus outbreak dataset involving 49 isolates. The second dataset is a selected set of 31 Streptococcus pneumoniae genomes. For reference, both of these datasets should run on modestly equipped laptops in a few minutes or less.
 
-## <a name ="first">Installations</a> 
+## <a name ="first">Installation</a> 
 
-Have ParSNP installed. ParSNP can be run on macOS / linux  
+Have ParSNP installed. Parsnpcan be run on macOS / linux  
 
-1)Download & install ParSNP on MacOS
+1)Download & install Parsnp on MacOS
 
    `wget https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-OSX64-v1.2.tar.gz`  
    
    `tar -xvf parsnp-OSX64-v1.2.tar.gz`
   
-2)Download & install ParSNP on Linux
+2)Download & install Parsnp on Linux
 
    `wget https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-Linux64-v1.2.tar.gz`   
    
@@ -254,14 +255,16 @@ This last step requires you to download software and is to highlight the ability
     File->Open File
 
 
+ <summary>
 # Bespoke Strain-Level Analysis of Bacterial Genomes
+</summary>
 
-# Michael Nute
+## Michael Nute
 
 RAD Microbes 2023
 December 14th, 2023
 
-# Whole-Genome Alignment
+## Whole-Genome Alignment
 
 Idea: align specifically the  _shared \(“core”\)_  portion of several genomes\.
 
