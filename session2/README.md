@@ -1,4 +1,4 @@
-Microbial Reference Genomes, Variant Calling, and Multiple Genome Alignment
+# Microbial Reference Genomes, Variant Calling, and Multiple Genome Alignment
 
 <details>
  <summary>
