@@ -1,9 +1,129 @@
 Microbial Reference Genomes, Variant Calling, and Multiple Genome Alignment
 
+<details>
+ <summary>
+  
+  ## Session Summary</summary>
+ <p></p>
+
+ * Kick-off (Todd)
+   
+ * Fantastic reference genomes and where to find them (lecture, Todd + Natalie)
+ 
+   * RefSeq
+       
+   * GenBank
+  
+   * SRA
+
+* Multiple Genome Alignment (lecture + hands on, Mike + Todd)
+   * Core Genome Alignment
+
+   * Whole Genome Alignment 
+
+   * Running Parsnp 
+ 
+   * Visualization with Gingr
+     
+* Strain-level analyses (lecture, Mike)
+  
+* Mapping reads to reference genomes for variant calling (lecture, Daniel)
+  
+</details>
+
+# Data Sources
+
+* NCBI
+  * SRA 		 _[https://www\.ncbi\.nlm\.nih\.gov/sra](https://www.ncbi.nlm.nih.gov/sra)_
+  * Taxonomy		 _[https://www\.ncbi\.nlm\.nih\.gov/taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy)_
+  * RefSeq		 _[https://www\.ncbi\.nlm\.nih\.gov/refseq/](https://www.ncbi.nlm.nih.gov/refseq/)_
+* GISAID
+  * EpiCoV		 _[https://www\.gisaid\.org/](https://www.gisaid.org/)_
+* Internal Sources
+* Other Sources
+
+# National Center for Biotechnology Information (NCBI)
+
+_[https://www\.ncbi\.nlm\.nih\.gov/](https://www.ncbi.nlm.nih.gov/)_
+
+![](img/genomedl0.png)
+
+__Sequence of the reference genome in fasta format__
+
+__Gene annotation file in GFF3 format__
+
+__Comprehensive record of the sequence including annotations in genbank format__
+
+![](img/genomedl1.png)
+
+![](img/genomedl2.png)
+
+![](img/genomedl3.png)
+
+<span style="color:#FF0000"> __Formatted search string__ </span>
+
+![](img/genomedl4.png)
+
+# SARS-CoV-2 sequences currently available in GenBank and the Sequence Read Archive (SRA)
+
+Until Wed May 27 14:55:29 EDT 2020
+
+4\,735 GenBank sequences
+
+1 RefSeq sequence
+
+6\,486 SRA Sequences
+
+_[https://www\.ncbi\.nlm\.nih\.gov/genbank/sars\-cov\-2\-seqs/](https://www.ncbi.nlm.nih.gov/genbank/sars-cov-2-seqs/)_
+
+![](img/genomedl5.png)
+
+# NCBI Advance Search Builder
+
+![](img/genomedl6.png)
+
+Refine your search by using Boolean operations
+
+Useful search terms including accession id\, bio project\, organism\, layout \(single vs paired\)\, publication date\, source \(WGS\, Amplicon\, metatranscriptomic\, etc\.\)\, platform \(Illumina vs Nanopore\)\, etc\.
+
+Generating search string that can be used in Entrez API
+
+# Entrez Databases and Retrieval System
+
+Available via  _[http://www\.ncbi\.nlm\.nih\.gov/Entrez/](http://www.ncbi.nlm.nih.gov/Entrez/)_
+
+A part of Biopython package  _[http://biopython\.org/DIST/docs/tutorial/Tutorial\.html](http://biopython.org/DIST/docs/tutorial/Tutorial.html)_
+
+Entrez Programming Utilities Help  _[https://www\.ncbi\.nlm\.nih\.gov/books/NBK25501/](https://www.ncbi.nlm.nih.gov/books/NBK25501/)_
+
+Always tell NCBI who you are by setting  _Entrez\.email _ parameter
+
+NCBI Entrez API allows advanced searches of records in multiple NCBI database as well as retrieving metadata for the records
+
+3 requests per second without an API key\, or 10 requests per second with an API key \(registered account strongly recommended\)
+
+![](img/genomedl7.png)
+
+![](img/genomedl8.png)
+
+# SRA Toolkit
+
+* Entrez package can be used to retrieve small files
+* SRA Toolkit is required to download large read datasets  _[https://trace\.ncbi\.nlm\.nih\.gov/Traces/sra/sra\.cgi?view=software](https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=software)_
+  * prefetch
+    * prefetch \[options\] \<SRA accession>
+  * fastq\-dump
+    * fastq\-dump \[options\] \< accession >
+  * \-\-split\-3 flag or \-\-split\-files must be set\, split spots into individual reads\. With \-\-split\-3 flag\, output would be 1\,2\, or 3 files\.
+    * 1 file means the data is not paired\.
+    * 2 file means the reads are paired\-end reads\.
+    * 3rd file\, often small\, contains unpaired orphaned reads\, typically ignored\.
+
+
 # <a name="first">Microbial Reference Genomes, Variant Calling, and Multiple Genome Alignment</a>
 ========
 
-This tutorial is to go over how to use ParSNP for multiple genome alignment (core). The first dataset is a MERS coronavirus outbreak dataset involving 49 isolates. The second dataset is a selected set of 31 Streptococcus pneumoniae genomes. For reference, both of these datasets should run on modestly equipped laptops in a few minutes or less.
+This tutorial is to go over how to use Parsnp for multiple genome alignment (core). The first dataset is a MERS coronavirus outbreak dataset involving 49 isolates. The second dataset is a selected set of 31 Streptococcus pneumoniae genomes. For reference, both of these datasets should run on modestly equipped laptops in a few minutes or less.
 
 ## <a name ="first">Installations</a> 
 
