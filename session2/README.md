@@ -128,7 +128,7 @@ NCBI Entrez API allows advanced searches of records in multiple NCBI database as
  <details>
  <summary>
   
-# Bespoke Strain-Level Analysis of Bacterial Genomes
+## Bespoke Strain-Level Analysis of Bacterial Genomes
  
 </summary>
 
@@ -137,7 +137,7 @@ NCBI Entrez API allows advanced searches of records in multiple NCBI database as
 RAD Microbes 2023
 December 14th, 2023
 
-## Whole-Genome Alignment
+### Whole-Genome Alignment
 
 Idea: align specifically the  _shared \(“core”\)_  portion of several genomes\.
 
@@ -157,7 +157,7 @@ SibeliaZ
 
 ![](img/Bespoke_StrainLevel_Comparative_Genomics_20230.png)
 
-# Whole Genome Alignment: Quick How-To with Parsnp
+#### Whole Genome Alignment: Quick How-To with Parsnp
 
 * Get  _assembled_  genomes from individual organisms
   * Isolates are nice\, MAGs will do
@@ -181,7 +181,7 @@ Assembly Quality Issues?
 
 Issues with Reference?
 
-# Interlude: QC-ing an Assembly with QUAST
+### Interlude: QC-ing an Assembly with QUAST
 
 ![](img/Bespoke_StrainLevel_Comparative_Genomics_20231.png)
 
@@ -189,7 +189,7 @@ Issues with Reference?
 
 ![](img/Bespoke_StrainLevel_Comparative_Genomics_20233.png)
 
-# Case-Study: C. difficile Genomes
+### Case-Study: C. difficile Genomes
 
 Gingr Data Visualization:
 
@@ -203,9 +203,9 @@ WGA of 720 assembled C\. difficile genomes
 
 Spot the strains…
 
-# Case-Study: C. difficile Genomes (excluding RT078 samples)
+### Case-Study: C. difficile Genomes (excluding RT078 samples)
 
-# Subset of Genomes w/ST annotation
+### Subset of Genomes w/ST annotation
 
 ![](img/Bespoke_StrainLevel_Comparative_Genomics_20234.wmf)
 
@@ -213,7 +213,7 @@ __Q__ : What makes RT027 different?
 
 __A__ : Pockets of heavy mutation
 
-# Digging Deeper…
+#### Digging Deeper…
 
 _This particular region is precisely the coding locus for Toxin B\. _
 
@@ -227,7 +227,7 @@ _Gene: _  _tcdB_  _ \(toxin B\)_
 
 ![](img/Bespoke_StrainLevel_Comparative_Genomics_20236.png)
 
-# Comparing Reference Genomes for Some Strains
+#### Comparing Reference Genomes for Some Strains
 
 _Note_  _: RT027 is in the top row\. CD630 is a lab strain used as a common reference\._
 
@@ -245,11 +245,11 @@ __Segment 2 __
 
 _Here the mutation pockets are much clearer\._
 
-# Digging Deeper Again…
+#### Digging Deeper Again…
 
 ![](img/Bespoke_StrainLevel_Comparative_Genomics_20239.png)
 
-# Comparing Location of Homologous Genes
+### Comparing Location of Homologous Genes
 
 * Scatter Plot
   * Each point shows position in genome for CD630 & RT027\, for a single shared gene
@@ -263,11 +263,11 @@ _Here the mutation pockets are much clearer\._
 
 _For C\. diff\, even across a huge number of isolates\, very little rearrangement shows up \(outliers here are reference genomes with single contig\, likely a different starting point _  _on the circular genome\._  _\)_
 
-# Synteny Comparison: C. difficile Isolates
+### Synteny Comparison: C. difficile Isolates
 
 ![](img/Bespoke_StrainLevel_Comparative_Genomics_202311.png)
 
-# Alignment of RT027 isolates (and near relatives) to RT027 ref.
+### Alignment of RT027 isolates (and near relatives) to RT027 ref.
 
 ![](img/Bespoke_StrainLevel_Comparative_Genomics_202312.png)
 
@@ -277,7 +277,7 @@ _…Yes_
 
 _Very little to see\, very high match level with all RT027 isolates except 3\. _
 
-# Another Case Study: R. gnavus Isolates from IBD Patients
+### Another Case Study: R. gnavus Isolates from IBD Patients
 
 __14 Genomes:__
 
@@ -301,7 +301,7 @@ _Game 1 : Spot the 2 Genomes from Infant Stool \(non\-IBD\)_
 
 ![](img/Bespoke_StrainLevel_Comparative_Genomics_202316.png)
 
-# R. gnavus strain-level phylogenetic signal is a mess
+### R. gnavus strain-level phylogenetic signal is a mess
 
 ![](img/Bespoke_StrainLevel_Comparative_Genomics_202317.png)
 
@@ -309,13 +309,13 @@ _Game 1 : Spot the 2 Genomes from Infant Stool \(non\-IBD\)_
 
 _These two organisms have very different types of genome plasticity\._
 
-# Synteny Comparison: R. gnavus & C. difficile
+### Synteny Comparison: R. gnavus & C. difficile
 
 ![](img/Bespoke_StrainLevel_Comparative_Genomics_202319.png)
 
 ![](img/Bespoke_StrainLevel_Comparative_Genomics_202320.png)
 
-# Conclusions
+## Conclusions
 
 * _Special Thanks To:_
 * The Treangen Lab \(Rice\)
