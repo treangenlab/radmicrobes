@@ -3,7 +3,7 @@ Microbial Reference Genomes, Variant Calling, and Multiple Genome Alignment
 <details>
  <summary>
   
- # Session Summary</summary>
+ ## Session Summary</summary>
  <p></p>
 
  * Kick-off (Todd)
@@ -25,15 +25,16 @@ Microbial Reference Genomes, Variant Calling, and Multiple Genome Alignment
  
    * Visualization with Gingr
      
-* Strain-level analyses (lecture, Mike)
+* Bespoke Strain-level analyses (lecture, Mike)
   
 * Mapping reads to reference genomes for variant calling (lecture, Daniel)
   
 </details>
 
  <summary>
-  
-# Fantastic reference genomes and where to find them </summary>
+ <details>
+ 
+## Fantastic reference genomes and where to find them </summary>
 * NCBI
   * SRA 		 _[https://www\.ncbi\.nlm\.nih\.gov/sra](https://www.ncbi.nlm.nih.gov/sra)_
   * Taxonomy		 _[https://www\.ncbi\.nlm\.nih\.gov/taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy)_
@@ -43,7 +44,7 @@ Microbial Reference Genomes, Variant Calling, and Multiple Genome Alignment
 * Internal Sources
 * Other Sources
 
-## National Center for Biotechnology Information (NCBI)
+### National Center for Biotechnology Information (NCBI)
 
 _[https://www\.ncbi\.nlm\.nih\.gov/](https://www.ncbi.nlm.nih.gov/)_
 
@@ -65,7 +66,7 @@ __Comprehensive record of the sequence including annotations in genbank format__
 
 ![](img/genomedl4.png)
 
-## SARS-CoV-2 sequences currently available in GenBank and the Sequence Read Archive (SRA)
+### SARS-CoV-2 sequences currently available in GenBank and the Sequence Read Archive (SRA)
 
 Until Wed May 27 14:55:29 EDT 2020
 
@@ -79,7 +80,7 @@ _[https://www\.ncbi\.nlm\.nih\.gov/genbank/sars\-cov\-2\-seqs/](https://www.ncbi
 
 ![](img/genomedl5.png)
 
-## NCBI Advance Search Builder
+### NCBI Advance Search Builder
 
 ![](img/genomedl6.png)
 
@@ -89,7 +90,7 @@ Useful search terms including accession id\, bio project\, organism\, layout \(s
 
 Generating search string that can be used in Entrez API
 
-## Entrez Databases and Retrieval System
+### Entrez Databases and Retrieval System
 
 Available via  _[http://www\.ncbi\.nlm\.nih\.gov/Entrez/](http://www.ncbi.nlm.nih.gov/Entrez/)_
 
@@ -107,7 +108,7 @@ NCBI Entrez API allows advanced searches of records in multiple NCBI database as
 
 ![](img/genomedl8.png)
 
-## SRA Toolkit
+### SRA Toolkit
 
 * Entrez package can be used to retrieve small files
 * SRA Toolkit is required to download large read datasets  _[https://trace\.ncbi\.nlm\.nih\.gov/Traces/sra/sra\.cgi?view=software](https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=software)_
@@ -120,6 +121,7 @@ NCBI Entrez API allows advanced searches of records in multiple NCBI database as
     * 2 file means the reads are paired\-end reads\.
     * 3rd file\, often small\, contains unpaired orphaned reads\, typically ignored\.
 
+</details>
 
 # <a name="first">Multiple Genome Alignment</a>
 ========
