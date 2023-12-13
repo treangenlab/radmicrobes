@@ -132,3 +132,234 @@ This last step requires you to download software and is to highlight the ability
     * Load MFA file:
 
     File->Open File
+
+
+# Bespoke Strain-Level Analysis of Bacterial Genomes
+
+# Michael Nute
+
+RAD Microbes 2023
+December 14th, 2023
+
+# Whole-Genome Alignment
+
+Idea: align specifically the  _shared \(“core”\)_  portion of several genomes\.
+
+Use these aligned segments to identify phylogenetic relationships\, etc…
+
+Visualize what exactly is similar and different…
+
+_Tools:_
+
+Parsnp
+
+Mauve
+
+SibeliaZ
+
+\(others…\)
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_20230.png)
+
+# Whole Genome Alignment: Quick How-To with Parsnp
+
+* Get  _assembled_  genomes from individual organisms
+  * Isolates are nice\, MAGs will do
+  * Contigs are fine for this\, doesn’t have to be complete
+  * Helps to have at least 1 high\-quality\, annotated reference genome
+  * Useful to run QUAST to QC the assembly
+* Run Parsnp:
+
+  * contig\_repo=\./parsnp\_contigs
+  * parsnp\_out=\./parsnp\_output\_13
+  * ref\_genbank=\./ref\_assembly\_GCF\_008121495/Ref\_ATCC\_29149\.gbff
+  * parsnp \-g $ref\_genbank \-d $contig\_repo \-p 15 \-o $parsnp\_out
+
+_Annotated Reference Genome \(\._  _gbff_  _ format\)_
+
+_Folder with 1 _  _fasta_  _ file for each assembly \(containing all contigs\)_
+
+__What can we learn?__
+
+Assembly Quality Issues?
+
+Issues with Reference?
+
+# Interlude: QC-ing an Assembly with QUAST
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_20231.png)
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_20232.png)
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_20233.png)
+
+# Case-Study: C. difficile Genomes
+
+Gingr Data Visualization:
+
+Color = % mutation compared to reference
+
+_RT078 – Originated in animal host\, crossed over_
+
+_RT027 – Known hypervirulent strain\. More recurrent\, nastier patient outcomes\._
+
+WGA of 720 assembled C\. difficile genomes
+
+Spot the strains…
+
+# Case-Study: C. difficile Genomes (excluding RT078 samples)
+
+# Subset of Genomes w/ST annotation
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_20234.wmf)
+
+__Q__ : What makes RT027 different?
+
+__A__ : Pockets of heavy mutation
+
+# Digging Deeper…
+
+_This particular region is precisely the coding locus for Toxin B\. _
+
+_RT027 carries a variant _  _tcdB_  _ gene with altered function that contributes to its virulence\._
+
+_Note_  _: not all of the _  _tcdB_  _ gene was aligned by Parsnp\, so this table represents the aligned length \(5\,103bp\) vs total \(7\,101bp\)\._
+
+_Gene: _  _tcdB_  _ \(toxin B\)_
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_20235.png)
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_20236.png)
+
+# Comparing Reference Genomes for Some Strains
+
+_Note_  _: RT027 is in the top row\. CD630 is a lab strain used as a common reference\._
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_20237.png)
+
+__Segment 1 __
+
+\(positions 0\-2mbp\)
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_20238.png)
+
+__Segment 2 __
+
+\(positions 2\-4mbp\)
+
+_Here the mutation pockets are much clearer\._
+
+# Digging Deeper Again…
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_20239.png)
+
+# Comparing Location of Homologous Genes
+
+* Scatter Plot
+  * Each point shows position in genome for CD630 & RT027\, for a single shared gene
+  * Color indicates %\-AA\-similarity
+* Despite differences\, genomes are highly colinear
+  * Many short indels throughout
+  * No major rearrangements except a few small segments\.
+  * Small rearrangements coincide with locations of high\-mutation
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_202310.wmf)
+
+_For C\. diff\, even across a huge number of isolates\, very little rearrangement shows up \(outliers here are reference genomes with single contig\, likely a different starting point _  _on the circular genome\._  _\)_
+
+# Synteny Comparison: C. difficile Isolates
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_202311.png)
+
+# Alignment of RT027 isolates (and near relatives) to RT027 ref.
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_202312.png)
+
+_Does the RT027 Reference match the genomes from the clinic?_
+
+_…Yes_
+
+_Very little to see\, very high match level with all RT027 isolates except 3\. _
+
+# Another Case Study: R. gnavus Isolates from IBD Patients
+
+__14 Genomes:__
+
+Reference: ATCC 29149 \(RefSeq GCF\_008121495\)
+
+ATCC 29149  _de novo _ assembly \(by me\)
+
+ATCC 35913 \(GenBank GCA\_900036035\)
+
+12 Genomes from Hall et al\. \(2017\) \(table at right\)
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_202313.wmf)
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_202314.png)
+
+_Game 2 : Spot the 2_  _nd_  _ ATCC 29149 gnome \(supposedly the same as the reference\)_
+
+_Game 1 : Spot the 2 Genomes from Infant Stool \(non\-IBD\)_
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_202315.png)
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_202316.png)
+
+# R. gnavus strain-level phylogenetic signal is a mess
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_202317.png)
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_202318.png)
+
+_These two organisms have very different types of genome plasticity\._
+
+# Synteny Comparison: R. gnavus & C. difficile
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_202319.png)
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_202320.png)
+
+# Conclusions
+
+* _Special Thanks To:_
+* The Treangen Lab \(Rice\)
+  * Todd Treangen
+  * Bryce Killie
+  * Kristen Curry
+  * Nick Sapoval
+  * Yunxi Liu
+  * Yilei Fu
+  * Advait Balaji
+* The Savidge Lab \(Baylor College of Medicine\)
+  * Qinglong Wu
+  * Charlie Seto
+* Taylor Reiter \(for the  _R\. _  _gnavus_  idea\)
+
+* Whole\-genome alignment will give a detailed comparison specifically of the  _core_  genome
+  * Maybe also auxiliary genes \( _pan_ \-genome\)
+* Visualization can get you up close and personal with the data
+  * \(This statement applies to almost everything\, not just genomes\)
+* Strains can differ from one another in weird ways\.
+  * Selective mutation at points of interest
+  * Gene gain/loss depending on environment
+  * Genome\-wide phylogenetic signal vs\. Locus\-specific signal
+  * Etc…?
+
+# Appendix: Quick How-to with Gingr (1 of 2)
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_202321.png)
+
+_1\.\) Open the \*\._  _ggr_  _ file created in the _  _parsnp_  _ output folder\._
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_202322.png)
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_202323.png)
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_202324.png)
+
+_2\.\) Once it is open\, go back to the “Open” dialogue and open the \*\.tree file in the same folder\._
+
+![](img/Bespoke_StrainLevel_Comparative_Genomics_202325.png)
+
+_3\.\) This will give you the standard _  _Gingr_  _ view\. Other options to re\-root the tree or to switch to Synteny view are available under the “Tree” and “View” menus\._
+
