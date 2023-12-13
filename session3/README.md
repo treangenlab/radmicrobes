@@ -301,6 +301,8 @@ During session two, Dr. Treangen went over variant calling in great detail. Ther
 
 ### Introduction and Terminology 
 
+Phylogenetics is simply put a catch-all term to infer evolutionary relationships using some form of distance measurement to infer the evolutionary history within a population. The field of bacterial phylogenetics employs molecular data, often derived from nucleic acids or proteins, to construct evolutionary trees that depict the genetic relatedness and divergence patterns among bacterial species or strains. 
+
 #### Dissecting a Tree
 
 #### Maximum Parsimony vs. Maximum Likelihood
