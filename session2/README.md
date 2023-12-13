@@ -43,7 +43,7 @@
  <details>
  <summary> 
   
-## Fantastic reference genomes and where to find them (lectures + hands on, Todd) </summary>
+## Fantastic reference genomes and where to find them (lecture + hands-on) </summary>
 * NCBI
   * SRA 		 _[https://www\.ncbi\.nlm\.nih\.gov/sra](https://www.ncbi.nlm.nih.gov/sra)_
   * Taxonomy		 _[https://www\.ncbi\.nlm\.nih\.gov/taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy)_
@@ -137,7 +137,7 @@ NCBI Entrez API allows advanced searches of records in multiple NCBI database as
  <details>
  <summary>
   
-## Bespoke Strain-Level Analysis of Bacterial Genomes (lecture, Mike)
+## Bespoke Strain-Level Analysis of Bacterial Genomes (lecture)
  
 </summary>
 
@@ -373,7 +373,7 @@ _3\.\) This will give you the standard _  _Gingr_  _ view\. Other options to re\
 <details>
  <summary>
   
- ## Multiple Genome Alignment (hands-on, Mike and Natalie) </summary>
+ ## Multiple Genome Alignment (hands-on) </summary>
  <p></p>
 ========
 
