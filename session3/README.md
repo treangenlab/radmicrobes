@@ -186,7 +186,7 @@ NC_008024.fna  spyogenes  -    gki(5)   gtr(11)  murI(8)   mutS(5)  recP(15?)  x
 NC_017040.fna  spyogenes  172  gki(56)  gtr(24)  murI(39)  mutS(7)  recP(30)   xpt(2)   yqiL(33)
 ```
 
-The only required argument is a FASTA/GenBank/E formatted assembly or assemblies. There are 144 schemas preloaded with the current version of mlst as of 2023-12-12, `mlst-v2.23.0`. Given that this release was over two years ago, it would be prudent to upbdate the pubmlst databases with the following companion script available in the mlst package. This takes awhile, so I would suggest executing this command at a later time:  
+The only required argument is a FASTA/GenBank/E formatted assembly or assemblies. There are 144 schemas preloaded with the current version of mlst as of 2023-12-12, `mlst-v2.23.0`. Given that this release was over two years ago, it would be prudent to upbdate the pubmlst databases with the following companion script available in the mlst package. This takes awhile, so I would suggest executing this command at a later time. Also note that your database pathway will be different from mine. 
 
 ```
 mlst-download_pub_mlst -d /opt/homebrew/Caskroom/miniforge/base/envs/radgenomics/db/pubmlst -j 2
@@ -207,27 +207,63 @@ When it comes to strain-level analysis, we are typically interested in genomic f
   - [ABRicate](https://github.com/tseemann/abricate)
   - [ResFinder](https://cge.food.dtu.dk/services/ResFinder/)
 
-AMRFinderPlus has become one of my favorite tools for the identification of AMR genes using bacterial genome assemblies. Hosted through the National Center for Biotechnology Information (NCBI), AMRFinderPlus provides additional context to AMR that many previous AMR detection tools lacked. For example, in addition to detecting AMR genes that may be acquired through horizontal gene transfer (HGT), AMRFinderPlus allows for the detection of species specific point mutations conferring resistance as well as the option of detecting stress response and virulence genes associated with particular organisms. Importantly, this program and corresponding databases are updated consistently through NCBI. 
+[AMRFinderPlus](https://github.com/ncbi/amr) has become one of my favorite tools for the identification of AMR genes using bacterial genome assemblies. Hosted through the National Center for Biotechnology Information (NCBI), AMRFinderPlus provides additional context to AMR that many previous AMR detection tools lacked. For example, in addition to detecting AMR genes that may be acquired through horizontal gene transfer (HGT), AMRFinderPlus allows for the detection of species specific point mutations conferring resistance as well as the option of detecting stress response and virulence genes associated with particular organisms. Importantly, this program and corresponding databases are updated consistently through NCBI. 
 
-We are again going to use ARLG-3179 and ARLG-3180 assemblies as examples with `prokka-v1.14.5` annotated files as input (*N.B.*, Dr. Baptista will go through annotation and output files in the following section in more detail). One of the first good practice steps after setting up AMRFinderPlus is to update the database as NCBI regularly provides updates in between AMRFinderPlus releases:
+We are again going to use ARLG-3179 and ARLG-3180 assemblies as examples with `prokka-v1.14.5` annotated files as input (*N.B.*, Dr. Baptista will go through annotation and output files in the following section in more detail. One of the first good practice steps after setting up AMRFinderPlus is to update the database as NCBI regularly provides updates in between AMRFinderPlus releases:
 
-`
+```
 amrfinder --update
-`
+```
 
-The command line parameters to include AMR encoding genes, point mutations, and stress/virulence factors associated with *K. pneumoniae* look like this:
+To see if your organism of interest is available to characterize species specific AMR point mutations, stress response, and virulence factors, you can list out organisms as such: 
 
-`
-for file in $(cat assembly_list.tsv);do amrfinder -p 
-`
+```
+amrfinder --list_organisms
+```
+
+From the standard output, one can see that *Klebsiella_pneumoniae* is included as an available organism. In order to properly run AMRFinderPlus with the plus functions, you need to include a nucleotide file (.fna), a protein file (.faa), a gff file (.gff), and specify the organism, `-O`. Additionally set the `--plus` flag as well as the annotation format `-a` which is `prokka` for this case. Here is an example of code you can run with each parameter looping through our two assemblies in their respective prokka directories:
+
+```
+for file in $(cat assembly_list.tsv);do amrfinder -p assemblies/${file}*_dir/${file}*.faa -g assemblies/${file}*_dir/${file}*.gff -n assemblies/${file}*_dir/${file}*.fna -a prokka --plus -O Klebsiella_pneumoniae --threads 2 -o ./../Analysis/${file}_AMRFinderPlus.tsv;done
+
+cd ./../Analysis
+head ARLG-3179_AMRFinderPlus.tsv
+```
+
+Let's go through the output to see what we can deduce from these two organisms. 
 
 #### Kleborate
 
+There are many *ad hoc* tools available to do analysis on your favorite organism of interest. [Kleborate](https://github.com/klebgenomics/Kleborate) has become a 'go-to' resource for *Klebsiella* genomics. Developed by the [Kat Holt lab](https://holtlab.net/), this python-based tool provides a wealth of information in addition to what AMRFinderPlus outputs, including assembly quality control (QC), MLST, AMR and virulence composite scores, and 'K' and 'O'-locus serotyping prediction using [Kaptive](https://github.com/klebgenomics/Kaptive). Let's run `kleborate-v2.3.2` with the `--all` parameter, which includes both resistance and serotyping prediction:
+
+```
+cd ./../Files
+for file in $(cat assembly_list.tsv);do kleborate --all -a ./assemblies/${file}*dir/*${file}*.fna -o ./../Analysis/${file}_kleborate.tsv;done
+cd ./../Analysis
+
+```
+
+Let's explore through some of the output and compare to the AMRFinderPlus output. 
+
 #### Center for Genomic Epidemiology
+
+As mentioned, this is not an exhaustive list of strain-level analysis tools by any means. One great repository of tools is hosted through the Technical University of Denmark called [Center for Genomic Epidemiology](https://www.genomicepidemiology.org). We do not have time to go over all tools available, but they do have some great tools from simple typing schemes such as plasmid typing [*e.g.*, PlasmidFinder](https://cge.food.dtu.dk/services/PlasmidFinder/) or full blown workflows such as phylogenetic analysis using [MinTyper](https://cge.food.dtu.dk/services/MINTyper/). One tool I have found invaluable is [KmerResistance](https://cge.food.dtu.dk/services/KmerResistance/). KmerResistance uses **k-mer alignment (KMA)** of short- or long-reads against redundant databases. Using a 'ConClave' sorting algorithm for non-unique matches, `kmerresistance` can identify with good sensitivity/specificity orthologous genes that may not elsewise be resolved in short-read assemblies where similar genes often get collapsed into a consensus. I like this tool so much, that I've incorporated it into my own tool that estimates copy number variants called [convict](https://github.com/wshropshire/convict). Instructions for installation are [here](https://bitbucket.org/genomicepidemiology/kma/src/master/), but I've set up `kmerresistance` to work in this conda environment. Let's quickly run through kmerresistance, using the ARLG-4673 short-read fastq files we used from session one. Note that you'll have to change the absolute pathways for each respective database based on where your radgenomics environment is located. 
+
+`
+kmerresistance -i ARLG-4673_R1.fastq.gz ARLG-4673_R2.fastq.gz -o ARLG-4673_kmerresistance -s_db /opt/homebrew/Caskroom/miniforge/base/envs/radgenomics/db/kma_databases/bacteria.ATG -t_db /opt/homebrew/Caskroom/miniforge/base/envs/radgenomics/db/kma_databases/resfinder_db
+`
+
+With short reads alone, this output indicates the likely organism (*i.e.*, *K. pneumoniae*) in addition to the AMR profile. Importantly, like many database tools that use some form of an alignment-based detection algorithm, you can use this tool with your own bespoke database to search for any genomic signature of your interest. 
+
+While non-exhaustive, I hope that these strain-level analysis tools serve as a good starting point for those of you who are getting started in genomic epidemiology analyses. 
 
 ### Measuring Genomic Distance
 
+One of the last concepts I want to bring up before jumping into phylogenetics is how we measure genetic distances across populations. There are many ways we can estimate genetic distance based on a comparison of genetic relatedness amongst two or more samples. Yesterday, we discussed variant calling against a reference. Estimating distance based on variant calls is perhaps the most powerful means to compare multiple sequences to then infer genetic distance. I want to close this section by going over some genetic distance heuristics, that are very helpful in estimating relatedness within a population in a computationally short amount of time with very low computational resources required. 
+
 #### Mash
+
+
 
 #### FastANI
 
