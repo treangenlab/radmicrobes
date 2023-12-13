@@ -8,14 +8,22 @@
 * [Traditional 'OG' Epidemiology](#traditional-og-epidemiology)
   * [Precision Public Health](#precision-public-health)
      * [Case Study 1 - Salmonellosis Outbreak](#case-study-1---salmonellosis-outbreak)
-     * [Case Study 2 - Cephalosporin Resistant Escherichia coli Surveillance](#case-study-2---cephalosporin-resistant-escherichia-coli-surveillance)
-* [Strain Level Analysis](#strain-level-analysis)
+     * [Case Study 2 - Cephalosporin Resistant *Escherichia coli* Surveillance](#case-study-2---cephalosporin-resistant-escherichia-coli-surveillance)
+* [Strain-Level Analysis](#strain-level-analysis)
   * [Genotyping - Measures of Genetic Relatedness](#genotyping---measures-of-genetic-relatedness)
-  * [Databases and Query-based Tools](#databases-and-query-based-tools)
-   * [Databases](#databases)
+   * [Working with Databases](#databases)
      * [Example 1 - Species Identification](#example-1---species-identification)
-     * [Example 2 - Multilocus sequence typing](#example-2---multilocus-sequence-typing) 
-   * [MLST](#mlst) 
+     * [Example 2 - Multilocus sequence typing](#example-2---multilocus-sequence-typing)
+     * [Example 3 - Downloading schemes](#example-3---downloading-schemes)
+   * [Strain-level Analysis Tools](#strain-level-analysis-tools)
+     * [MLST](#mlst)
+     * [AMRFinderPlus](#amrfinderplus)
+     * [Kleborate](#kleborate)
+     * [Center for Genomic Epidemiology](#center-for-genomic-epidemiology)
+   * [Measuring Genomic Distance](#measuring-genomic-distance)
+     *  [Mash](#mash)
+     *  [FastANI](#fastani)
+     *  [Snippy](#snippy)
 * [Phylogenetics](#phylogenetics)
   * [Introduction and Terminology](#introduction-and-terminology)  
 * [Tips](#tips)
@@ -90,7 +98,7 @@ Where ESC-S = extended-spectrum cephalosporin susceptible, ESC-R = extended spec
 
 Panels A and B show proportion and absolute frequency for isolates sequenced over time by phylogroup, a molecular typing based on a quadraplex PCR schema whereas panels C and D show proportion and absolute frequency for multi-locus sequence typing (MLST), which is based on a PCR schema that includes typically 7-8 housekeeping genes and provides additional resolution. Are there any patterns that you observe from both figures?
 
-## Strain Level Analysis
+## Strain-Level Analysis
 
 ### Genotyping - Measures of Genetic Relatedness
 
@@ -102,8 +110,6 @@ As alluded to in the previous section, we can achieve increasing levels of genet
 </p>
 
 Multi-locus sequence typing (MLST) is based on a PCR assay that would identify 7-8 single copy, housekeeping genes omnipresent in a particular species. Typically, these schema correlate well with phenotype/serotype of the organism, however, there is certainly less than ideal one-to-one correlations. Core genome MLST consists of identifying a set of genes found in nearly all organisms of a specific taxa whereas whole genome MLST includes accessory genome content which includes the union of all genes found within a particular group. cgMLST and wgMLST schema are very complex and only well curated for a handful of organisms such as *E. coli*. We will now be going through the databases responsible for curating bacterial typing schemes as well as some tools we can use to perform *in silico* typing of bacterial WGS data. 
-
-## Databases and Query-based Tools
 
 ### Databases
 
@@ -136,10 +142,10 @@ Given that said colleague is Dr. Hanson, who had told us previously that we were
 Now that you have successfully identified these isolates as *K. pneumoniae*, you want to quickly check what sequence type these isolates belong to using their assembly files. As mentioned before, *in silico* multilocus sequence typing (MLST) is based on a simple PCR assay where you target 7-8 single copy housekeeping genes within a bacterial chromosome that is typically species specific. Many schema are available in the aforementioned databases. Fortunately, with some simple understanding of the key:value dictionary structure of the [JSON file format](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON), we can modify Dr. Keith Jolley's Python script to do ```curl``` API calls using the *K. pneumoniae* MLST schema:
 
 ```
-python3 ./kpneumoniae_mlst_api_upload.py -f ARLG-3180_consensus_assembly.fasta
+python3 ./kpneumoniae_mlst_api_upload.py -f ./ARLG-3180_consensus_assembly.fasta
 ```
 
-We can see based on the stdout that we have exact matches for ARLG3179 (ST258) and ARLG3180 (ST307), which corresponds to the two most commonly detected *K. pneumoniae* sequence types that were circulating in Houston, TX from 2016 to 2017. For those scared of the commandline (**which you shouldn't be!!!**), I will now demonstrate how we could upload a fasta file to [BIGSdb-Pasteur](https://bigsdb.pasteur.fr/) to determine the sequence type of the organism. 
+We can see based on the stdout that we have exact matches for ARLG-3179 (ST258) and ARLG-3180 (ST307), which corresponds to the two most commonly detected *K. pneumoniae* sequence types that were circulating in Houston, TX from 2016 to 2017. For those scared of the commandline (**which you shouldn't be!!!**), I will now demonstrate how we could upload a fasta file to [BIGSdb-Pasteur](https://bigsdb.pasteur.fr/) to determine the sequence type of the organism. 
 
 #### Example 3 - Downloading schemes
 
@@ -152,7 +158,7 @@ Now you have a directory that has all the up-to-date *K. pneumoniae* MLST inform
 
 ### Strain-level analysis tools
 
-## MLST
+#### MLST
 
 One of the most simple and user-friendly tools for MLST typing is Torsten Seemann's [mlst tool](https://github.com/tseemann/mlst). The command line parameterization is very simple: 
 
@@ -175,7 +181,48 @@ NC_008024.fna  spyogenes  -    gki(5)   gtr(11)  murI(8)   mutS(5)  recP(15?)  x
 NC_017040.fna  spyogenes  172  gki(56)  gtr(24)  murI(39)  mutS(7)  recP(30)   xpt(2)   yqiL(33)
 ```
 
-The only required argument is a FASTA/GenBank/E formatted assembly or assemblies. 
+The only required argument is a FASTA/GenBank/E formatted assembly or assemblies. There are 144 schemas preloaded with the current version of mlst as of 2023-12-12, `mlst-v2.23.0`. Given that this release was over two years ago, it would be prudent to upbdate the pubmlst databases with the following companion script available in the mlst package: 
+
+```
+mlst-download_pub_mlst -d /opt/homebrew/Caskroom/miniforge/base/envs/radgenomics/db/pubmlst -j 2
+```
+
+For a quick example, we are going to use ARLG-3179 and ARLG-3180 assemblies as input for the mlst command using another `for loop` structure:
+
+```
+for file in *fasta;do mlst $file >> kpneumoniae_mlst.tsv;done
+```
+
+#### AMRFinderPlus
+
+There are many database reference tools that can be used to detect antimicrobial resistance (AMR) genes such as: 
+
+  - [ABRicate](https://github.com/tseemann/abricate)
+  - [ResFinder](https://cge.food.dtu.dk/services/ResFinder/)
+
+AMRFinderPlus has become a gold standard for the identification of AMR genes using bacterial genome assemblies. Hosted through the National Center for Biotechnology Information (NCBI), AMRFinderPlus provides additional tools for species specific point mutations conferring resistance as well as allows for the option of detecting stress response and virulence genes associated with particular organisms. We are again going to use ARLG-3179 and ARLG-3180 assemblies as input examples with `prokka-v1.14.5` annotated files as input (*N.B.*, Dr. Baptista will go through annotation and output files in the following section in more detail). One of the first good practice steps after setting up AMRFinderPlus is to update the database as NCBI regularly provides updates in between AMRFinderPlus releases:
+
+`
+amrfinder --update
+`
+
+The command line parameters to include AMR encoding genes, point mutations, and stress/virulence factors associated with *K. pneumoniae* look like this:
+
+`
+for file in *fasta;do amrfinder -p 
+`
+
+#### Kleborate
+
+#### Center for Genomic Epidemiology
+
+### Measuring Genomic Distance
+
+#### Mash
+
+#### FastANI
+
+#### Snippy 
 
 ## Phylogenetics
 
@@ -185,7 +232,10 @@ The only required argument is a FASTA/GenBank/E formatted assembly or assemblies
 
 * [An applied genomic epidemiological handbook](https://alliblk.github.io/genepi-book/index.html) by Allison Black and Gytis Dudas formerly of the [Bedford lab](https://bedford.io/) is a fantastic overview of genomic epidemiology that heavily inspired the content of this section.
 * Good review on bacterial strain typing can be found in this review by [**Simar *et al.*, 2021**](https://journals.lww.com/co-infectiousdiseases/fulltext/2021/08000/techniques_in_bacterial_strain_typing__past,.10.aspx)
-* [Bactopia](https://bactopia.github.io/latest/#overview) is a convenient end-to-end Nextflow-based workflow that is very useful for standardized, reproducible results. Bactopia accepts assembly or raw fastq data and provides a whole suite of QC, assembly, and analysis tools. 
+* [Bactopia](https://bactopia.github.io/latest/#overview) is a convenient end-to-end Nextflow-based workflow that is very useful for standardized, reproducible results. Bactopia accepts assembly or raw fastq data and provides a whole suite of QC, assembly, and analysis tools.
+* [ChatGPT 3.5](https://chat.openai.com/) has become an invaluable tool for troubleshooting code and creating simple, boilerplate code. While `ChatGPT` cannot be completely relied upon to code properly, it does provide a nice starting point for working through coding challenges.
+* [Stackoverflow](https://stackoverflow.com/) is the original source for finding programming related answers to your questions.
+* [Biostars](https://www.biostars.org/) is similar to Stackoverflow, a great resource for answering bioinformatic related questions. 
 
 ## License
 
