@@ -12,21 +12,27 @@
      * [Case Study 2 - Cephalosporin Resistant *Escherichia coli* Surveillance](#case-study-2---cephalosporin-resistant-escherichia-coli-surveillance)
 * [Strain-Level Analysis](#strain-level-analysis)
   * [Genotyping - Measures of Genetic Relatedness](#genotyping---measures-of-genetic-relatedness)
-   * [Working with Databases](#databases)
+  * [Working with Databases](#databases)
      * [Example 1 - Species Identification](#example-1---species-identification)
      * [Example 2 - Multilocus sequence typing](#example-2---multilocus-sequence-typing)
      * [Example 3 - Downloading schemes](#example-3---downloading-schemes)
-   * [Strain-level Analysis Tools](#strain-level-analysis-tools)
+  * [Strain-level Analysis Tools](#strain-level-analysis-tools)
      * [MLST](#mlst)
      * [AMRFinderPlus](#amrfinderplus)
      * [Kleborate](#kleborate)
      * [Center for Genomic Epidemiology](#center-for-genomic-epidemiology)
-   * [Measuring Genomic Distance](#measuring-genomic-distance)
+  * [Measuring Genomic Distance](#measuring-genomic-distance)
      *  [Mash](#mash)
      *  [FastANI](#fastani)
      *  [Snippy](#snippy)
 * [Phylogenetics](#phylogenetics)
-  * [Introduction and Terminology](#introduction-and-terminology)  
+  * [Introduction and Terminology](#introduction-and-terminology)
+     * [Dissecting a Tree](#dissecting-a-tree)
+     * [Maximum Parsimony vs. Maximum Likelihood](#maximum-parsimony-vs.-maximum-likelihood)
+  * [Inferring Phylogenies Using Maximum-Likelihood](#inferring-phylogenies-using-maximum-likelihood)
+     * [IQTREE 2](#iqtree-2)  
+  * [Bayesian Analysis to Infer Time-Dated Phylogenies](#bayesian-analysis-to-infer-time-dated-phylogenies)
+  * [Phylogeny Visualization Tools](#phylogeny-visualization-tools) 
 * [Tips](#tips)
 * [License](#license)
 
@@ -272,6 +278,18 @@ One of the last concepts I want to bring up before jumping into phylogenetics is
 ## Phylogenetics
 
 ### Introduction and Terminology 
+
+#### Dissecting a Tree
+
+#### Maximum Parsimony vs. Maximum Likelihood
+
+### Inferring Phylogenies Using Maximum-Likelihood
+
+#### IQ-TREE 2
+
+### Bayesian Analysis to Infer Time-Dated Phylogenies
+
+### Phylogeny Visualization Tools
 
 ## Tips
 
