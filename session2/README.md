@@ -513,6 +513,204 @@ This last step requires you to download software and is to highlight the ability
  <summary>
   
  ## Mapping reads to reference genomes for variant calling (lecture, Daniel) </summary>
+# Alignment and quality control (QC) of aligning short-read data
+
+## Mapping reads
+
+### 1. Index reference genome:
+We first need to index the reference genome itself by using `bwa index`.
+
+```
+bwa index reference.fasta
+```
+This should only take a few seconds since the SARS-Cov-2 genome is tiny.
+
+### 2. Map reads to genome:
+Next we are ready to start mapping the fastq reads to the genome itself. For this we want to use the `bwa mem` option that is best capable to handle the Illumina paired end reads.
+
+```
+ bwa mem -t 2 reference.fasta  raw_reads.fastq.gz  raw_reads.fastq.gz > our_mapped_reads.sam
+```
+
+This executes bwa mem with `2` threads (`-t` parameter) give our previously indexed `reference.fasta` and the two fastq files representing the Illumina paired end reads.
+
+After some time the program ends and we have our first result as : `our_mapped_reads.sam`. This is a standard text file (see SAM file format specification [here](https://samtools.github.io/hts-specs/SAMv1.pdf)) and we can take a look.Here we have a header in this file indicated with `@` and then entries per read per line.
+
+### 3. Converting a SAM file to a BAM file
+
+For subsequent analysis we need to compress (SAM -> BAM) the file. For this we are using [samtools](https://github.com/samtools/samtools) with the option: `view`
+
+```
+samtools view -hb our_mapped_reads.sam > our_mapped_reads.bam
+```
+
+The options `-h` ensures that the header is kept for the output file and the option `-b` tells `samtools` that we want to obtain the compressed (BAM) version.
+
+
+### 4. Sorting a BAM file
+
+Next we need to sort the file according to read mapping locations. For this we again are using `samtools`, but this time the `sort` option.
+
+```
+samtools sort our_mapped_reads.bam > our_mapped_reads.sort.bam
+```
+The output file `our_mapped_reads.sort.bam` is now a sorted and mapped read file that is necessary for subsequent analysis. Keep in mind that this file includes the same information as the previous files, but nowsorted.
+
+You can see based on the file sizes that the compression and sorting significantly reduced the file size:
+```
+ll -h our_mapped_reads.*
+```
+
+This should show you that the sam file (`our_mapped_reads.sam`) is the largest file and the compressed and sorted bam file (`our_mapped_reads.sort.bam`) is actually the smallest file.
+
+Since these files contain all the same information we don't need to keep the larger files anymore. To remove them from your disk we run:
+
+```
+rm our_mapped_reads.bam
+rm our_mapped_reads.sam
+```
+
+
+### 5. Creating a BAM index file
+
+The last step that is necessary for a subsequent analysis is to index the sorted and compressed read file:
+```
+samtools index our_mapped_reads.sort.bam
+```
+
+Thus in the end you should have 2 files: `our_mapped_reads.sort.bam` and `our_mapped_reads.sort.bam.bai`. The latter is the index file.
+
+## Mapping QC
+
+Before we move on to the variant analysis we want to inspect the mapped read file a little to see if all steps worked as expected.
+
+First we want to count the mapped and unmapped reads. This can be  done using `samtools view`. For this we need to query / filter the reads based on their sam tag. You can here refresh what each tag stands for: https://broadinstitute.github.io/picard/explain-flags.html
+
+To compute the number of mapped reads we run:
+
+```
+samtools view -c -F 4 our_mapped_reads.sort.bam
+```
+ The parameter `-c` tells samtools view, to only count and report that number to you. The parameter `-F 4` tells it to only use reads that are in disagreement with the flag:4 . You can see based on the above [URL](https://broadinstitute.github.io/picard/explain-flags.html) that this flag represents unmapped reads. Thus we are querying not unmapped reads, which is the count of mapped reads.
+
+Often we want to further filter by using a certain mapping quality threshold. This can be done like this:
+
+```
+ samtools view -q 20 -c -F 4 our_mapped_reads.sort.bam
+```
+Here the addition of `-q 20` restricts the reads to have mapping quality of 20 or more that is typically indicative of highly trustful alignments.
+Next we want to compute the number of unmapped reads:
+
+```
+ samtools view -c -f 4 our_mapped_reads.sort.bam
+ ```
+ Note we only need to change the `-F` to a `-f` to query for the Tag: 4.
+
+ Using samtools view we can also do other manipulations/queries. For example we can query the reads that are split reads, but only the supplement splits. These reads are going to be useful later for the detection of SV.
+
+ ```
+samtools view -c -f 2048  our_mapped_reads.sort.bam
+ ```
+ Again feel free to check out what the tag 2048 means over at  https://broadinstitute.github.io/picard/explain-flags.html
+
+
+ Lastly we can also compute the reads that are mapped on the `+` vs. `-` strand. For some type of analysis, this is an important metric:
+ ```
+ samtools view -c -q 20 -f 16  our_mapped_reads.sort.bam
+ samtools view -c -q 20 -f 0  our_mapped_reads.sort.bam
+```
+This time the `-f 16` filters for reads on the `-` strand and the `-f 0` for reads that mapped to the `+` strand.
+
+***
+
+# Variant calling
+Now that we have confidence in our mapped reads file and we know that it's the right format and reads are sorted, we can continue with the variant calling. First, we will call variants for SNV and subsequently for SV.  
+There are many tools that can be used 
+## SNV calling
+For SNV calling we are going to use [FreeBayes](https://github.com/freebayes/freebayes).
+
+Given our mapped read file and our reference fasta file we can execute Lofreq as follow:
+
+```
+freebayes -F 0.75 -! 5 -p 1 --min-mapping-quality 30 -f reference.fasta our_mapped_reads.sort.bam > our_snv.vcf 
+```
+
+This command presents different flags.  `-F` specifies the minimum fraction of alternate allele observations to consider variant sites. `-!` specifies the minimum coverage required to call variants. In this case, we need a minimum of 5 reads supporting the variant for it to be considered. `-p` defines the ploidy of the organism being evaluated. Some microorganisms, like the yeasts *C. albicans* and *S. cerevisiae* and other Eukaryotes are diploids, so you should adjust the this option to "2".  `--min-mapping-quality` specifies a mapping quality requirement of 30. `-f` defines the reference file.
+
+
+In the end the program `FreeBayes` has produced a VCF file as its output: `our_snv.vcf` as defined by the `-o` option. We can open and inspect this file like:
+
+```
+less -S our_snv.vcf
+```
+Note to terminate this process press `q` to close less.
+As we can see the VCF file follows a certain standard as it has first specified meta information as part of the header (`#`). This is then followed by each line showing a single variant.
+
+Take your time to look into this file. Some of the important tags that are defined are `AF` (allele frequency within the sample), `DP4` list of supporting reads for reference and alternative split up over `+/-` strand. What is important to note is that each of these tags have to be defined in the header. Go and look up: `DP` and compare it to `DP4`.
+
+To get a feeling about our file we want to query it a little to summarize our SNV calls.
+First we want to count the total number of SNV in this file:
+```
+grep -vc '#' our_snv.vcf
+```
+This will count the number of lines that don't have an `#` in it. `-v` is inverting the match and `-c` is counting the number of these matches.
+
+If we want to know if there is an imbalance in the nucleotides that has been changed we could use something simple like this:
+```
+grep -v '#' our_snv.vcf | cut -f 5 |sort | uniq -c
+```
+Again we are selecting against the header (`-v '#'`), then extracting column 5 (the alternative nucleotide) and sorting and counting the occurrence of each nucleotide (uniq ) with the `-c` option to count. You should see a clear preference for an `T` and `A` nucleotide that has been inserted.
+
+We can also roughly and quickly see if there are hotspots for SNV along the genome:
+```
+grep -v '#' our_snv.vcf | cut -f 2 | awk '{print int($1/100)*100}'  | sort | uniq -c  | awk '$1 > 5 {print $0 }' | sort -n -k 2,2 | less
+```
+Here we extract similar to before the 2nd column (SNV position) and bin it by 100bp. Next we sort and count the occurrences and filter to have only regions that have more than 5 SNV within their 100bp. Lastly we make sure that the positions of the bins are sorted in the output.
+
+A set of very useful methods are [bcftools](http://samtools.github.io/bcftools/) and [vcftools](https://vcftools.github.io/man_latest.html) to further filter and manipulate these files.
+
+## SV calling
+Detecting structural variants (SVs) using short-read sequencing data involves several methods, each with its own strengths and limitations. Here are some common methods used to call SVs from short-read data:
+
+Read-pair (or paired-end) mapping: Utilizes information from paired-end reads where the expected distance between two reads mapped to the reference genome differs due to an SV. 
+
+Split-read mapping: Identifies SVs by identifying reads that align partially to different locations due to breakpoints. Tools like Pindel and SPLITREADER utilize this approach.
+
+Assembly-based methods: Assemble reads into longer contiguous sequences (contigs) and align them back to the reference genome to identify structural differences. Tools like TIGRA-SV and SOAPdenovo can be used for de novo assembly.
+
+Depth of coverage analysis: Detects copy number variations (CNVs) by analyzing variations in read depth across the genome. Tools such as CNVnator and Control-FREEC rely on this method.
+
+Hybrid methods: Combine multiple approaches, such as read-pair and split-read mapping or local assembly followed by read alignment, to improve accuracy and sensitivity. Sniffles, Lumpy and Manta are examples of tools using hybrid approaches.
+
+Here, we will adopt Manta to demonstrate how to detect SVs using short reads. 
+
+In the end we want to also identify Structural Variations (SVs). Here we are simply using [Manta](https://github.com/Illumina/manta), which was mainly designed to identify SV across a human genome. It works with almost any organisms however. This tool uses a combination of split reads and paired end approaches to detect SVs.
+
+
+Manta requires two steps:
+
+### 1. Initiate the run:
+```
+configManta.py --bam=our_mapped_reads.sort.bam --referenceFasta=reference.fasta --runDir=Out_Manta
+```
+This should initiate the folder structure and specifies for the subsequent process to use our mapped reads and our reference file. In addition, we specify the output to be written in `Out_Manta`
+
+### 2. Run the analysis:
+```
+python Out_Manta/runWorkflow.py -j 2 -m local -g 10
+```
+
+This will launch the Manta pipeline that we previously configured. `-j` specifies the number of CPU threads (2 in our case), `-m` local indicates that it should not try to run things on different nodes or instances and `-g 30` specifies the available memory for the process in GB.
+
+Manta now searches for abnormal paired-end reads and split-reads across our mapped reads. These will be analyzed together and clustered to identify SV in these samples. After some time, you should see that the program has finished.
+
+Our SV calling results can be found here (Out_Manta/results/variants/). Let us open quickly the output of the highest quality SV files:
+```
+cd  Out_Manta/results/variants/
+ls 
+```
+As you can see we have multiple VCF files. These represent the different stages of Manta and the confidence level for the SV calls. See more information about the Manta output [here](https://github.com/Illumina/manta). 
+ 
  <p></p>
  
 
