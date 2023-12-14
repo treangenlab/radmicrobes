@@ -82,7 +82,7 @@ There are several options of instances available:
 #### <ins>Files to be used in this hands-on</ins>
 File name  | Description | Location in the cluster
 ------------- | ------------- | ------------- 
-Genome.fasta  | Assembled genome generated on session 1 | /pathway/Session4
+ARLG-4673_assembly.fasta  | Assembled genome generated on session 1 | /pathway/Session4
 my_genome.gff  | Pre-generated gff output | /pathway/Session4
 
 **Basic Usage:**
