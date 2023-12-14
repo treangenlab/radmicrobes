@@ -329,7 +329,7 @@ There are a few important points to always keep in mind when interpreting trees:
 
 The internal nodes will represent the Most Recent Common Ancestor (MRCA), or Last Common Ancestor (LCA).  It is important to realize that since the actual observed samples are on the tips, the LCA is hypothetical.  Another common misinterpretation is that proximal leaves are closely related.  This may not be the case, depending on how the tree is drawn.  Always trace the leaves back down the branches and look to the MRCA.
 
-#### Constructing a Phylogenetic Tree
+### Constructing a Phylogenetic Tree
 
 Generally, can be divided into two methods:
 
@@ -463,11 +463,17 @@ At least some form of rate heterogeneity modelling should be employed
 
 A number of software suites for phylogenetic estimation include features and tools designed to help with "optimal" model selection for your dataset.
 
-#### IQ-TREE 2
+### 
 
 ### Bayesian Analysis to Infer Time-Dated Phylogenies
 
-### Phylogeny Visualization Tools
+#### Phylogeny Visualization Tools
+
+There are multiple tools employed for visualizing phylogenies not limited to: 
+  - [Gingr](https://github.com/marbl/gingr)
+  - [iTOL](https://itol.embl.de/login.cgi)
+  - [FigTree](http://tree.bio.ed.ac.uk/software/figtree/)
+  - 
 
 ## Tips
 
