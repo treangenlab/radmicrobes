@@ -36,6 +36,8 @@ William Shropshire is a second year T32 Postdoctoral Fellow funded through the G
 
 ### An Dinh
 
+<img width="200" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/153662215/e8e5f279-6442-4dc5-939a-9a407a6ec0fa">
+
 An Dinh is a first year PhD student of epidemiology under Dr. Blake Hanson in the Center of Infectious Disease at the UTHealth School of Public Health.  For the past 8 years, he has worked with both short- and long- read sequencing technologies, producing data for large-scale genomic epidemiology studies of antimicrobial resistant pathogens.  His work experience includes laboratory automation, protocol development and optimization, high-throughput data processing, as well as more narrowly-focused small-scale projects. Studies have ranged from transcriptomics, metagenomics, and exploring the use of rapid sequencing of clinical samples for pathogen diagnoses and personalized medicine.  His interests include pushing new technologies and techniques to improve data resolution for AMR surveillance, optimizations of analyses pipelines for microbial genomics, and continuing to test and validate the utility of microbial sequencing in clinical spaces.
 
 ### Natalie Kokroko  
