@@ -39,7 +39,8 @@ William Shropshire is a second year T32 Postdoctoral Fellow funded through the G
 ### Michael Nute, PhD
 
 ### Natalie Kokroko
-<img width="200" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/137814633/5ac518f1-47c9-452b-b50b-653e6a284098">
+
+<img width="200" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/137814633/9afdd46c-9351-49d1-993f-fbbd67139444">
 
 
 ### Daniel Paiva Agustinho, PhD
