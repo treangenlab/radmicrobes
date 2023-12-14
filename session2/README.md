@@ -669,6 +669,17 @@ Here we extract similar to before the 2nd column (SNV position) and bin it by 10
 
 A set of very useful methods are [bcftools](http://samtools.github.io/bcftools/) and [vcftools](https://vcftools.github.io/man_latest.html) to further filter and manipulate these files.
 
+### Variant annotation
+
+
+Variant annotation is the comprehensive analysis and interpretation of genetic variants identified in genomic data. For this purpose, we will use [SnpEff](https://pcingola.github.io/SnpEff/). Leveraging genomic databases and annotations, SnpEff predicts the potential functional impact of variants by annotating their effects on genes, transcripts, and proteins. It  maps variants to genomic elements, such as exons, introns, splice sites, and regulatory regions, while categorizing variations into distinct types, such as missense, nonsense, frameshift, or splice site alterations. SnpEff uses this information to infer how these variations might affect protein function, alter gene regulation, or contribute to disease. The tool further enhances these annotations by cross-referencing with databases containing population frequencies, known disease associations, and evolutionary conservation data, aiding in the comprehensive characterization and understanding of genomic variants and their potential implications.
+
+```
+java -jar snpEff.jar -c snpEff.config -v ASM221672v1 our_snv.vcf > our_snv.ann.vcf
+```
+
+This command will create a new version of the VCF file, containing annotation and impact of each variant. The `-c` option defines a config file containing the assembly used as a reference genome. The `-v` refers to the genome assembly used as the reference genome. 
+
 ## SV calling
 Detecting structural variants (SVs) using short-read sequencing data involves several methods, each with its own strengths and limitations. Here are some common methods used to call SVs from short-read data:
 
