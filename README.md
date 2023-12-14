@@ -41,4 +41,6 @@ William Shropshire is a second year T32 Postdoctoral Fellow funded through the G
 ### Natalie Kokroko
 
 ### Daniel Paiva Agustinho, PhD
+![IMG-20190316-WA0016](https://github.com/treangenlab/radmicrobes/assets/72709799/20d9ce96-ab60-487f-876d-f9dcfbea94da)
+
 
