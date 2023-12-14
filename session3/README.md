@@ -134,8 +134,8 @@ Each of these databases curate specific genus/species combinations of taxa with 
 A colleague has sent you a fasta file letting you know that he believes that he has a bacterial assembly, but has no idea as to what it is. While you are curious as to why the colleague doesn't know what bacterial species it is, you say no problem, Dr. Keith Jolley has created a very simple python script that queries fasta assemblies against the ribosomal Multilocus Sequence Type (rMLST) database through the PubMLST RESTful API using the ```curl``` command.
 
 ```
-cd ./session3/Scripts
-python3 ./species_api_upload.py -f ./../Files/assemblies/ARLG-3180_consensus_assembly.fasta.fna
+cd ~/radmicrobes/session3/Scripts
+python3 ./species_api_upload.py -f ./../Files/assemblies/ARLG-3180_consensus_assembly.fasta
 ```
 
 If we want to loop through two or more assemblies, we can use a ```for``` loop structure: 
@@ -201,7 +201,7 @@ mlst-download_pub_mlst -d /opt/homebrew/Caskroom/miniforge/base/envs/radgenomics
 For a quick example, we are going to use ARLG-3179 and ARLG-3180 assemblies as input for the mlst command using another `for loop` structure. I'm also going to use **wildcard** notation, specifically `*` to have any matching number, string, or special character match following the assigned `for loop` variable up to **.fasta**. 
 
 ```
-cd ./session3/Files
+cd ./../Files
 for file in $(cat ./lists/assembly_subset.tsv);do mlst assemblies/${file}_*.fasta >> ./results/kpneumoniae_mlst.tsv;done
 head ./results/kpneumoniae_mlst.tsv
 ```
@@ -246,7 +246,7 @@ There are many *ad hoc* tools available to do analysis on your favorite organism
 
 ```
 cd ./../Files
-for file in $(cat ./lists/assembly_list.tsv);do kleborate --all -a ./assemblies/${file}*dir/*${file}*.fna -o ./results/${file}_kleborate.tsv;done
+for file in $(cat ./lists/assembly_subset.tsv);do kleborate --all -a ./assemblies/${file}*.fasta -o ./results/${file}_kleborate.tsv;done
 head ./results/*_kleborate.tsv
 
 ```
@@ -276,19 +276,22 @@ One of the last concepts I want to bring up before jumping into phylogenetics is
 There are a total of 11 *K. pneumoniae* assemblies that are available in the `./Files/assemblies` directory. I'm going to demonstrate how simple it is to create an all-to-all Mash estimated distance matrix: 
 
 ```
-cd ./Files/assemblies
+cd ~/radmicrobes/session3/Files/assemblies
 
 # Create a reduced sketch file of all 11 assemblies that will be used to estimate distance
 mash sketch -o ./reference -s 100000 *.fasta
 
 # Do an all-vs-all estimate of distance across each of the 11 assemblies to create a distance matrix that correlates well with a Jaccard distance estimate using reference-based alignments
 mash dist ./reference.msh ./reference.msh -t > distances.tab
+head distances.tab
 
 # Borrowing a quick code snip-it from Ryan Wick's bacsort to format distance.tab into a PHYLIP formatted file
 tail -n +2 distances.tab > distances.tab.temp  # remove first line
 wc -l distances.tab.temp | awk '"[0-9]+ errors" {sum += $1}; END {print sum}' > distances.ndist  # get number for sample/line count
 cat distances.ndist distances.tab.temp > kpneumo.mash.phylip
 rm distances.ndist distances.tab.temp
+
+mv kpneumo.mash.phylip ./../phylogenetics/
 ```
 
 [FastANI](https://github.com/ParBLiSS/FastANI) is another great heuristic for estimating Average Nucleotide Identity (ANI) in a population, for future reference. We will use the `kpneumo.mash.phylip` PHYLIP file in the following [Phylogenetics](#phylogenetics) section. 
@@ -301,7 +304,7 @@ During session two, Dr. Treangen went over variant calling in great detail. Ther
 
 ### Introduction and Terminology 
 
-Phylogenetics is simply put a catch-all term to infer evolutionary relationships using some form of distance measurement to infer the evolutionary history within a population. The field of bacterial phylogenetics employs molecular data, often derived from nucleic acids or proteins, to construct evolutionary trees that depict the genetic relatedness and divergence patterns among bacterial species or strains. 
+Phylogenetics is simply put a catch-all term to infer evolutionary relationships using some form of distance measurement to infer the evolutionary history within a population. The field of bacterial phylogenetics employs molecular data, often derived from nucleic acids or proteins, to construct evolutionary trees that depict the genetic relatedness and divergence patterns among bacterial species or strains. In essence, 
 
 #### Dissecting a Tree
 
