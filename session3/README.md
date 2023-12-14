@@ -41,14 +41,13 @@
 ## Preparation
 
 If you have not already done so, please download:
-  * R and RStudio from the following site: [RStudio](https://posit.co/download/rstudio-desktop/). 
-  * Python: [Python](https://www.python.org/downloads/).
+  * R and RStudio from the following site: [RStudio](https://posit.co/download/rstudio-desktop/)
 
 This is **NOT** a coding class, so we won't be going over in detail first principles of programming (*i.e.*, coding syntax, structure, etc.); however, background on R/Python will be helpful when we go through some basic code that we will use to execute scripts from a command line interface. 
 
 As an aside, there are multiple data analysis software that you can choose to perform genomic analyses. Additionally, there are multiple interactive development environments you can choose to work from such as:
  - [PyCharm](https://www.jetbrains.com/pycharm/) 
-- [JupyterLab](https://jupyter.org/)
+ - [JupyterLab](https://jupyter.org/)
 
 If you're just getting started, I suggest testing out multiple platforms to see what feels most intuitive to you in conjunction of what serves your analytical needs the best. That being said, this section of the workshop is going to focus on high level theory in addition to some tools I find useful in my own work. 
 
