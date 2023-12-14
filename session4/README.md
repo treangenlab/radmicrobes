@@ -87,6 +87,9 @@ my_genome.gff  | Pre-generated gff output | /pathway/Session4
 
 **Basic Usage:**
 ```
+###Call prokka in bootcamp server
+source /projects/k2i/radmicrobes-s4/bin/activate
+##Run prokka
 prokka --outdir prokka_test --prefix my_genome --rfam genome.fasta
 ```
 **Flag explanation**
@@ -435,6 +438,7 @@ cd roary_analysis
 ##### Running Roary <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20">
 **Basic usage**
 ```
+source /projects/k2i/roary/bin/activate
 roary -p 5 -n -e -v *.gff
 ```
 
@@ -461,6 +465,7 @@ gene_presence_absence.csv | Table with information of gene presence and absense
 
 **Basic usage:**
 ```
+source /projects/k2i/radmicrobes-s4/bin/activate
 raxml-ng --msa core_gene_alignment.aln --model GTR+G --all --bs-trees 10
 ```
 **Flag explanation**
