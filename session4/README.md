@@ -87,6 +87,8 @@ my_genome.gff  | Pre-generated gff output | /pathway/Session4
 
 **Basic Usage:**
 ```
+###Prepare to run in interactive node
+srun --pty --export=ALL --ntasks=1 --reservation=workshop --cpus-per-task=8 --mem=15GB --time=04:00:00 /bin/bash
 ###Call prokka in bootcamp server
 source /projects/k2i/radmicrobes-s4/bin/activate
 ##Run prokka
