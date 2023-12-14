@@ -47,6 +47,9 @@ Natalie Kokroko is a first year PhD student at Rice University in the Computer S
 
 
 ### Daniel Paiva Agustinho, PhD
-![IMG-20190316-WA0016](https://github.com/treangenlab/radmicrobes/assets/72709799/20d9ce96-ab60-487f-876d-f9dcfbea94da)
 
+
+<img width="200" alt="image" src="[https://github.com/treangenlab/radmicrobes/assets/137814633/68553628-554a-43ea-8bbc-f1e6f607271d](https://github.com/treangenlab/radmicrobes/assets/72709799/20d9ce96-ab60-487f-876d-f9dcfbea94da)https://github.com/treangenlab/radmicrobes/assets/72709799/20d9ce96-ab60-487f-876d-f9dcfbea94da">
+
+Daniel is a staff scientist at Baylor College of Medicine with over 13 years of dedicated research focusing on human pathogens and host interactions. His journey from wet lab biology to bioinformatics commenced during his PhD, where he analyzed gene expression in host-pathogen interactions. His contributions to microbiology and immunology shed light on complex molecular relationships. As a postdoctoral researcher, Daniel deepened his exploration into host-pathogen interactions, investigating pathogen-triggered immune responses. Transitioning to Baylor College of Medicine, he leads comprehensive metagenomic analyses, specializing in viral evolution studies. His work includes a review article on metagenomics' utility in infectious diseases, and he spearheads the development of pipelines for pathogen detection in clinical samples. Daniel's interdisciplinary approach has significantly advanced our understanding of infectious diseases.
 
