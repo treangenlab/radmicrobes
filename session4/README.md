@@ -179,7 +179,7 @@ File name  | Description | Location in the cluster
 Reference.fasta  | Close related reference genome used for training | /pathway/Session4
 Euk_genome.fasta  | Genome to be annotated | /pathway/Session4
 Protein_ref.fasta  | Reference protein evidence for training | /pathway/Session4
-Euk_genome.gff  | Pre-generated gff output | /pathway/Session4
+Euk_genome_augustus.gff  | Pre-generated gff output | /pathway/Session4
 
 #### <ins>Training dataset for prediction</ins>
 
