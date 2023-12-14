@@ -308,11 +308,102 @@ Phylogenetics is simply put a catch-all term to infer evolutionary relationships
 
 #### Dissecting a Tree
 
-A phylogenetic tree is a hierarchical representation of your modelled data to represent taxa within a population. Trees are composed of **tips** (*i.e.*, 'leaves' which represent your observed data), **internal nodes** (*i.e.*, 
+A phylogenetic tree is a hierarchical representation of your modelled data to represent taxa within a population. Trees are composed of:
+
++ **tips** (*i.e.*, 'leaves' which represent your observed data),
++ **internal nodes** (*i.e.*, divergence points)
++ **branches** (*i.e.*, connections),
++ and sometimes a **root**.  
+
+One note: there is a lot of synonymous nomenclature describing parts of trees, as anybody from biologists to mathematicians to arborists may work with trees regularly.  For instance, branches can also be called **edges** in graph vernacular.  Leaves can also be thought of as an external node.  Branches can also be be classified as internal if both ends are connected to either internal nodes or the root, or external if it terminates at a leaf.
+
+There are a few important points to always keep in mind when interpreting trees:
+
++ The observed (sequenced) samples are on branch tips.
+
++ Time runs from root to tip
+
++ The order of the leaves don’t really mean anything
+  + The spacing between branches also doesn't mean anything
+  + Order and spacing of leaves are always arbitrary; Branches can always be swapped (or rotated about an internal node)
+
+The internal nodes will represent the Most Recent Common Ancestor (MRCA), or Last Common Ancestor (LCA).  It is important to realize that since the actual observed samples are on the tips, the LCA is hypothetical.  Another common misinterpretation is that proximal leaves are closely related.  This may not be the case, depending on how the tree is drawn.  Always trace the leaves back down the branches and look to the MRCA.
+
+#### Constructing a Phylogenetic Tree
+
+Generally, can be divided into two methods:
+
++ Distance-matrix based - algorithmic
++ Directly from sequences - constructs phylogenetic inferences
+
+Distance-matrix based methods include the Unweighted-Pair Group Method with Arithmetic Mean (UPGMA), the Fitch-Margoliash (FM) algorithm, or Neighbor-Joining (NJ) methods.  They rely heavily on pairwise distances between sample sequences - this is problematic *(why?)* - and so are rarely used on their own.  Instead, these methods are useful in building heuristic initial starting trees for the methods discussed below.
+
+Phylogenetic inference methods can be broadly classed into maximum parsimony and maximum likelihood methods, and will be expanded on in the next subsection.
 
 #### Maximum Parsimony vs. Maximum Likelihood
 
+**Maximum parsimony**
+
+Generally, parsimony describes when a minimum of change is required.  
+
+Thus in the phylogenetic context, out of all possible trees, the tree which meets the maximum parsimony criteria will group the samples in such a way that the least amount of evolutionary change is required.  That is, as every divergence point represents at least a single nucleotide change, the maximum parsimony tree will have the least total number of substitution events as one traces the topology of the tree from root to tips.  
+
+*Claim: this necessarily means that a maximum parsimony tree will always be an underestimation of the true amount of evolutionary change.  Why might this be true?*
+
+Maximum parsimony methods assume the concepts of homologous similarity - that identical alleles had to come from a common ancestor, and homoplasy (such as convergent evolution, parallel evolution, or reversal) are rare.
+
+**Maximum likelihood**
+
+Given:
+
+1.) A sample set of sequences, and
+2.) A nucleotide substitution (evolutionary) model,
+
+Maximum Likelhood (ML) phylogenetic inference methods will build a multitude of trees, recursively computing the probabilities for the tree topology and branch lengths.  The ML method will generally start with a small (n=4) tree, analyzed, then samples are iteratively added one at a time to the tree.  With each addition, alternative topologies are explored and assessed for likelihood using local rearrangement methods such as:
+
++ Nearest-neighbor interchange (NNI)
++ Subtree prune and regraft (SPR)
++ Tree bisection and reconnection (TBR)
+
+In order to compute the likelihood, the branch lengths are computed for *each* topological variant by summing the log-likelihood for *each* nucleotide at *each* site (position).
+
+This is computationally expensive!...
+
 ### Inferring Phylogenies Using Maximum-Likelihood
+
+As stated before, given a sample set of sequences, ML methods will also require an evolutionary model.  What is meant by this?  Let's look at the simplest (most constrained) substitution model as illustration.
+
+#### Jukes-Cantor (1969)
+
+The Jukes-Cantor (JC69) model assumes that the rate of nucleotide substitution is the same for all pairs, and that the base nucleotide frequency is equal in the population.  
+
+(insert image here)
+
+See also: Felsenstein (1981).  This is like the JC69 model, in that the substitution rates are equal, but with unequal base frequency.
+
+#### Kimura (1980)
+
+The Kimura (K80) model recognizes that the rate of transitions are not equal to tranversion rate.  Transitions are intragroup changes, such as A <-> G (purines), or C <-> T (pyrimidines).  Transversions would be either of the purines changing into either of the pyrimidines.  Consistent with biochemical intution, we do observe that transitions are more frequent than transversions.
+
+(insert image here)
+
+See also: Hasegawa-Kishino-Yano (1985).  This is like the K80 model (unequal transition vs. transversion rates), but includes unequal base frequency.
+
+**The above two models might be thought of as "historical" by some.  We will skip ahead to more contemporary, more complex, and less constrained models below.**
+
+#### General Time-Reversible (GTR) substitution model (Tavare 1986)
+
+The GTR model is like the HKY model, but each possible nucleotide substitution has it's own exchangibility rate, along with unequal base frequencies.
+
+"The Generalised time reversible (GTR) is the most general neutral, independent, finite-sites, time-reversible model possible.”
+
+(Of course it is, it has the most parameters).
+
+This model is probably the most popular at the moment.  
+
+#### +gamma (Yang 1994)
+
+This is more of a modification that may be applied to any model, though you may commonly see this model along with the aforementioned GTR model as GTR+gamma.
 
 #### IQ-TREE 2
 
