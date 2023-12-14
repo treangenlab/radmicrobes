@@ -369,6 +369,16 @@ In order to compute the likelihood, the branch lengths are computed for *each* t
 
 This is computationally expensive!...
 
+**ML with Bootstrapping (Felsenstein 1985)**
+
+Generally, bootstrapping as a statistical method that involves random subsampling with replacement.  It is useful for estimating the statistical error when sampling distribution is unknown.
+
+In the phylogenetic context, bootstrapping estimates the reliability (consistency) of the resultant (majority-rule) consensus tree.  
+
+With each subsampling, an ML tree is constructed.  This processs is repeated 100, sometimes 1000 times.  Then all of the tree topologies are compared in a frequentist manner - these values are sometimes included on phylogenetic tree figures as 'branch support'.
+
+One thing to note: the final resultant tree might not be the overall maximum-likelihood tree.
+
 ### Inferring Phylogenies Using Maximum-Likelihood
 
 As stated before, given a sample set of sequences, ML methods will also require an evolutionary model.  What is meant by this?  Let's look at the simplest (most constrained) substitution model as illustration.
@@ -404,6 +414,52 @@ This model is probably the most popular at the moment.
 #### +gamma (Yang 1994)
 
 This is more of a modification that may be applied to any model, though you may commonly see this model along with the aforementioned GTR model as GTR+gamma.
+
+In short, the gamma modification removes the assumption of per-site independence for mutations.  That is, a +gamma model:
++ allows for a model of rate heterogeneity in mutations across sites (ie: not all sites have equivalent nor independent mutational rates)
++ applies standard gamma distribution with a shape parameter (alpha), itself usually estimated from the sample data
+
+In practice, usually a *discrete* (categorized) gamma distribution is used
+
+#### More complexities to address mutational heterogeneity
+
+*Why only use just one model?*
+
+Partitioning (categorization) - apply specific models for a site or regions along a sequenced
+
+Mixture models - assign a model (out of a user-specified selection) on a per-site basis
+
+**!! Some caution may need to be exercised to avoid potential over-parameterization !!**
+
+#### Why so many models and which to choose?
+
+Tractibility. The ML criterion is a NP-hard problem (as Mike Nute stated yesterday during Session 2).
+
+We need to balance between robustness and efficiency.  There are always practical limitations such as computational resources, memory consumption, time, which are increasingly evident in the area of "big data" (larger datasets, deeper sequencing, etc.)
+
+But, software packages can help!  Credit to the mountain of work underlying their development, testing, optimization and validation that enables analytic accessibility on large-scale genomic sequencing projects.
+
+#### Additional model variations and approaches
+
+**Heuristics and Approximations**
++Gamma -> +CAT (rate categorization)
+etc
+
+**Hybrids and Combinatorial approaches**
+FastTree
+etc
+
+**Technical optimizations**
+
+#### TAKEAWAYS
+
+Inferential methods (ML, Bayesian) are statistically consistent.
+
+GTR is probably the most popular model
+
+At least some form of rate heterogeneity modelling should be employed
+
+A number of software suites for phylogenetic estimation include features and tools designed to help with "optimal" model selection for your dataset.
 
 #### IQ-TREE 2
 
