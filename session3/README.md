@@ -442,10 +442,12 @@ But, software packages can help!  Credit to the mountain of work underlying thei
 #### Additional model variations and approaches
 
 **Heuristics and Approximations**
+
 +Gamma -> +CAT (rate categorization)
 etc
 
 **Hybrids and Combinatorial approaches**
+
 FastTree
 etc
 
