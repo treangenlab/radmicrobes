@@ -111,7 +111,7 @@ ssh username@radmicrobes.rice.edu
 As an example, my username for our workshop is `hpc3` so my login command is:
 
 ```
-ssh hpc3@username@radmicrobes.rice.edu
+ssh hpc3@radmicrobes.rice.edu
 ```
 
 Once you hit enter, the connection between your computer and the radmicrobes.rice.edu server will be established and you will be greeted with the interactive command line. This server is called a gateway server, or a jump station, and acts as our portal to the workshop infrastructure.
