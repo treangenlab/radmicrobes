@@ -194,13 +194,14 @@ NC_017040.fna  spyogenes  172  gki(56)  gtr(24)  murI(39)  mutS(7)  recP(30)   x
 The only required argument is a FASTA/GenBank/E formatted assembly or assemblies. There are 144 schemas preloaded with the current version of mlst as of 2023-12-12, `mlst-v2.23.0`. Given that this release was over two years ago, it would be prudent to upbdate the pubmlst databases with the following companion script available in the mlst package. This takes awhile, so I would suggest executing this command at a later time. Also note that your database pathway will be different from mine. 
 
 ```
-mlst-download_pub_mlst -d /opt/homebrew/Caskroom/miniforge/base/envs/radgenomics/db/pubmlst -j 2
+mlst-download_pub_mlst -d  -j 2
 ```
 
 For a quick example, we are going to use ARLG-3179 and ARLG-3180 assemblies as input for the mlst command using another `for loop` structure. I'm also going to use **wildcard** notation, specifically `*` to have any matching number, string, or special character match following the assigned `for loop` variable up to **.fasta**. 
 
 ```
-cd ./../Files
+cd ~/radmicrobes/session3/Files
+mkdir -p results
 for file in $(cat ./lists/assembly_subset.tsv);do mlst assemblies/${file}_*.fasta >> ./results/kpneumoniae_mlst.tsv;done
 head ./results/kpneumoniae_mlst.tsv
 ```
@@ -231,7 +232,7 @@ amrfinder --list_organisms
 From the standard output, one can see that *Klebsiella_pneumoniae* is included as an available organism. In order to properly run AMRFinderPlus with the plus functions, you need to include a nucleotide file (.fna), a protein file (.faa), a gff file (.gff), and specify the organism, `-O`. Additionally set the `--plus` flag as well as the annotation format `-a` which is `prokka` for this case. Here is an example of code you can run with each parameter looping through our two assemblies in their respective prokka directories:
 
 ```
-cd ./session3/Files
+cd ~/radmicrobes/session3/Files
 for file in $(cat ./lists/assembly_subset.tsv);do amrfinder -p ./prokka_dirs/${file}*_dir/${file}*.faa -g ./prokka_dirs/${file}*_dir/${file}*.gff -n ./prokka_dirs/${file}*_dir/${file}*.fna -a prokka --plus -O Klebsiella_pneumoniae --threads 2 -o ./results/${file}_AMRFinderPlus.tsv;done
 
 head ./results/*_AMRFinderPlus.tsv
@@ -244,7 +245,7 @@ Let's go through the output to see what we can deduce from these two organisms.
 There are many *ad hoc* tools available to do analysis on your favorite organism of interest. [Kleborate](https://github.com/klebgenomics/Kleborate) has become a 'go-to' resource for *Klebsiella* genomics. Developed by the [Kat Holt lab](https://holtlab.net/), this python-based tool provides a wealth of information in addition to what AMRFinderPlus outputs, including assembly quality control (QC), MLST, AMR and virulence composite scores, and 'K' and 'O'-locus serotyping prediction using [Kaptive](https://github.com/klebgenomics/Kaptive). Let's run `kleborate-v2.3.2` with the `--all` parameter, which includes both resistance and serotyping prediction:
 
 ```
-cd ./../Files
+# Make sure you're in the Files directory 
 for file in $(cat ./lists/assembly_subset.tsv);do kleborate --all -a ./assemblies/${file}*.fasta -o ./results/${file}_kleborate.tsv;done
 head ./results/*_kleborate.tsv
 
