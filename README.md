@@ -8,7 +8,7 @@ SUMMARY: Computational analyses of microbial genomes through genomic sequencing 
 
 TOPICS: Short and long-read sequencing, amplicon and isolate genome sequence, genome assembly and validation, functional annotation, phylogenomic analysis, and strain typing. This workshop will be taught by scientists with expertise in bioinformatics and analysis of clinical samples, allowing participants to get individualized training on how to accurately sample, sequence, and characterize microbial genomes.
 
-## Instructors
+## RAD Instructors and TAs
 
 ### Dr. Rodrigo de Paula Baptista, PhD 
 
@@ -26,8 +26,7 @@ I am trained as an epidemiologist and have extensive experience in applying adva
 
 <img width="200" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/28576450/892207aa-f0e5-4299-8989-e03429ce5baf">
 
-
-[Bio]
+Todd Treangen is a Associate Professor in the Computer Science department at Rice University. He established his research group in the Computer Science department in July 2018. Prior to joining Rice, he was a Research Scientist at the Center for Bioinformatics and Computational Biology (CBCB) at the University of Maryland College Park, and previously a Principal Investigator at the National Biodefense Analysis and Countermeasures Center (NBACC). His primary research interests lie at the intersection of computer science and genomics, and his research group is focused on the development of novel computational methods and software tools with relevance to real-time monitoring of microbial community dynamics, infectious disease, and biothreats. Given the computational challenges presented by the metagenomic data deluge, coupled with the time-sensitive nature of problems specific to tracking pandemics and synthetic DNA screening, the Treangen lab strives to develop efficient and accurate computational solutions to emerging problems in these fields. Specifically, his research group focuses on the design, development, and implementation of novel algorithms, heuristics, and data structures to solve emerging computational research questions specific to biosecurity, infectious disease monitoring, and host-associated microbiome characterization. The Treangen lab is also dedicated to the dissemination and development of novel open-source bioinformatics methods, software, and pipelines, and to providing exciting “hands on” research opportunities to Rice undergraduates.
 
 ### Will Shropshire, PhD
 
@@ -36,4 +35,12 @@ I am trained as an epidemiologist and have extensive experience in applying adva
 William Shropshire is a second year T32 Postdoctoral Fellow funded through the Gulf Coast Consortia/Keck Center’s Texas Medical Center Training Program in Antimicrobial Resistance (NIAID Grant No. T32 AI141349-05). He currently works at the University of Texas MD Anderson Cancer Center within the Department of Infectious Diseases, Infection Control, and Employee Health under the supervision of Dr. Samuel Shelburne. During the past six years, Dr. Shropshire has developed a strong skillset in computational biology and microbiology with the focus of his work translating genomic data into clinically impactful results. His pre- and post-doctoral work has spanned a broad spectrum of topics, ranging from the molecular mechanisms of antimicrobial resistance to the genomic epidemiology of infectious disease outbreaks. The focus of his current T32 project is to elucidate genomic and transcriptomic factors that contribute to the progressive development of carbapenem resistance within *Escherichia coli* causing invasive infections. Over the past three years, his research has documented the significant clinical impact of extended-spectrum beta-lactamase (ESBL) positive Enterobacterales and how ESBL encoding genes can amplify via mobile genetic elements upon initial exposures to beta-lactam drugs. There is increasing evidence that these beta-lactamase gene encoding amplifications can lead to heteroresistant populations, wherein only a subset of a bacterial population remains non-susceptible to treatment. His future goal is to leverage his T32 work into a K01 award in which he investigates the clinical impact of beta-lactam heteroresistance as well as other AMR survival strategies such as tolerance within high-risk Enterobacterales pathogens. His research work can be summarized [here](https://www.researchgate.net/profile/William-Shropshire).
 
 ![image](https://github.com/treangenlab/radmicrobes/assets/34726302/f95a6428-4900-4ea4-a1ab-2bb2726d135d)
+
+### An Dinh
+
+### Michael Nute, PhD
+
+### Natalie Kokroko
+
+### Daniel Paiva Agustinho, PhD
 
