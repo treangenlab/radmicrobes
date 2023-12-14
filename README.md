@@ -20,7 +20,7 @@ Rodrigo Baptista is researcher with 13 years of expertise in the realms of eukar
 
 <img width="200" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/28576450/0aabd7fe-8836-4422-8f4e-bc335d661f87">
 
-[Bio]
+I am trained as an epidemiologist and have extensive experience in applying advanced genomic technologies and big-data analytical methods to investigate infectious diseases of public health importance. I am also an Assistant Professor in the Department of Internal Medicine, Division of Infectious Diseases, within the McGovern School of Medicine, and serve as the Associate Director for Microbial Genomics in the Center for Antimicrobial Resistance and Microbial Genomics (CARMiG). My laboratory uses a combination of existing and innovative laboratory techniques, and cutting-edge sequencing and bioinformatics to study infectious disease transmission and colonization, how microbial communities impact the development of disease, and how antimicrobial resistance develops and transmits through society. Current projects include: elucidating the importance of acquired antimicrobial resistance genes and mobile genetic elements in clinical outcomes, such as patient mortality and response to treatment, in Staphylococcus aureus causing bacteremia, co-circulating strains of carbapenem resistant Enterobacteriaceae (CRE), and vancomycin resistant enterococci (VRE); and interrogating the role of the microbiome in implanted medical device-associated infections, with a specific focus on breast implants placed following mastectomy due to cancer.
 
 ### Todd Treangen, PhD
 
