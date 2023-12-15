@@ -1,0 +1,6 @@
+Process,Algorithm,Version,Model,Citation
+Overall,Gubbins,3.3.1,-,https://doi.org/10.1093/nar/gku1196
+Tree constructor (1st iteration),iqtree,2.2.6,GTRGAMMA,https://doi.org/10.1093/molbev/msaa015
+Model fitter (1st iteration),iqtree,2.2.6,GTRGAMMA,https://doi.org/10.1093/molbev/msaa015
+Sequence reconstructor,pyjar,1.0,GTRGAMMA,https://doi.org/10.1093/oxfordjournals.molbev.a026369
+Tree constructor (later iterations),iqtree,2.2.6,GTRGAMMA,https://doi.org/10.1093/molbev/msaa015

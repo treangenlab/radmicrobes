@@ -1,0 +1,6 @@
+#Template	Num	Score	Expected	Template_length	Query_Coverage	Template_Coverage	Depth	tot_query_Coverage	tot_template_Coverage	tot_depth	q_value	p_value
+NZ_CP025140.1 Klebsiella pneumoniae strain KP1768 chromosome, complete genome	16838	13437659	223	154389	   93.18	   97.54	   85.67	   93.18	   97.54	   85.67	13436989.97	1.0e-26
+NZ_CP026155.1 Klebsiella pneumoniae strain B12(AN) chromosome, complete genome	3341	291896	4408	158452	    2.02	    2.23	    1.80	   79.00	   81.56	   70.17	278934.07	1.0e-26
+NZ_LR134210.1 Klebsiella pneumoniae strain NCTC418 chromosome 1	13748	3778	21	746	    0.03	    5.23	    5.06	    0.14	   25.07	   27.96	 3714.94	1.0e-26
+NZ_LR134276.1 Klebsiella aerogenes strain NCTC9793 genome assembly, chromosome: 1	13334	1921	14	513	    0.01	    4.09	    3.73	    0.14	   39.57	   37.88	 1877.74	1.0e-26
+NZ_CP033757.1 Klebsiella pneumoniae strain FDAARGOS_566 chromosome 2	11762	510	15	541	    0.00	    1.11	    0.89	    0.13	   39.19	   31.73	  465.71	1.0e-26
