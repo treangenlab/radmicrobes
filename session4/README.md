@@ -414,6 +414,16 @@ In the quest for a pangenome analysis, the core genome emerges as an appealing a
 The accessory genome is frequently divided into the shell genome, which comprises genes shared by more than 15% of the strains but less than 95% of the strains, and the cloud genome, encompassing genes shared by less than 15% of the strains but present in more than one strain.
 These genes have the potential to confer distinctive characteristics to a strain and/or offer a niche-specific advantage to the host strains. Acquisition of these genes may occur through horizontal gene transfer (HGT), and they are sustained by a subset of all the strains within a species.
 
+### Pangenome tools
+
+There are several options of instances available:
+
+* [Roary](https://sanger-pathogens.github.io/Roary/) (Besides not having updates anymore, it is still very useful for the community and will be used for this session)
+
+* [Panaroo](https://github.com/gtonkinhill/panaroo) (Considered the substitute for roary)
+
+* [PIRATE](https://github.com/SionBayliss/PIRATE) (another good alternative)
+
 <details>
 <summary>
  
