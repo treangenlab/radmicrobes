@@ -328,7 +328,7 @@ The GFF (General Feature Format) format consists of one line per feature, each c
 less my_genome.gff
 
 ###How many features are in your gff file?
-cat my_genome.gff | cut -f 3| sort| uniq -c
+cat my_genome.gff | cut -s -f 3| sort| uniq -c
 
 ###Do we have a "Carbapenem-hydrolyzing beta-lactamase KPC" gene annotated in this genome?
 more my_genome.gff| grep "KPC"
