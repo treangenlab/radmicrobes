@@ -520,7 +520,14 @@ etc
 
 ### Example 1 - Distance based phylogeny 
 
-We can use the [BioNJ algorithm](https://academic.oup.com/mbe/article/14/7/685/1119804?login=true) using 
+We can use the [BioNJ algorithm](https://academic.oup.com/mbe/article/14/7/685/1119804?login=true) to create a midpoint rooted, neighbor-joining tree inferred from the Mash distance matrix using a simple Rscript from [bacsort](https://github.com/rrwick/Bacsort). 
+
+```
+cd ~/radmicrobes/Rscripts/phylogenetics
+Rscript ~/radmicrobes/Rscripts/bionj_tree.R kpneumo.mash.phylip kpneumo.mash.tre
+```
+
+You can now view `kpneumo.mash.tre` in [Gingr](https://github.com/marbl/gingr), which you should have already downloaded yesterday. 
 
 ### Example 2 - Maximum-likelihood inferred Phylogent 
 
@@ -534,7 +541,13 @@ In addition to inferring a phylogeny like we did previously, we introduce a coup
  * Bayesian Dating Analysis: Employ Bayesian dating methods, such as BEAST (Bayesian Evolutionary Analysis by Sampling Trees), to simultaneously estimate phylogenetic relationships and divergence times while considering uncertainties in the data.
  * Posterior Inference: Obtain a posterior distribution of divergence times, providing a range of likely dates for key evolutionary events.
 
-Tools that are 
+Tools that are useful for molecular clock analysis are:
+
+  * [BEAST](https://beast.community/)
+  * [BactDating](https://github.com/xavierdidelot/BactDating)
+
+Here is an example of a BactDating analysis we recently did on ST307 *K. pneumoniae* to determine how a potential new cluster of ST307 isolates were expanding in Houston, TX:
+  
 
 ### Phylogeny Visualization Tools
 
@@ -542,7 +555,7 @@ There are multiple tools employed for visualizing phylogenies not limited to:
   - [Gingr](https://github.com/marbl/gingr)
   - [iTOL](https://itol.embl.de/login.cgi)
   - [FigTree](http://tree.bio.ed.ac.uk/software/figtree/)
-  - 
+  - [ggtree](https://bioconductor.org/packages/release/bioc/html/ggtree.html#:~:text='ggtree'%20is%20designed%20for%20visualization,%5Bctb%5D%2C%20Watal%20M.)
 
 ## Tips
 
