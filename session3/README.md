@@ -554,8 +554,8 @@ etc
 We can use the [BioNJ algorithm](https://academic.oup.com/mbe/article/14/7/685/1119804?login=true) to create a midpoint rooted, neighbor-joining tree inferred from the Mash distance matrix using a simple Rscript from [bacsort](https://github.com/rrwick/Bacsort). 
 
 ```
-cd ~/radmicrobes/Rscripts/phylogenetics
-Rscript ~/radmicrobes/Rscripts/bionj_tree.R kpneumo.mash.phylip kpneumo.mash.tre
+cd ~/radmicrobes/session3/Files/phylogenetics
+Rscript ~/radmicrobes/session3/RScripts/bionj_tree.R kpneumo.mash.phylip kpneumo.mash.tre
 ```
 
 You can now view `kpneumo.mash.tre` in [Gingr](https://github.com/marbl/gingr), which you should have already downloaded yesterday. 
