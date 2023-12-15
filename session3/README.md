@@ -89,7 +89,8 @@ conda activate radmicrobes-s3
 cp /projects/k2i/radmicrobes-s3.tar.gz ~/miniconda3/envs/radmicrobes-s3
 
 # Uncompress environment in conda environment directory
-tar xvzf ~/miniconda3/envs/radmicrobes-s3
+cd ~/miniconda3/envs/radmicrobes-s3
+tar xvzf radmicrobes-s3
 
 # Test and see if mlst is in pathway
 mlst -h
