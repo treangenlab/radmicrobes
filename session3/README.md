@@ -99,6 +99,10 @@ cp /projects/k2i/radmicrobes-s3.tar.gz ~/miniconda3/envs/radmicrobes-s3
 cd ~/miniconda3/envs/radmicrobes-s3
 tar -xvzf radmicrobes-s3.tar.gz
 
+# Prepare conda-pack
+cd ~/miniconda3/envs/radmicrobes-s3
+./conda-unpack
+
 # Test and see if mlst is in pathway
 mlst -h
 
