@@ -96,6 +96,9 @@ tar -xvzf radmicrobes-s3.tar.gz
 
 # Test and see if mlst is in pathway
 mlst -h
+
+# Clone this git repository into your home directory so that you have all the files and scripts necessary for the latter parts of this session
+git clone https://github.com/treangenlab/radmicrobes.git
 ```
 
 This is **NOT** a coding class, so we won't be going over in detail first principles of programming (*i.e.*, coding syntax, structure, etc.); however, background on R/Python will be helpful when we go through some basic code that we will use to execute scripts from a command line interface. 
