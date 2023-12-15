@@ -40,8 +40,60 @@
 
 ## Preparation
 
+* **Download R/RStudio**
+
 If you have not already done so, please download:
   * R and RStudio from the following site: [RStudio](https://posit.co/download/rstudio-desktop/)
+
+* **Set up conda environment on NOTS**
+By this point everyone should be able to `ssh` into the NOTS server:
+```
+# First ssh into the jumpstation
+ssh hpc4@radmicrobes.rice.edu
+
+# Should be in the SSH gateway
+ssh hpc4@nots
+
+# Now you have accessed in the NOTS cluster
+```
+
+* **Enter 'interactive' compute node so that we don't crash the server using limited compute resources in the compute node:
+When working in Simple Linux Utility for Resource Management, or simply Slurm, cluster, you typically will send job queues to perform large computational tasks. We are going to access an 'interactive' compute node so that we can run commands within the command line interface (CLI):
+```
+srun --partition=commons --pty --export=ALL --ntasks=1 --reservation=workshop --cpus-per-task=8 --mem=15GB --time=04:00:00 /bin/bash
+```
+
+* **Set up conda environment on NOTS**
+Most of the bioinformatic tools we use today will be used through the creation of a conda environment I already have packaged that just needs to be uncompressed within a `~/miniconda3/envs/radmicrobes-s3` directory that you'll create after successfully setting up Conda:
+```
+# Copy Conda install bash script into home directory
+cp /projects/k2i/Miniconda3-latest-Linux-x86_64.sh .
+
+# Run through the interactive conda setup guide, which I'll install on the SSH gateway (NOTE it's won't work in the gateway!) with everyone.
+
+# Once you have successfully downloaded Conda, we are going to add and set channels
+conda config --add channels defaults
+conda config --add channels conda-forge
+conda config --add channels bioconda
+
+# Install mamba for package management
+conda install -c conda-forge mamba
+
+# Create radmicrobes-s3 environment
+mamba create -n radmicrobes-s3
+
+# Activate the environment
+conda activate radmicrobes-s3
+
+# Copy the tarball radmicrobes-s3.tar.gz file into the conda environment directory
+cp /projects/k2i/radmicrobes-s3.tar.gz ~/miniconda3/envs/radmicrobes-s3
+
+# Uncompress environment in conda environment directory
+tar xvzf ~/miniconda3/envs/radmicrobes-s3
+
+# Test and see if mlst is in pathway
+mlst -h
+```
 
 This is **NOT** a coding class, so we won't be going over in detail first principles of programming (*i.e.*, coding syntax, structure, etc.); however, background on R/Python will be helpful when we go through some basic code that we will use to execute scripts from a command line interface. 
 
@@ -329,7 +381,7 @@ There are a few important points to always keep in mind when interpreting trees:
 
 The internal nodes will represent the Most Recent Common Ancestor (MRCA), or Last Common Ancestor (LCA).  It is important to realize that since the actual observed samples are on the tips, the LCA is hypothetical.  Another common misinterpretation is that proximal leaves are closely related.  This may not be the case, depending on how the tree is drawn.  Always trace the leaves back down the branches and look to the MRCA.
 
-### Constructing a Phylogenetic Tree
+#### Constructing a Phylogenetic Tree
 
 Generally, can be divided into two methods:
 
@@ -340,9 +392,9 @@ Distance-matrix based methods include the Unweighted-Pair Group Method with Arit
 
 Phylogenetic inference methods can be broadly classed into maximum parsimony and maximum likelihood methods, and will be expanded on in the next subsection.
 
-#### Maximum Parsimony vs. Maximum Likelihood
+### Maximum Parsimony vs. Maximum Likelihood
 
-**Maximum parsimony**
+#### Maximum parsimony
 
 Generally, parsimony describes when a minimum of change is required.  
 
@@ -352,7 +404,7 @@ Thus in the phylogenetic context, out of all possible trees, the tree which meet
 
 Maximum parsimony methods assume the concepts of homologous similarity - that identical alleles had to come from a common ancestor, and homoplasy (such as convergent evolution, parallel evolution, or reversal) are rare.
 
-**Maximum likelihood**
+#### Maximum likelihood
 
 Given:
 
@@ -431,7 +483,7 @@ Mixture models - assign a model (out of a user-specified selection) on a per-sit
 
 **!! Some caution may need to be exercised to avoid potential over-parameterization !!**
 
-#### Why so many models and which to choose?
+### Why so many models and which to choose?
 
 Tractibility. The ML criterion is a NP-hard problem (as Mike Nute stated yesterday during Session 2).
 
@@ -439,7 +491,7 @@ We need to balance between robustness and efficiency.  There are always practica
 
 But, software packages can help!  Credit to the mountain of work underlying their development, testing, optimization and validation that enables analytic accessibility on large-scale genomic sequencing projects.
 
-#### Additional model variations and approaches
+### Additional model variations and approaches
 
 **Heuristics and Approximations**
 
@@ -453,21 +505,22 @@ etc
 
 **Technical optimizations**
 
-#### TAKEAWAYS
+### Takeways
 
-Inferential methods (ML, Bayesian) are statistically consistent.
+  * Inferential methods (ML, Bayesian) are statistically consistent.
+  * GTR is probably the most popular model
+  * At least some form of rate heterogeneity modelling should be employed
+  * A number of software suites for phylogenetic estimation include features and tools designed to help with "optimal" model selection for your dataset.
 
-GTR is probably the most popular model
+### Example 1 - Distance based phylogeny 
 
-At least some form of rate heterogeneity modelling should be employed
-
-A number of software suites for phylogenetic estimation include features and tools designed to help with "optimal" model selection for your dataset.
-
-### 
+### Example 2 - Maximum-likelihood inferred Phylogent 
 
 ### Bayesian Analysis to Infer Time-Dated Phylogenies
 
-#### Phylogeny Visualization Tools
+
+
+### Phylogeny Visualization Tools
 
 There are multiple tools employed for visualizing phylogenies not limited to: 
   - [Gingr](https://github.com/marbl/gingr)
