@@ -4,7 +4,7 @@
 # Copyright (c) 2018, University of Oxford
 # Licence: GPL3
 
-import sys, requests, argparse, base64, 
+import sys, requests, argparse, base64
 parser = argparse.ArgumentParser()
 parser.add_argument('--file', '-f', type=str, default='contigs.fasta', help='assembly contig filename (FASTA format)')
 args = parser.parse_args()
