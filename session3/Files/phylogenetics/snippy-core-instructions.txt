@@ -1,5 +1,7 @@
 ##### Vignette on how to run snippy-multi
 
+"## Before getting started, make sure you have snippy commands in your environment pathway and/or create a conda environment: mamba install -c bioconda snippy "
+
 cd ./radgenomics/session3/phylogenetics
 
 ## Step 1: Donwload short-read fastq files using NCBIs sratoolkit the sra_subset.tsv file under the 'lists' directory

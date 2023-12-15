@@ -1,5 +1,5 @@
 ---
-title: "3.1 - RAD_Genomics_BootCamp"
+title: "3.1 - RADMicrobes_BootCamp"
 author: "William Shropshire"
 date: "`r Sys.Date()`"
 output: html_document
@@ -7,7 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir = "~/Documents/GitHub/radmicrobes/session3/Analysis/")
+knitr::opts_knit$set(root.dir = "~/Documents/GitHub/radmicrobes/session3/RScripts/")
 ```
 
 ## Traditional 'OG' Epidemiology 
@@ -61,7 +61,7 @@ ggsave("cholera_deaths_time.pdf")
 # What if John Snow had (1) knowledge of germ theory; (2) capacity to culture Vibrio cholera; (3) either phenotypic or genotypic data at his disposal?
 
 ```{r fictional 1854 Cholera outbreak dataset, echo=FALSE}
-df1<- read.csv("../Files/cholera_fictional_data.csv")
+df1<- read.csv("../Files/datasets/cholera_fictional_data.csv")
 
 # Create a histogram without serotyping data
 ggplot(df1, aes(x = as.Date(date))) +
@@ -105,8 +105,7 @@ ggsave("fictional_hist_w_serotype.pdf")
 rm(list = ls())  
 
 # Clear packages
-detach("package:datasets", unload = T)  
-p_unload(all)  
+pacman::p_unload(all)  
 
 # Clear plots
 graphics.off()  

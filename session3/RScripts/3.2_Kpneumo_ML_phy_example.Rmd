@@ -1,9 +1,11 @@
 ---
-title: "Phylogenies"
-output: html_notebook
+title: "3.2 - RADMicrobes_BootCamp"
+author: "William Shropshire"
+date: "`r Sys.Date()`"
+output: html_document
 ---
 
-### Core genome alignment of ST131 E. coli isolates (n=184 including reference) that have been sequenced from 2013 to 2020 at MD Anderson Cancer Center
+### Core genome alignment with recombination masked using Gubbins for *K. pneumoniae* with a small subset (n=10) of isolates from CRACKLEII project
 
 ### Initial GGtree was inspired/borrowed from https://aschuerch.github.io/posts/2017-04-24-blog-post-1
 
@@ -25,253 +27,59 @@ pacman::p_load(
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(root.dir = "/Users/wcshropshire/Documents/Active_projects/T32_carb_preResistance/2023_08_14_core_genome_mask_phylogeny/")
-```
-
-## read in files
-
-```{r read in files}
-iqtree.file.ec <- "ST131_clean_core_snp_2023_08_23.final_bootstrapped_tree.tre"
-iqtree.metadata <- "2023_09_11_ST131_dataframe_working.csv"
+knitr::opts_knit$set(root.dir = "~/Documents/GitHub/radmicrobes/session3/RScripts/")
 ```
 
 ### Note that the branch length scale with Gubbins is expressed in substitutions/genome
 
 ## Create basic iqtree and midroot the tree
 
-```{r}
-# Create metadata set
-df1 <- read.csv(iqtree.metadata)
+```{r Create tree visualizations}
+# Create tree for ML tree
 
-# Change MB1860 to reference to match tip labels
-df1$sample_id[df1$sample_id =="MB1860"] <- "Reference"
-rownames(df1) <- df1$sample_id
-df1$recurrent_cat <- as.factor(df1$recurrent)
-df1$hierbaps_2 <- as.factor(df1$hierbaps_2)
-# Year collected
-df1$collection_date <- as.Date(df1$collection_date, "%m/%d/%y")
-df1$admin_date <- as.Date(df1$admin_date, "%m/%d/%y")
-df1$year_collected <- as.factor(year(df1$collection_date))
+# Create tree for ML tree
+ml_tree <- read.tree("./../Files/phylogenetics/kpneumo.clean.full.aln.contree")
+# midpoint root
+ml_tree <- midpoint_root(ml_tree)
 
-df1$fluct_candidate[is.na(df1$fluct_candidate)] <- 0
-df1$fluct_candidate <- as.factor(df1$fluct_candidate)
-df1$include <- as.character(ifelse(df1$fluct_candidate == 1, "yes", NA))
-
-df1$ompC[df1$ompC == "missense/disruptive inframe deletion"] <- "missense"
-
-# year cat
-df1$year_cat <- ifelse(df1$year_collected == "2013" | df1$year_collected == "2014" | df1$year_collected == "2015", "1",
-                       ifelse(df1$year_collected == "2016", "2",
-                              ifelse(df1$year_collected == "2017", "3", 
-                                     ifelse(df1$year_collected == "2018", "4", 
-                                            ifelse(df1$year_collected == "2019", "5", "6")))))
-
-# Create service category 
-df1$service_cat <- ifelse(df1$service_lab == "Leukemia" | df1$service_lab == "Pedi Stem Cell Transplant", "1", 
-                          ifelse(df1$service_lab == "Stem Cell Transplant and Cellular Therapy" | df1$service_lab == "Young Adult Stem Cell Transplant" | df1$service_lab == "Pedi Stem Cell Transplant", "2", 
-                                 ifelse(df1$service_lab == "Hospital Medicine - Other", "3", 
-                                        ifelse(df1$service_lab == "Lymphoma/Myeloma", "4", 
-                                               ifelse(df1$service_lab == "Breast Medical Oncology" | df1$service_lab == "General Gynecology" | df1$service_lab == "Gyn Medical Oncology" | df1$service_lab == "GYN Oncology", "5", 
-                                                      ifelse(df1$service_lab == "GU Oncology" | df1$service_lab == "Urology", "6", 
-                                                             ifelse(df1$service_lab == "Supportive Care", "7", "8")))))))
-
-# PapGII
-df1$papG_cat <- as.factor(ifelse(is.na(df1$papG.II), 0, 1))
-attach(df1)
-
-# Create tree for E. coli and create a new dataframe with hierBAPs levels
-tree_ec <- read.tree(iqtree.file.ec)
-tree_ec <- midpoint.root(tree_ec)
-
-#Visualize nodes
-treenode <- ggtree(tree_ec) + geom_text(aes(label=node), hjust=0.3)
-
-# Color schemes and breaks
-colors2 <- c("#215eed", "#dbe8fb", "#f1cfd0", "#e7a397","#db483d", "#76231d")
-color_breaks2 <- c(0.499999,1.499999,2.499999, 3.499999,4.49999999)
-cbPalette11 <- c("#00FFFF","#0000FF","#FF00FF","#FB9709","#008000","#800000",
-"#32CD32","#87CEFA","#808000","#800080","#ff0000")
-
-cbPalette24 <- c("#00FFFF","#0000FF","#FF00FF","#FB9709","#008000","#800000",
-"#32CD32","#87CEFA","#808000","#800080","#ff0000","#F2F2F2","#008080","#FF6347",
-"#FFFF00","#7CFC00","#000080","#FFD700","#1E90FF","#F778A1","#A0522D","#E0B0FF","#493D26","#FFD27F")
 # Create ggtree basic plot
-ggtree_ec <- ggtree(tree_ec)
-ggtree_ec <- ggtree_ec + 
-        geom_treescale(fontsize = 2, linesize = 0.5, family = "Arial Bold") + 
-        geom_point2(aes(subset=(!isTip & as.numeric(label)>.95)), size = 0.5)
+ggtree_ml <- ggtree(ml_tree) +
+  geom_treescale(fontsize = 2, linesize = 0.5, family = "Arial Bold") +
+  geom_tiplab(aes(label = label), size = 2, fontface = 2, family = "Helvetica")
 
 
-p1 <- ggtree_ec %<+% df1 + geom_tiplab(aes(color = as.factor(hierbaps_2)), show.legend=FALSE,
-                                    geom="text", fontface=2, align = TRUE, family ="Helvetica", size = 2) +
-      theme(legend.text=element_text(size=6, face="bold"),
-            legend.title=element_text(size=8, face="bold"),
-            legend.key.size = unit(0.5, 'cm'),
-            legend.title.align=0.5) +
-      geom_polygon(aes(fill = hierbaps_2, x = 0, y = 0)) +
-      scale_color_manual(values = cbPalette11, na.translate = F) +
-      scale_fill_manual(values = cbPalette11, na.translate = F) +
-      labs(fill = "Cluster")
+# Create metadata set
+df1 <- read.csv("./../Files/datasets/crackle2_kleborate_subset.csv")
+df1$sra_id[df1$sra_id =="SRR12509439"] <- "Reference"
+rownames(df1) <- df1$sra_id
+
+p1 <- gheatmap(ggtree_ml, df1[, "ST", drop=FALSE], offset=0.0005, width=0.013, hjust = 1, colnames_angle = -45, colnames_position = "top", color = "white", font.size = 3, family="Arial Bold", custom_column_labels = c("ST"))+
+  theme(legend.text=element_text(size=6, face="bold"),
+        legend.title=element_text(size=10, face="bold"),
+        legend.key.size = unit(0.5, 'cm'),
+        legend.title.align=0.5) +
+  ggplot2::ylim(-1.0, NA) + 
+  coord_cartesian(clip = "off") + 
+  scale_fill_manual(values = c("#ff0000", "#0000FF", "#5f0f40"), 
+                    name = "Sequence Type",
+                    breaks = c("ST307", "ST258", "ST244"))
 
 p2 <- p1 + new_scale_fill()
-p3 <- gheatmap(p2, df1[, "category", drop=FALSE], offset=25, width=0.013, hjust = 1, colnames_angle = -45,
-               colnames_position = "top", color = "white", font.size = 3, family="Arial Bold", custom_column_labels = c("AST")) +
+
+p3 <- gheatmap(p2, df1[, "Bla_Carb_acquired", drop=FALSE], offset=0.00055, width=0.013, hjust = 1, colnames_angle = -45, colnames_position = "top", color = "white", font.size = 3, family="Arial Bold", custom_column_labels = c("Carb"))+
   theme(legend.text=element_text(size=6, face="bold"),
         legend.title=element_text(size=10, face="bold"),
         legend.key.size = unit(0.5, 'cm'),
         legend.title.align=0.5) +
   ggplot2::ylim(-1.0, NA) + 
   coord_cartesian(clip = "off") + 
-  scale_fill_manual(values = c("#588157", "#fb8b24", "#9a031e", "#5f0f40"), 
-                    name = "Antimicrobial \nSusceptibility",
-                    breaks = c("ESC-S","ESC-R","non-CP-CRE", "CPE"))
+  scale_fill_manual(values = c("#ff00e3", "#FFFFFFFF"), 
+                    name = "KPC-2",
+                    breaks = c("KPC-2", "-"), 
+                    labels = c("Present", "Absent"))
 
-#p11 <-gheatmap(p10, df1[, "papG_cat", drop=FALSE], offset=70, width=0.013, hjust = 1, colnames_angle = -45,
-#              colnames_position = "top", color = "white", font.size = 3, family="Arial Bold", custom_column_labels = c("PapGII")) +
-#      theme(legend.text=element_text(size=6, face="bold"),
-#            legend.title=element_text(size=8, face="bold"),
-#            legend.key.size = unit(0.5, 'cm'),
-#            legend.title.align=0.5) +
-#      ggplot2::ylim(-1.0, NA) + 
-#      coord_cartesian(clip = "off") + 
-#      scale_fill_manual(values = c("#d5bdaf","#e63946"), 
-#                        name = "PapGII\n Positivity",
-#                        breaks = c("0","1"),
-#                        labels = c("Absent", "Present"))
-
-
-
-#Changing the continous values to dscrete values
-#Or use as.factor()
-#df1$etp_cat[df1$etpsir=="1"] <- "susceptible"
-#df1$etp_cat[df1$etpsir!="1"] <- "non-susceptible"
-
-#df1$cro_cat[df1$crosir=="1"] <- "susceptible"
-#df1$cro_cat[df1$crosir!="1"] <- "non-susceptible"
-
-#p3<-gheatmap(p2, df1[, c("cro_cat","etp_cat"), drop=FALSE], offset=25, width=0.023, hjust = 1, colnames_angle = -45,
-#             colnames_position = "top", color = "white", font.size = 3, family="Arial Bold", custom_column_labels = c("CRO", "ETP")) +
-#      theme(legend.text=element_text(size=6, face="bold"),
-#            legend.title=element_text(size=10, face="bold"),
-#            legend.key.size = unit(0.5, 'cm'),
-#            legend.title.align=0.5) +
-#      ggplot2::ylim(-1.0, NA) + 
-#      coord_cartesian(clip = "off") + 
-#      scale_fill_manual(values = c("#EDD983", "#872CA2"), 
-#                        name = "AST\n Profile",
-#                        breaks = c("susceptible", "non-susceptible"),
-#                        labels = c("Susceptible", "Non-susceptbile"))
-
-p4<-p3+new_scale_fill()
-p5<- gheatmap(p4, df1[, c("ompC","ompF"), drop=FALSE], offset=40, width=0.023, hjust = 1, colnames_angle = -45,
-               colnames_position = "top", color = "white", font.size = 3, family="Arial Bold", custom_column_labels = c("ompC", "ompF")) +
-  theme(legend.text=element_text(size=6, face="bold"),
-        legend.key.size = unit(0.5, 'cm'),
-        legend.title=element_text(size=10, face="bold"),
-        legend.title.align=0.5) +
-  ggplot2::ylim(-1.0, NA) + 
-  coord_cartesian(clip = "off") + 
-  scale_fill_manual(values = c("#1d3557", "#457b9d", "#e63946","#a8dadc" ,"#d5bdaf"), 
-                    name = "OMP Profile",
-                    breaks = c("frameshift", "insertion", "nonsense", "missense", "WT"),
-                    labels = c("Frameshift", "Insertion", "Nonsense", "Missense", "Wild Type"))
-
-p6<-p5+new_scale_fill()
-p7 <- gheatmap(p6, df1[, "esbl_cat", drop=FALSE], offset=62, width=0.013, hjust = 1, colnames_angle = -45,
-               colnames_position = "top", color = "white", font.size = 3, family="Arial Bold", custom_column_labels = c("ESBL")) +
-  theme(legend.text=element_text(size=6, face="bold"),
-        legend.title=element_text(size=10, face="bold"),
-        legend.key.size = unit(0.5, 'cm'),
-        legend.title.align=0.5) +
-  ggplot2::ylim(-1.0, NA) + 
-  coord_cartesian(clip = "off") + 
-  scale_fill_manual(values = c("#5f0f40", "#fb8b24", "#0f4c5c", "#8ecae6", "#d5bdaf"), 
-                    name = "ESBL",
-                    breaks = c("CTX-M-15","CTX-M-27", "CTX-M-14", "Other", "None"))
-
-p8 <- p7 + new_scale_fill()
-p9 <-gheatmap(p8, df1[, "oxa1_cat", drop=FALSE], offset=72, width=0.013, hjust = 1, colnames_angle = -45,
-              colnames_position = "top", color = "white", font.size = 3, family="Arial Bold", custom_column_labels = c("OXA-1")) +
-      theme(legend.text=element_text(size=6, face="bold"),
-            legend.title=element_text(size=8, face="bold"),
-            legend.key.size = unit(0.5, 'cm'),
-            legend.title.align=0.5) +
-      ggplot2::ylim(-1.0, NA) + 
-      coord_cartesian(clip = "off") + 
-      scale_fill_manual(values = c("#d5bdaf","#e63946"), 
-                        name = "OXA-1",
-                        breaks = c("None","OXA-1"))
-
-p10 <- p9 + new_scale_fill()
-p11 <-gheatmap(p10, df1[, "esbl_context", drop=FALSE], offset=87, width=0.013, hjust = 1, colnames_angle = -45,
-              colnames_position = "top", color = "white", font.size = 3, family="Arial Bold", custom_column_labels = c("ESBL Context")) +
-      theme(legend.text=element_text(size=6, face="bold"),
-            legend.title=element_text(size=8, face="bold"),
-            legend.key.size = unit(0.5, 'cm'),
-            legend.title.align=0.5) +
-      ggplot2::ylim(-1.0, NA) + 
-      coord_cartesian(clip = "off") + 
-      scale_fill_manual(values = c("#d5bdaf","#264653", "#fb8b24", "#9a031e"), 
-                        name = "ESBL Context",
-                        breaks = c("None","chromosome", "plasmid", "both"),
-                        labels = c("None", "Chromosome", "Plasmid", "Both"))
-
-p12 <- p11 + new_scale_fill()
-p13 <-gheatmap(p12, df1[, "esbl_amp", drop=FALSE], offset=102, width=0.013, hjust =1, 
-              colnames_angle = -45, 
-              colnames_position = "top", color = "white", font.size = 3, family="Arial Bold", 
-              custom_column_labels = c("ESBL CNV")) +
-      theme(legend.text=element_text(size=6, face="bold"),
-            legend.title=element_text(size=8, face="bold"),
-            legend.key.size = unit(0.5, 'cm'),
-            legend.title.align=0.5) +
-      ggplot2::ylim(-1.0, NA) + 
-      coord_cartesian(clip = "off") + 
-      scale_fill_stepsn(colors = colors2[c(1, seq_along(colors2), length(colors2))],
-                          values  = c(0, scales::rescale(color_breaks2, from = c(-4,5.5)), 1),
-                          breaks =c(0.499999,1.499999,2.499999, 3.499999,4.49999999),
-                          labels =c("0","1","2","3","4"),
-                          limits=c(-4,5.5),
-                          name = "Rel. copy",
-                          na.value = "white") 
-
-p14<-p13+new_scale_fill()
-p15 <-gheatmap(p14, df1[, "oxa1_amp", drop=FALSE], offset=112, width=0.013, hjust =1, 
-              colnames_angle = -45, 
-              colnames_position = "top", color = "white", font.size = 3, family="Arial Bold", 
-              custom_column_labels = c("OXA-1 CNV")) +
-      theme(legend.text=element_text(size=6, face="bold"),
-            legend.title=element_text(size=8, face="bold"),
-            legend.key.size = unit(0.5, 'cm'),
-            legend.title.align=0.5) +
-      ggplot2::ylim(-1.0, NA) + 
-      coord_cartesian(clip = "off") + 
-      scale_fill_stepsn(colors = colors2[c(1, seq_along(colors2), length(colors2))],
-                          values  = c(0, scales::rescale(color_breaks2, from = c(-4,5.5)), 1),
-                          breaks =c(0.499999,1.499999,2.499999, 3.499999,4.49999999),
-                          labels =c("0","1","2","3","4"),
-                          limits=c(-4,5.5),
-                          name = "Rel. copy",
-                          na.value = "white") 
-
-p16<-p15+new_scale_fill()    
-p17 <- p16 + geom_fruit(
-          data=df1,
-          geom=geom_star,
-          show.legend = FALSE,
-          mapping=aes(x=include, y=sample_id, fill=include),
-          size=2,
-          starstroke=0,
-          pwidth=0.1,
-          offset = 0.015,
-          na.rm = TRUE,
-          inherit.aes = FALSE) +
-      scale_fill_manual(values = c("#000000"), na.value = "transparent")
-
-
-
-ggsave("fig1_phylogenies_v4.svg",  
-       fig1_1,         
+ggsave("pneumo_ML_tree.svg",  
+       p3,         
        device = "svg",       
        dpi = 300,             
        units = "cm",         
@@ -280,7 +88,19 @@ ggsave("fig1_phylogenies_v4.svg",
 
 ```
 
+```{r clean up, echo=FALSE}
+# Clear data
+rm(list = ls())  
 
+# Clear packages
+pacman::p_unload(all)  
+
+# Clear plots
+graphics.off()  
+
+# Clear console
+cat("\014") 
+```
 
 
 
