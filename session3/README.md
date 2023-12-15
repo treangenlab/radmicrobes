@@ -506,10 +506,7 @@ etc
 
 **Hybrids and Combinatorial approaches**
 
-FastTree
-etc
-
-**Technical optimizations**
+ * [FastTree](http://www.microbesonline.org/fasttree/)
 
 ### Takeways
 
@@ -529,7 +526,19 @@ Rscript ~/radmicrobes/Rscripts/bionj_tree.R kpneumo.mash.phylip kpneumo.mash.tre
 
 You can now view `kpneumo.mash.tre` in [Gingr](https://github.com/marbl/gingr), which you should have already downloaded yesterday. 
 
-### Example 2 - Maximum-likelihood inferred Phylogent 
+Use scp from your local terminal to transfer:
+```
+scp -r -J hpc4@radmicrobes.rice.edu hpc4@nots.rice.edu:/home/hpc4/radmicrobes/session3/Files/phylogenetics/kpneumo.mash.tre .
+```
+
+### Example 2 - Maximum-likelihood Inferred Phylogeny
+
+I'm now going to show how we can use a core genome alignment as input to a maximum likelihood inferred phylogeny. One of my favorite tools is [Gubbins](https://github.com/nickjcroucher/gubbins), which includes multiple ML software tools such as **IQ-TREE 2** and **RAxML-NG**. It uses a sliding window variant detection to look for high snp density regions that are signals of potential high recombination. However, given our small sample size and high divergence, I would not use in this particular case. Therefore, going to show an example using IQ-TREE 2 and go over some of the options. Dr. Baptista will go over RAxML-ng in the follow section: 
+
+```
+iqtree2 -B 1000 --alrt 1000 -s kpneumo.clean.full.aln
+```
+Let's go through the output and transfer the `kpneumo.clean.full.aln.contree` to your local computer so we can look through it. 
 
 ### Bayesian Analysis to Infer Time-Dated Phylogenies
 
