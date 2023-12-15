@@ -377,6 +377,10 @@ A phylogenetic tree is a hierarchical representation of your modelled data to re
 + **internal nodes** (*i.e.*, divergence points)
 + **branches** (*i.e.*, connections),
 + and sometimes a **root**.  
+  
+<p align="center">
+<img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/SimpleTree1.png" width="500" height="300">
+</p>
 
 One note: there is a lot of synonymous nomenclature describing parts of trees, as anybody from biologists to mathematicians to arborists may work with trees regularly.  For instance, branches can also be called **edges** in graph vernacular.  Leaves can also be thought of as an external node.  Branches can also be be classified as internal if both ends are connected to either internal nodes or the root, or external if it terminates at a leaf.
 
@@ -390,7 +394,14 @@ There are a few important points to always keep in mind when interpreting trees:
   + The spacing between branches also doesn't mean anything
   + Order and spacing of leaves are always arbitrary; Branches can always be swapped (or rotated about an internal node)
 
+<p align="center">
+<img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/SimpleTree1_rotated.png" width="500" height="300">
+</p>
+
+<p align="center">This tree is the same as the previous one</p>
+
 The internal nodes will represent the Most Recent Common Ancestor (MRCA), or Last Common Ancestor (LCA).  It is important to realize that since the actual observed samples are on the tips, the LCA is hypothetical.  Another common misinterpretation is that proximal leaves are closely related.  This may not be the case, depending on how the tree is drawn.  Always trace the leaves back down the branches and look to the MRCA.
+
 
 #### Constructing a Phylogenetic Tree
 
