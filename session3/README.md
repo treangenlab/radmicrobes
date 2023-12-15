@@ -67,9 +67,11 @@ srun --partition=commons --pty --export=ALL --ntasks=1 --reservation=workshop --
 Most of the bioinformatic tools we use today will be used through the creation of a conda environment I already have packaged that just needs to be uncompressed within a `~/miniconda3/envs/radmicrobes-s3` directory that you'll create after successfully setting up Conda:
 ```
 # Copy Conda install bash script into home directory
-cp /projects/k2i/Miniconda3-latest-Linux-x86_64.sh .
+cp /projects/k2i/Miniconda3-latest-Linux-x86_64.sh ~
 
 # Run through the interactive conda setup guide, which I'll install on the SSH gateway (NOTE it's won't work in the gateway!) with everyone.
+bash ~/Miniconda3-latest-Linux-x86_64.sh
+# Enter 'yes' when the prompt asks "Do you wish to update your shell profile to automatically initialize conda?" 
 
 # Once you have successfully downloaded Conda, we are going to add and set channels
 conda config --add channels defaults
