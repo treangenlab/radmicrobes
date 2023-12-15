@@ -520,11 +520,21 @@ etc
 
 ### Example 1 - Distance based phylogeny 
 
+We can use the [BioNJ algorithm](https://academic.oup.com/mbe/article/14/7/685/1119804?login=true) using 
+
 ### Example 2 - Maximum-likelihood inferred Phylogent 
 
 ### Bayesian Analysis to Infer Time-Dated Phylogenies
 
+Bayesian dating, a powerful analytical approach, is employed to estimate the timing of evolutionary events within these phylogenies, providing a temporal dimension to the relationships among bacterial lineages. The process typically involves incorporating molecular clock models, which assume that genetic mutations accumulate at a relatively constant rate over time. By combining sequence data from bacterial genomes with calibration points derived from known time points such as collection dates, Bayesian dating methods use statistical inference to estimate divergence times between species or lineages.
 
+In addition to inferring a phylogeny like we did previously, we introduce a couple additional steps:
+
+ * Molecular Clock Calibration: Introduce calibration points based on external information, such as historical events or fossil records, to anchor the molecular clock and estimate mutation rates.
+ * Bayesian Dating Analysis: Employ Bayesian dating methods, such as BEAST (Bayesian Evolutionary Analysis by Sampling Trees), to simultaneously estimate phylogenetic relationships and divergence times while considering uncertainties in the data.
+ * Posterior Inference: Obtain a posterior distribution of divergence times, providing a range of likely dates for key evolutionary events.
+
+Tools that are 
 
 ### Phylogeny Visualization Tools
 
