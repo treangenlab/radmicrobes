@@ -168,6 +168,12 @@ Where ESC-S = extended-spectrum cephalosporin susceptible, ESC-R = extended spec
 
 Panels A and B show proportion and absolute frequency for isolates sequenced over time by phylogroup, a molecular typing based on a quadraplex PCR schema whereas panels C and D show proportion and absolute frequency for multi-locus sequence typing (MLST), which is based on a PCR schema that includes typically 7-8 housekeeping genes and provides additional resolution. Are there any patterns that you observe from both figures?
 
+### SARS-Cov-2 Outbreak Surveillance
+
+I would be amiss to not mention how NGS completely reshaped how we approach genomic epidemiology following the COVID-19 outbreak. Within days of the first reported case of COVID-19 that occurred in January of 2020, we had sequenced the novel coronavirus. This not only shaped how we would trace the spread and evolution of this virus, but it also provided critical information regarding pathogenecity, immunogenicity, and gave researchers the necessasry information to develop mRNA vaccine targets for SARS-CoV-2, a completely game changing technology developed by Drs. Katalin Karikó and Drew Weissman.
+
+Let's briefly navigate to [Nextstrain](https://nextstrain.org/ncov/gisaid/global/all-time) to look at how SARS-Cov-2 changed over time. To learn more about this awesome data visualization dashboard, I recommend checking out [Hadfield et al. 2018, *Bioinformatics* ](https://academic.oup.com/bioinformatics/article/34/23/4121/500138).
+
 ## Strain-Level Analysis
 
 ### Genotyping - Measures of Genetic Relatedness
