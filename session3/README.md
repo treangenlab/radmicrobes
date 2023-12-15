@@ -562,7 +562,7 @@ scp -r -J hpc4@radmicrobes.rice.edu hpc4@nots.rice.edu:/home/hpc4/radmicrobes/se
 
 #### Example 2 - Maximum-likelihood Inferred Phylogeny
 
-I'm now going to show how we can use a core genome alignment as input to a maximum likelihood inferred phylogeny. One of my favorite tools is [Gubbins](https://github.com/nickjcroucher/gubbins), which includes multiple ML software tools such as **IQ-TREE 2** and **RAxML-NG**. It uses a sliding window variant detection to look for high snp density regions that are signals of potential high recombination. However, given our small sample size and high divergence, I would not use in this particular case. Therefore, going to show an example using IQ-TREE 2 and go over some of the options. Dr. Baptista will go over RAxML-ng in the follow section: 
+I'm now going to show how we can use a core genome alignment as input to a maximum likelihood inferred phylogeny. One of my favorite tools is [Gubbins](https://github.com/nickjcroucher/gubbins), which includes multiple ML software tools such as **IQ-TREE 2** and **RAxML-NG**. It uses a sliding window variant detection to look for high snp density regions that are signals of potential high recombination. However, given our small sample size and high divergence, I would not use in this particular case. I would also note that you **cannot use Gubbins for core gene alignments generated from pan-genome tools**. Therefore, going to show an example using IQ-TREE 2 and go over some of the options. Dr. Baptista will go over RAxML-ng in the follow section: 
 
 ```
 iqtree2 -B 1000 --alrt 1000 -s kpneumo.clean.full.aln
