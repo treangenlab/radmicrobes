@@ -555,7 +555,9 @@ Tools that are useful for molecular clock analysis are:
   * [BEAST](https://beast.community/)
   * [BactDating](https://github.com/xavierdidelot/BactDating)
 
-Here is an example of a BactDating analysis we recently did on ST307 *K. pneumoniae* to determine how a potential new cluster of ST307 isolates were expanding in Houston, TX:
+We recently performed a BactDating analysis of ST307 *K. pneumoniae* ([Selvaraj Anand *et. al.* medrxiv](https://www.medrxiv.org/content/10.1101/2023.11.22.23298833v1) to determine how a potential new cluster of ST307 isolates were expanding in Houston, TX. Here is output of root-to-tip distance to measure the correlation between sampling dates and phylogenetic signal:
+
+
   
 
 ### Phylogeny Visualization Tools
