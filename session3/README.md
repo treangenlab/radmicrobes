@@ -402,7 +402,6 @@ There are a few important points to always keep in mind when interpreting trees:
 
 The internal nodes will represent the Most Recent Common Ancestor (MRCA), or Last Common Ancestor (LCA).  It is important to realize that since the actual observed samples are on the tips, the LCA is hypothetical.  Another common misinterpretation is that proximal leaves are closely related.  This may not be the case, depending on how the tree is drawn.  Always trace the leaves back down the branches and look to the MRCA.
 
-
 #### Constructing a Phylogenetic Tree
 
 Generally, can be divided into two methods:
@@ -512,6 +511,14 @@ Tractibility. The ML criterion is a NP-hard problem (as Mike Nute stated yesterd
 We need to balance between robustness and efficiency.  There are always practical limitations such as computational resources, memory consumption, time, which are increasingly evident in the area of "big data" (larger datasets, deeper sequencing, etc.)
 
 But, software packages can help!  Credit to the mountain of work underlying their development, testing, optimization and validation that enables analytic accessibility on large-scale genomic sequencing projects.
+
+#### Common file formats for Trees
+
+Newick
+
+Nexus
+
+PHYLIP
 
 ### Additional model variations and approaches
 
