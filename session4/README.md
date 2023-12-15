@@ -373,6 +373,7 @@ Using [InterproScan](https://www.ebi.ac.uk/interpro/search/sequence/) ou can als
 
 ![image](https://github.com/treangenlab/radmicrobes/assets/28576450/0ae73a5e-8eda-4a50-b8d5-3fdad1057eef)
 
+**Exercise:** copy the first sequence on your prokka faa result and paste [here](https://www.ebi.ac.uk/interpro/search/sequence/). What do you see?
 
 </details>
 <details>
