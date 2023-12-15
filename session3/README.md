@@ -557,8 +557,18 @@ Tools that are useful for molecular clock analysis are:
 
 We recently performed a BactDating analysis of ST307 *K. pneumoniae* ([Selvaraj Anand *et. al.* medrxiv](https://www.medrxiv.org/content/10.1101/2023.11.22.23298833v1) to determine how a potential new cluster of ST307 isolates were expanding in Houston, TX. Here is output of root-to-tip distance to measure the correlation between sampling dates and phylogenetic signal:
 
+<p align="center">
+<img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/Root-to-tip_test.jpg" width="600" height="450">
+<em>(Selvaraj Anand et al., 2023 medRxiv)</em>
+</p>
 
-  
+Here is the molecular dated tree of 224 CG307 isolates from different geographic locales with 37 isolates included from our recent study: 
+
+<p align="center">
+<img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/BactDating_CG307.png" width="700" height="600">
+<em>(Selvaraj Anand et al., 2023 medRxiv)</em>
+</p>
+
 
 ### Phylogeny Visualization Tools
 
@@ -567,6 +577,8 @@ There are multiple tools employed for visualizing phylogenies not limited to:
   - [iTOL](https://itol.embl.de/login.cgi)
   - [FigTree](http://tree.bio.ed.ac.uk/software/figtree/)
   - [ggtree](https://bioconductor.org/packages/release/bioc/html/ggtree.html#:~:text='ggtree'%20is%20designed%20for%20visualization,%5Bctb%5D%2C%20Watal%20M.)
+
+Each has advantages and disadvantages, but for our final exercise, I'm going to use `ggtree` to create a simple visual aid of our tree. 
 
 ## Tips
 
