@@ -436,6 +436,7 @@ Maximum parsimony methods assume the concepts of homologous similarity - that id
 Given:
 
 1.) A sample set of sequences, and
+
 2.) A nucleotide substitution (evolutionary) model,
 
 Maximum Likelhood (ML) phylogenetic inference methods will build a multitude of trees, recursively computing the probabilities for the tree topology and branch lengths.  The ML method will generally start with a small (n=4) tree, analyzed, then samples are iteratively added one at a time to the tree.  With each addition, alternative topologies are explored and assessed for likelihood using local rearrangement methods such as:
@@ -446,7 +447,7 @@ Maximum Likelhood (ML) phylogenetic inference methods will build a multitude of 
 
 In order to compute the likelihood, the branch lengths are computed for *each* topological variant by summing the log-likelihood for *each* nucleotide at *each* site (position).
 
-This is computationally expensive!...
+This is computationally expensive!
 
 **ML with Bootstrapping (Felsenstein 1985)**
 
@@ -490,7 +491,7 @@ The GTR model is like the HKY model, but each possible nucleotide substitution h
 
 This model is probably the most popular at the moment.  
 
-**+gamma (Yang 1994)**
+**+Gamma (Yang 1994)**
 
 This is more of a modification that may be applied to any model, though you may commonly see this model along with the aforementioned GTR model as GTR+gamma.
 
