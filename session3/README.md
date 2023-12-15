@@ -28,10 +28,15 @@
   * [Introduction and Terminology](#introduction-and-terminology)
      * [Dissecting a Tree](#dissecting-a-tree)
      * [Maximum Parsimony vs. Maximum Likelihood](#maximum-parsimony-vs-maximum-likelihood)
-  * [Inferring Phylogenies Using Maximum-Likelihood](#inferring-phylogenies-using-maximum-likelihood)
-     * [IQ-TREE 2](#iq-tree-2)  
+  * [Inferring Phylogenies Using Maximum-Likelihood Parameterization](#inferring-phylogenies-using-maximum-likelihood)
+     * [More complexities to address mutational heterogeneity](#more-complexities-to-address-mutational-heterogeneity)
+  * [Why so many models and which to choose?](#why-so-many-models-and-which-to-choose?)
+  * [Additional model variations and approaches](#additional-model-variations-and-approaches)
+  * [Summary of Key Points](#summary-of-key-points)
+     * [Example 1 - Distance based phylogeny](#example-1---distance-based-phylogeny)
+     * [Example 2 - Maximum-likelihood Inferred Phylogeny](#example-2---maximum-likelihood-inferred-phylogeny)
   * [Bayesian Analysis to Infer Time-Dated Phylogenies](#bayesian-analysis-to-infer-time-dated-phylogenies)
-  * [Phylogeny Visualization Tools](#phylogeny-visualization-tools) 
+  * [Phylogeny Visualization Tools](#phylogeny-visualization-tools)
 * [Tips](#tips)
 * [License](#license)
 
@@ -437,11 +442,11 @@ With each subsampling, an ML tree is constructed.  This processs is repeated 100
 
 One thing to note: the final resultant tree might not be the overall maximum-likelihood tree.
 
-### Inferring Phylogenies Using Maximum-Likelihood
+### Inferring Phylogenies Using Maximum-Likelihood Parameterization
 
 As stated before, given a sample set of sequences, ML methods will also require an evolutionary model.  What is meant by this?  Let's look at the simplest (most constrained) substitution model as illustration.
 
-#### Jukes-Cantor (1969)
+**Jukes-Cantor (1969)**
 
 The Jukes-Cantor (JC69) model assumes that the rate of nucleotide substitution is the same for all pairs, and that the base nucleotide frequency is equal in the population.  
 
@@ -449,7 +454,7 @@ The Jukes-Cantor (JC69) model assumes that the rate of nucleotide substitution i
 
 See also: Felsenstein (1981).  This is like the JC69 model, in that the substitution rates are equal, but with unequal base frequency.
 
-#### Kimura (1980)
+**Kimura (1980)**
 
 The Kimura (K80) model recognizes that the rate of transitions are not equal to tranversion rate.  Transitions are intragroup changes, such as A <-> G (purines), or C <-> T (pyrimidines).  Transversions would be either of the purines changing into either of the pyrimidines.  Consistent with biochemical intution, we do observe that transitions are more frequent than transversions.
 
@@ -459,7 +464,7 @@ See also: Hasegawa-Kishino-Yano (1985).  This is like the K80 model (unequal tra
 
 **The above two models might be thought of as "historical" by some.  We will skip ahead to more contemporary, more complex, and less constrained models below.**
 
-#### General Time-Reversible (GTR) substitution model (Tavare 1986)
+**General Time-Reversible (GTR) substitution model (Tavare 1986)**
 
 The GTR model is like the HKY model, but each possible nucleotide substitution has it's own exchangibility rate, along with unequal base frequencies.
 
@@ -469,7 +474,7 @@ The GTR model is like the HKY model, but each possible nucleotide substitution h
 
 This model is probably the most popular at the moment.  
 
-#### +gamma (Yang 1994)
+**+gamma (Yang 1994)**
 
 This is more of a modification that may be applied to any model, though you may commonly see this model along with the aforementioned GTR model as GTR+gamma.
 
@@ -508,14 +513,14 @@ etc
 
  * [FastTree](http://www.microbesonline.org/fasttree/)
 
-### Takeways
+### Summary of Key Points
 
   * Inferential methods (ML, Bayesian) are statistically consistent.
   * GTR is probably the most popular model
   * At least some form of rate heterogeneity modelling should be employed
   * A number of software suites for phylogenetic estimation include features and tools designed to help with "optimal" model selection for your dataset.
 
-### Example 1 - Distance based phylogeny 
+#### Example 1 - Distance based phylogeny 
 
 We can use the [BioNJ algorithm](https://academic.oup.com/mbe/article/14/7/685/1119804?login=true) to create a midpoint rooted, neighbor-joining tree inferred from the Mash distance matrix using a simple Rscript from [bacsort](https://github.com/rrwick/Bacsort). 
 
@@ -531,7 +536,7 @@ Use scp from your local terminal to transfer:
 scp -r -J hpc4@radmicrobes.rice.edu hpc4@nots.rice.edu:/home/hpc4/radmicrobes/session3/Files/phylogenetics/kpneumo.mash.tre .
 ```
 
-### Example 2 - Maximum-likelihood Inferred Phylogeny
+#### Example 2 - Maximum-likelihood Inferred Phylogeny
 
 I'm now going to show how we can use a core genome alignment as input to a maximum likelihood inferred phylogeny. One of my favorite tools is [Gubbins](https://github.com/nickjcroucher/gubbins), which includes multiple ML software tools such as **IQ-TREE 2** and **RAxML-NG**. It uses a sliding window variant detection to look for high snp density regions that are signals of potential high recombination. However, given our small sample size and high divergence, I would not use in this particular case. Therefore, going to show an example using IQ-TREE 2 and go over some of the options. Dr. Baptista will go over RAxML-ng in the follow section: 
 
@@ -568,7 +573,6 @@ Here is the molecular dated tree of 224 CG307 isolates from different geographic
 <img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/BactDating_CG307.png" width="700" height="600">
 <em>(Selvaraj Anand et al., 2023 medRxiv)</em>
 </p>
-
 
 ### Phylogeny Visualization Tools
 
