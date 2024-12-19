@@ -8,7 +8,7 @@ SUMMARY: Computational analyses of microbial genomes through genomic sequencing 
 
 TOPICS: Short and long-read sequencing, amplicon and isolate genome sequence, genome assembly and validation, functional annotation, phylogenomic analysis, and strain typing. This workshop will be taught by scientists with expertise in bioinformatics and analysis of clinical samples, allowing participants to get individualized training on how to accurately sample, sequence, and characterize microbial genomes.
 
-## RAD Instructors and TAs
+## RAD Microbes Organizers and Instructors
 
 ### Dr. Rodrigo de Paula Baptista, PhD 
 
@@ -45,19 +45,3 @@ An Dinh is a first year PhD student of epidemiology under Dr. Blake Hanson in th
 <img width="200" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/761469/41e8dbd8-16ed-4fec-b612-de8f16613762">
 
 Natalie Kokroko is a first year PhD student at Rice University in the Computer Science program. Her background is in Biomedical Engineering. Natalie worked in a research Institute at the University of Ghana (West African Centre for cell Biology of Infectious Pathogens) where she mainly did research and bioinformatics data analysis for the genomics and infectious disease laboratory. As a member of the Treangen lab, her research interest is to make use of computational tools and algorithms to interpret and analyze clinical and environmental microbiome data. Generally, Natalie is interested in Computational Biology, Bioinformatics, Genomics and Metagenomic data analysis. Her future goal is to be in academia and impart the knowledge and skills gained from her PhD to the next generation of scientists. 
-
-
-
-### Daniel Paiva Agustinho, PhD
-
-
-
-<img width="200" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/72709799/6ed66db5-0b81-4a29-984d-2ed9d39e7b4e)">
-
-Daniel is a staff scientist at Baylor College of Medicine with over 13 years of dedicated research focusing on human pathogens and host interactions. His journey from wet lab biology to bioinformatics commenced during his PhD, where he analyzed gene expression in host-pathogen interactions. His contributions to microbiology and immunology shed light on complex molecular relationships. As a postdoctoral researcher, Daniel deepened his exploration into host-pathogen interactions, investigating pathogen-triggered immune responses. Transitioning to Baylor College of Medicine, he leads comprehensive metagenomic analyses, specializing in viral evolution studies. His work includes a review article on metagenomics' utility in infectious diseases, and he spearheads the development of pipelines for pathogen detection in clinical samples. Daniel's interdisciplinary approach has significantly advanced our understanding of infectious diseases.
-
-### Michael Nute, PhD
-
-<img width="200" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/761469/32dbac1b-04f5-49da-97fa-c33e728b5f2f">
-
-Mike is a Research Scientist at Rice University in Todd Treangen's lab and has been working on Microbial bioinformatics since 2015. He did his Ph.D. in Statistics at UIUC under Tandy Warnow, where he worked on algorithms for phylogenetics and multiple sequence alignment with a particular emphasis on applications to microbes. He was co-advised by Rebecca Stumpf researching the microbiome of non-human primates. After finishing in 2019, he patiently waited for a global pandemic to take hold in order to find a postdoc that could be done remotely, which he found in 2020 with the Treangen Lab. 
