@@ -1,8 +1,8 @@
 # RAD microbes
 2025 RAD microbes boot camp
 
-DATES: January 13th, 2025
-LOCATION: O'Connor 5th floor event space | 6500 Main St., Houston, TX 77005
+DATES: April 28th and 29th, 2025
+LOCATION: Room 280, BRC (https://brc.rice.edu/) 
 
 SUMMARY: Computational analyses of microbial genomes through genomic sequencing hold tremendous promise yet can become riddled with various sources of potential bias. The microbial genome analysis workshop is designed for graduate students, postdoctoral fellows, and investigators from diverse backgrounds and interests for clarity on how to effectively utilize ubiquitous computational pipelines for answering specific research questions. This hands-on workshop will cover end-to-end microbial genome analysis, discussing the pros and cons of decisions made during the process (library preparation, sequencing, bioinformatic tool selection, parameter settings, and interpretation of results).
 
@@ -44,4 +44,4 @@ An Dinh is a second year PhD student of epidemiology under Dr. Blake Hanson in t
 
 <img width="200" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/761469/41e8dbd8-16ed-4fec-b612-de8f16613762">
 
-Natalie Kokroko is a first year PhD student at Rice University in the Computer Science program. Her background is in Biomedical Engineering. Natalie worked in a research Institute at the University of Ghana (West African Centre for cell Biology of Infectious Pathogens) where she mainly did research and bioinformatics data analysis for the genomics and infectious disease laboratory. As a member of the Treangen lab, her research interest is to make use of computational tools and algorithms to interpret and analyze clinical and environmental microbiome data. Generally, Natalie is interested in Computational Biology, Bioinformatics, Genomics and Metagenomic data analysis. Her future goal is to be in academia and impart the knowledge and skills gained from her PhD to the next generation of scientists. 
+Natalie Kokroko is a second year PhD student at Rice University in the Computer Science program. Her background is in Biomedical Engineering. Natalie worked in a research Institute at the University of Ghana (West African Centre for cell Biology of Infectious Pathogens) where she mainly did research and bioinformatics data analysis for the genomics and infectious disease laboratory. As a member of the Treangen lab, her research interest is to make use of computational tools and algorithms to interpret and analyze clinical and environmental microbiome data. Generally, Natalie is interested in Computational Biology, Bioinformatics, Genomics and Metagenomic data analysis. Her future goal is to be in academia and impart the knowledge and skills gained from her PhD to the next generation of scientists. 
