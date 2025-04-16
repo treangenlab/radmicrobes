@@ -243,17 +243,34 @@ braker.pl --genome=genome.fa --prot_seq=orthodb.fa --bam=/path/to/SRA_ID1.bam
 <details>
 <summary>
 
-### Direct RNA sequencing for annotation using Oxford Nanopore sequencing (DRS)
+### Long read RNA sequencing for annotation using PacBio and Oxford Nanopore sequencing (DRS)
 
 </summary>
 
-Nanopore direct RNA sequencing (DRS) involves the continuous reading of native RNA strands, providing a valuable tool for validating *ab initio* annotations. This technique is particularly useful for obtaining information about gene boundaries, including untranslated regions (UTRs), and is adept at detecting alternative splicing events.
+**PacBio Iso-Seq** method sequences the entire cDNA molecules – up to 10 kb or more – without the need for bioinformatics transcript assembly, so you can characterize novel genes and isoforms in bulk and single-cell transcriptomes.
+
+**Nanopore direct RNA sequencing (DRS)** involves the continuous reading of native RNA strands, providing a valuable tool for validating *ab initio* annotations. 
+
+Both techniques are particularly useful for obtaining information about gene boundaries, including untranslated regions (UTRs), and is adept at detecting alternative splicing events.
 
  
 <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/d0fc0990-fb26-4dd7-b99e-641c0d12f83c" >
 <em>(Parker et al., 2020)</em>
 
 Since the results from this assay would give you full-length transcripts, there is no need to perform a prediction or transcriptome assembly. Usually, you run [minimap2](https://github.com/lh3/minimap2) against your assembled genome and curate the annotation using tools such as [Webapollo2](https://github.com/GMOD/Apollo).
+
+To analyze using [Isoseq3](https://github.com/ylipacbio/IsoSeq3)
+
+```
+#Consensus Calling
+ccs movie.subreads.bam ccs.bam --no-polish --num-passes 1
+#Primer removal and demultiplexing
+lima ccs.bam barcoded_primers.fasta demux.ccs.bam --isoseq --no-pbi
+#Clustering and transcript clean up
+isoseq3 cluster demux.P5--P3.bam unpolished.bam --verbose
+#Polishing (optional)
+isoseq3 polish unpolished.bam m54020_171110_2301211.subreads.bam polished.bam
+```
 
 To run the alignment using minmap2 and DRS reads against a reference genome:
 
