@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = "~/Documents/GitHub/radmicrobes/session3/RScripts/")
 ```
 
-## Traditional 'OG' Epidemiology 
+## Traditional Epidemiology 
 
 The first exercise utilizes a dataset from HistData  
 ```{r download packages, echo = FALSE}
@@ -27,7 +27,6 @@ pacman::p_load(
 ```
 
 ## What if John Snow had 'R'? 
-
 ```{r John Snow 1854 London cholera death outbreak data, echo=FALSE}
 # Load in dataset from HistData package
 data(Snow.dates)
@@ -43,7 +42,7 @@ Snow.dates <- na.omit(Snow.dates)
 
 # Plot deaths over time
 ggplot(Snow.dates, aes(x = date, y = deaths, color = clr)) +
-  geom_line(size = 2) +
+  geom_line(linewidth = 2) +
   geom_point(size = 3, shape = 16) +
   geom_text(aes(x = mdy("09/08/1854"), y = 40, label = "Pump handle\nremoved Sept. 8"), vjust = -1, hjust = -0.25) + # Adding text
   geom_vline(xintercept = mdy("09/08/1854"), linetype = "dotted", color = "red", linewidth = 1) +  # Adding a vertical dotted line
@@ -58,49 +57,102 @@ ggplot(Snow.dates, aes(x = date, y = deaths, color = clr)) +
 ggsave("cholera_deaths_time.pdf")
 ```
 
-# What if John Snow had (1) knowledge of germ theory; (2) capacity to culture Vibrio cholera; (3) either phenotypic or genotypic data at his disposal?
+```{r create a fictional 1854 Cholera outbreak dataset, echo=FALSE}
+# Create monthly time series
+dates <- seq(as.Date("1853-08-01"), as.Date("1855-12-01"), by = "month")
 
-```{r fictional 1854 Cholera outbreak dataset, echo=FALSE}
-df1<- read.csv("../Files/datasets/cholera_fictional_data.csv")
+# Expand each date into two rows (O1 and non-O1)
+outbreak_data <- expand.grid(date = dates, serotype = c("O1", "non-O1")) %>%
+  arrange(date)
 
-# Create a histogram without serotyping data
-ggplot(df1, aes(x = as.Date(date))) +
-  geom_bar(aes(y = count), stat = "identity") +
-  geom_line(aes(y = deaths, color = "Deaths"), linetype = "dotted", size = 1.5) +
-  labs(title = "Histogram of Cholera Episodes Over Time",
-       x = "Date",
-       y = "Cholera Episodes") +
-  scale_color_manual(values = "red", name = "Mortality") +
+# Assign outbreak phases
+outbreak_data <- outbreak_data %>%
+  mutate(period = case_when(
+    date >= as.Date("1854-06-01") & date <= as.Date("1854-08-01") ~ "peak1",
+    date >= as.Date("1855-07-01") & date <= as.Date("1855-10-01") ~ "peak2",
+    date >= as.Date("1853-08-01") & date <= as.Date("1853-09-01") ~ "early_bump",
+    TRUE ~ "baseline"
+  ))
+
+# Simulate count and deaths
+set.seed(42)
+outbreak_data <- outbreak_data %>%
+  rowwise() %>%
+  mutate(
+    count = case_when(
+      period %in% c("peak1", "peak2") & serotype == "O1" ~ sample(100:160, 1),
+      period %in% c("peak1", "peak2") & serotype == "non-O1" ~ sample(20:40, 1),
+      period %in% c("early_bump") & serotype == "O1" ~ sample(40:60, 1),
+      period %in% c("early_bump") & serotype == "non-O1" ~ sample(10:20, 1),
+      TRUE ~ sample(5:15, 1)
+    ),
+    deaths = case_when(
+      serotype == "O1" & period %in% c("peak1", "peak2") ~ round(count * runif(1, 0.40, 0.60)),
+      serotype == "O1" ~ round(count * runif(1, 0.15, 0.30)),
+      serotype == "non-O1" ~ round(count * runif(1, 0.01, 0.08))
+)
+  ) %>%
+  ungroup()
+```
+
+# What if John Snow had (1) knowledge of germ theory; (2) capacity to culture *Vibrio cholera*; (3) either phenotypic or genotypic data at his disposal?
+```{r plot of cholera cases from 1853-08 to 1855-12}
+# Collapse serotypes to simulate lack of typing
+agg_data <- outbreak_data %>%
+  group_by(date) %>%
+  summarise(
+    count = sum(count),
+    deaths = sum(deaths)
+  )
+
+ggplot(agg_data, aes(x = date)) +
+  geom_bar(aes(y = count), stat = "identity", fill = "gray60") +
+  geom_line(aes(y = deaths, color = "Deaths"), linewidth = 1.5, linetype = "dotted") +
+  labs(title = "Cholera Cases and Deaths Without Serotype Data",
+       x = "Date", y = "Cases") +
+  scale_color_manual(values = "red") +
   theme_minimal()
+```
 
-ggsave("fictional_hist_wo_serotype.pdf")
+# Data stratified by Serotype
+```{r analyze fictional dataset, message=FALSE}
+# Deaths by date for trendline
+deaths_by_date <- outbreak_data %>%
+  group_by(date) %>%
+  summarise(deaths = sum(deaths, na.rm = TRUE))
 
-# Check for correlation between deaths and serotype
-corr_test <- chisq.test(table(df1$deaths, df1$count))
-print(corr_test)
-
-# Convert 'date' column to Date format
-df1$date <- as.Date(df1$date)
-
-# Create a histogram with serotyping data
-ggplot(df1, aes(x = date)) +
+ggplot(outbreak_data, aes(x = date)) +
   geom_bar(aes(y = count, fill = serotype), stat = "identity") +
-  geom_line(aes(y = deaths, color = "Deaths"), linetype = "dotted", size = 1.5) +
-  labs(title = "Histogram of Cholera Episodes Over Time by Serotype",
-       x = "Date",
-       y = "Cholera Episodes") +
-  scale_color_manual(values = "red", name = "Mortality") +
-  scale_fill_manual(values = c("O1" = "blue", "non-O1" = "green"), name = "Serotype") +
-  geom_text(aes(x = as.Date("1855-12-01"), y = max(count), 
-                label = "Chi-squared p-value: 0.003"),
-            hjust = 1, vjust = 1, size = 4, color = "black") +
+  geom_line(data = deaths_by_date, aes(x = date, y = deaths, color = "Deaths"),
+            linewidth = 1.5, linetype = "dotted") +
+  labs(title = "Cholera Cases and Deaths With Serotype Data",
+       x = "Date", y = "Cases") +
+  scale_fill_manual(values = c("O1" = "blue", "non-O1" = "green")) +
+  scale_color_manual(values = c("Deaths" = "red"), name = "") +
   theme_minimal()
 
-ggsave("fictional_hist_w_serotype.pdf")
+#ggsave("fictional_hist_w_serotype.pdf")
 
 ```
 
-```{r clean up, echo=FALSE}
+```{r Serotype Associated with Cholera attributable mortality}
+# Create summary of deaths and survivors per serotype
+contingency_table <- outbreak_data %>%
+  group_by(serotype) %>%
+  summarise(
+    Died = sum(deaths, na.rm = TRUE),
+    Survived = sum(count - deaths, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  column_to_rownames("serotype") %>%
+  as.matrix()
+
+# Run chi-square test
+chisq.test(contingency_table)
+```
+### There is a strong association of Vibrio cholorae serotype 01 attributable mortallity compared to non-01 serotypes (P-value = 2.2e-16). When looking at the mortality over our timeframe stratified by serotype, 01 serotypes had 30% mortality compared to 4% for non-01 Vibrio cholorae.
+
+```{r clean up, echo=FALSE, message=FALSE}
 # Clear data
 rm(list = ls())  
 

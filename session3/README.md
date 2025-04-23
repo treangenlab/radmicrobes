@@ -203,7 +203,7 @@ Each of these databases curate specific genus/species combinations of taxa with 
 
 #### Example 1 - Species identification
 
-A colleague has sent you a fasta file letting you know that he believes that he has a bacterial assembly, but has no idea as to what it is. While you are curious as to why the colleague doesn't know what bacterial species it is, you say no problem, Dr. Keith Jolley has created a very simple python script that queries fasta assemblies against the ribosomal Multilocus Sequence Type (rMLST) database through the PubMLST RESTful API using the ```curl``` command.
+A colleague has sent you bacterial genome assemblies in fasta file format and wants you to determine what bacterial species it is. We are now going to leverage the PubMLST API tool with a very simple python script that Dr. Keith Jolley, [one of the primary developers of BIGSdb](https://doi.org/10.1186/1471-2105-11-595), wrote that queries fasta assemblies against the ribosomal Multilocus Sequence Type (rMLST) database through the PubMLST RESTful API using the ```curl``` command.
 
 ```
 cd ~/radmicrobes/session3/Scripts
@@ -216,11 +216,11 @@ If we want to loop through two or more assemblies, we can use a ```for``` loop s
 for file in $(cat ./../Files/lists/assembly_subset.tsv);do echo $file; python ./species_api_upload.py -f ./../Files/assemblies/${file}_consensus_assembly.fasta;done
 ```
 
-Given that said colleague is Dr. Hanson, who had told us previously that we were working on *K. pneumoniae* and he just had a momentary lapse recalling what project we were working with during this workshop 😉 (Dr. Hanson is *very* busy), we are happy to see that these isolates belong to the *K. pneumoniae* taxa. 
+This prelininary check of our draft assemblies suggests we have *K. pneumoniae* taxa. 
 
 #### Example 2 - Multilocus sequence typing
 
-Now that you have successfully identified these isolates as *K. pneumoniae*, you want to quickly check what sequence type these isolates belong to using their assembly files. As mentioned before, *in silico* multilocus sequence typing (MLST) is based on a simple PCR assay where you target 7-8 single copy housekeeping genes within a bacterial chromosome that is typically species specific. Many schema are available in the aforementioned databases. Fortunately, with some simple understanding of the key:value dictionary structure of the [JSON file format](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON), we can modify Dr. Keith Jolley's Python script to do ```curl``` API calls using the *K. pneumoniae* MLST schema:
+Now that you have successfully identified these isolates as *K. pneumoniae*, you want to quickly check what sequence type these isolates belong to using their assembly files. As mentioned before, *in silico* multilocus sequence typing (MLST) is based on a simple PCR assay where you target 7-8 single copy housekeeping genes within a bacterial chromosome that is typically species specific. Many schema are available in the aforementioned databases. Fortunately, we can modify the key:value dictionary structure of the [JSON file format](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON), and use Dr. Keith Jolley's Python script to do ```curl``` API calls using the *K. pneumoniae* MLST schema:
 
 ```
 for file in $(cat ./../Files/lists/assembly_subset.tsv);do echo $file; python ./kpneumoniae_mlst_api_upload.py -f ./../Files/assemblies/${file}_consensus_assembly.fasta;done
@@ -589,18 +589,18 @@ Tools that are useful for molecular clock analysis are:
   * [BEAST](https://beast.community/)
   * [BactDating](https://github.com/xavierdidelot/BactDating)
 
-We recently performed a BactDating analysis of ST307 *K. pneumoniae* ([Selvaraj Anand *et. al.* medrxiv](https://www.medrxiv.org/content/10.1101/2023.11.22.23298833v1) to determine how a potential new cluster of ST307 isolates were expanding in Houston, TX. Here is output of root-to-tip distance to measure the correlation between sampling dates and phylogenetic signal:
+We recently performed a BactDating analysis of ST307 *K. pneumoniae* ([Selvaraj Anand *et. al.* medrxiv](https://doi.org/10.1099/mgen.0.001201) to determine how a potential new cluster of ST307 isolates were expanding in Houston, TX. Here is output of root-to-tip distance to measure the correlation between sampling dates and phylogenetic signal:
 
 <p align="center">
 <img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/Root-to-tip_test.jpg" width="600" height="450">
-<em>(Selvaraj Anand et al., 2023 medRxiv)</em>
+<em>(Selvaraj Anand et al., 2024 Microbial Genomics)</em>
 </p>
 
 Here is the molecular dated tree of 224 CG307 isolates from different geographic locales with 37 isolates included from our recent study: 
 
 <p align="center">
 <img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/BactDating_CG307.png" width="700" height="600">
-<em>(Selvaraj Anand et al., 2023 medRxiv)</em>
+<em>(Selvaraj Anand et al., 2024 Microbial Genomics)</em>
 </p>
 
 ### Phylogeny Visualization Tools
@@ -618,7 +618,7 @@ Each has advantages and disadvantages, but for our final exercise, I'm going to 
 * [An applied genomic epidemiological handbook](https://alliblk.github.io/genepi-book/index.html) by Allison Black and Gytis Dudas formerly of the [Bedford lab](https://bedford.io/) is a fantastic overview of genomic epidemiology that heavily inspired the content of this section.
 * Good review on bacterial strain typing can be found in this review by [**Simar *et al.*, 2021**](https://journals.lww.com/co-infectiousdiseases/fulltext/2021/08000/techniques_in_bacterial_strain_typing__past,.10.aspx)
 * [Bactopia](https://bactopia.github.io/latest/#overview) is a convenient end-to-end Nextflow-based workflow that is very useful for standardized, reproducible results. Bactopia accepts assembly or raw fastq data and provides a whole suite of QC, assembly, and analysis tools.
-* [ChatGPT 3.5](https://chat.openai.com/) has become an invaluable tool for troubleshooting code and creating simple, boilerplate code. While `ChatGPT` cannot be completely relied upon to code properly, it does provide a nice starting point for working through coding challenges.
+* [ChatGPT 4o](https://chat.openai.com/) has become an invaluable tool for troubleshooting code and creating simple, boilerplate code. While `ChatGPT` cannot be completely relied upon to code properly, it does provide a nice starting point for working through coding challenges.
 * [Stackoverflow](https://stackoverflow.com/) is the original source for finding programming related answers to your questions.
 * [Biostars](https://www.biostars.org/) is similar to Stackoverflow, a great resource for answering bioinformatic related questions. 
 
