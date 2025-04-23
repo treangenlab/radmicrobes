@@ -117,19 +117,19 @@ If you're just getting started, I suggest testing out multiple platforms to see 
 John Snow (1813 - 1858), an English physician who pioneered many anesthesia practices in the 19th century, has been ascribed as the founder of traditional epidemiology due to his work studying the London cholera outbreaks that occurred in the mid 19th century. Prior to the widespread acceptance of germ theory that began to take hold in the late 19th century, the conventional wisdom of the time were that many diseases, including cholera, were due to 'foul air' or pollution (*i.e.*, miasma theory). John Snow was able to deduce through classic epidemiogical tracing of cholera death/attack frequency counts that cholera deaths were 14 times higher near the Broad street waterpump compared to other waterpumps that served as water sources throughout London. He documented these deaths using a dotmap, where stacked bars served as a visual tool to indicate higher frequency of deaths in a particular location: 
 
 <p align="center">
-<img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/600px-Snow-cholera-map-1.jpg" width="500" height="400">
+<img src="https://github.com/treangenlab/radmicrobes/blob/main/session4/Images/600px-Snow-cholera-map-1.jpg" width="500" height="400">
 <em>(C.F. Cheffins, 1854)</em>
 </p>
 
 This led to John Snow being able to convince London authorities to remove the pump handle upon which cholera deaths declined:
 
 <p align="center">
-<img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/cholera_deaths_time.jpg" width="600" height="400">
+<img src="https://github.com/treangenlab/radmicrobes/blob/main/session4/Images/cholera_deaths_time.jpg" width="600" height="400">
 </p>
 
 #### Exercise 1 - Using R
 
-While John Snow was certainly ahead of his time, had he known that a microorganism called *Vibrio cholerae* was responsible for this life-threatening diarrheal illness and that one could culture it using a nutrient rich medium (*e.g.*, lysogeny broth which hadn't been created yet), he may have been able to more definitively demonstrate that 'fool-air' was not the causative agent for cholera. Furthermore, had John Snow been familiar with serotyping via agglutination of antisera to type specific O-antigens, he may have found an interesting correlation between genotype and phenotype. The first exercise is designed to become familiar with using R and RStudio using [this R Markdown file](https://github.com/treangenlab/radmicrobes/blob/main/session3/RScripts/3.1_Snow_cholera_example.Rmd) and [this dataset](https://github.com/treangenlab/radmicrobes/blob/main/session3/Files/datasets/cholera_fictional_data.csv). We will be using: (1) the package **HistData**, which can be used to load the historical data collected from the 1854 London cholera epidemic; (2) generate epidemiological curves using fictional cholera attack/death data from a two year timeframe.
+While John Snow was certainly ahead of his time, had he known that a microorganism called *Vibrio cholerae* was responsible for this life-threatening diarrheal illness and that one could culture it using a nutrient rich medium (*e.g.*, lysogeny broth which hadn't been created yet), he may have been able to more definitively demonstrate that 'fool-air' was not the causative agent for cholera. Furthermore, had John Snow been familiar with serotyping via agglutination of antisera to type specific O-antigens, he may have found an interesting correlation between genotype and phenotype. The first exercise is designed to become familiar with using R and RStudio using [this R Markdown file](https://github.com/treangenlab/radmicrobes/blob/main/session4/RScripts/3.1_Snow_cholera_example.Rmd). We will be using: (1) the package **HistData**, which can be used to load the historical data collected from the 1854 London cholera epidemic; (2) generate epidemiological curves using fictional cholera attack/death data from a two year timeframe.
 
 ### Precision Public Health 
 
@@ -140,7 +140,7 @@ The application of genomics to traditional epidemiology has revolutionized how w
 The following example provided by [**Armstrong *et al.*, 2019**](https://www.nejm.org/doi/full/10.1056/nejmsr1813907) demonstrates how increased resolution of molecular subtyping can improve the capacity for public health officials to pinpoint sources of outbreaks: 
 
 <p align="center">
-<img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/Precision_PH.jpg" width="600" height="300">
+<img src="https://github.com/treangenlab/radmicrobes/blob/main/session4/Images/Precision_PH.jpg" width="600" height="300">
 <em>(Adapted from Armstrong et al., 2019 NEJM)</em>
 </p>
 
@@ -151,14 +151,14 @@ This figure succinctly demonstrates the added value of WGS in the detection of a
 The next example comes from [**Shropshire *et al.*, 2023**](https://journals.asm.org/doi/full/10.1128/msphere.00183-23?rfr_dat=cr_pub++0pubmed&url_ver=Z39.88-2003&rfr_id=ori%3Arid%3Acrossref.org) demonstrating how retrospective sampling and whole genome sequencing data can provide additional context to infectious disease surveillance. The first figure shows an approximate 5-year study timeframe in which we measured the prevalence of first occurrence *Escherichia coli* bacteremia cases stratified by their susceptibility pattern to the class of beta-lactam antibiotics known as cephalosporins:
 
 <p align="center">
-<img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/BSI_Ec_trends.jpg" width="650" height="400">
+<img src="https://github.com/treangenlab/radmicrobes/blob/main/session4/Images/BSI_Ec_trends.jpg" width="650" height="400">
 <em>(Shropshire et al., 2023 mSphere)</em>
 </p>
 
 Where ESC-S = extended-spectrum cephalosporin susceptible, ESC-R = extended spectrum cephalosporin resistant, and total represents total bloodstream infections (BSIs). Each dot represents monthly BSI prevalence estimates stratified by susceptibility profile and each line represents a loess curve representing the smoothed average of each respective prevalence estimate over time. We were able to sequence 64% (248/349) ESC-R *E. coli* isolates to gather a more complete picture of how the population structure of bacteremia isolates causing cephalosporin resistance were changing over time:
 
 <p align="center">
-<img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/ST_Phylo_temporal_trends.jpg" width="600" height="550">
+<img src="https://github.com/treangenlab/radmicrobes/blob/main/session4/Images/ST_Phylo_temporal_trends.jpg" width="600" height="550">
 <em>(Shropshire et al., 2023 mSphere)</em>
 </p>
 
@@ -177,7 +177,7 @@ Let's briefly navigate to [Nextstrain](https://nextstrain.org/ncov/gisaid/global
 As alluded to in the previous section, we can achieve increasing levels of genetic resolution to increase probability that we can discern if two or more isolates likely descended from a common recent ancestor: 
 
 <p align="center">
-<img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/Genetic_Relatedness.jpg" width="750" height="450">
+<img src="https://github.com/treangenlab/radmicrobes/blob/main/session4/Images/Genetic_Relatedness.jpg" width="750" height="450">
 <em>(Shropshire et al., 2023 mSphere)</em>
 </p>
 
@@ -199,7 +199,7 @@ Each of these databases curate specific genus/species combinations of taxa with 
 A colleague has sent you bacterial genome assemblies in fasta file format and wants you to determine what bacterial species it is. We are now going to leverage the PubMLST API tool with a very simple python script that Dr. Keith Jolley, [one of the primary developers of BIGSdb](https://doi.org/10.1186/1471-2105-11-595), wrote that queries fasta assemblies against the ribosomal Multilocus Sequence Type (rMLST) database through the PubMLST RESTful API using the ```curl``` command.
 
 ```
-cd ~/radmicrobes/session3/Scripts
+cd ~/radmicrobes/session4/Scripts
 python3 ./api_species_download.py -f ./../Files/assemblies/ARLG-3180_consensus_assembly.fasta
 ```
 
@@ -266,7 +266,7 @@ mlst-download_pub_mlst -d  -j 2
 For a quick example, we are going to use ARLG-3179 and ARLG-3180 assemblies as input for the mlst command using another `for loop` structure. I'm also going to use **wildcard** notation, specifically `*` to have any matching number, string, or special character match following the assigned `for loop` variable up to **.fasta**. 
 
 ```
-cd ~/radmicrobes/session3/Files
+cd ~/radmicrobes/session4/Files
 mkdir -p results
 for file in $(cat ./lists/assembly_subset.tsv);do mlst assemblies/${file}_*.fasta >> ./results/kpneumoniae_mlst.tsv;done
 head ./results/kpneumoniae_mlst.tsv
@@ -298,7 +298,7 @@ amrfinder --list_organisms
 From the standard output, one can see that *Klebsiella_pneumoniae* is included as an available organism. In order to properly run AMRFinderPlus with the plus functions, you need to include a nucleotide file (.fna), a protein file (.faa), a gff file (.gff), and specify the organism, `-O`. Additionally set the `--plus` flag as well as the annotation format `-a` which is `prokka` for this case. Here is an example of code you can run with each parameter looping through our two assemblies in their respective prokka directories:
 
 ```
-cd ~/radmicrobes/session3/Files
+cd ~/radmicrobes/session4/Files
 for file in $(cat ./lists/assembly_subset.tsv);do amrfinder -p ./prokka_dirs/${file}*_dir/${file}*.faa -g ./prokka_dirs/${file}*_dir/${file}*.gff -n ./prokka_dirs/${file}*_dir/${file}*.fna -a prokka --plus -O Klebsiella_pneumoniae --threads 2 -o ./results/${file}_AMRFinderPlus.tsv;done
 
 head ./results/*_AMRFinderPlus.tsv
@@ -342,7 +342,7 @@ One of the last concepts I want to bring up before jumping into phylogenetics is
 There are a total of 11 *K. pneumoniae* assemblies that are available in the `./Files/assemblies` directory. I'm going to demonstrate how simple it is to create an all-to-all Mash estimated distance matrix: 
 
 ```
-cd ~/radmicrobes/session3/Files/assemblies
+cd ~/radmicrobes/session4/Files/assemblies
 
 # Create a reduced sketch file of all 11 assemblies that will be used to estimate distance
 mash sketch -o ./reference -s 100000 *.fasta
@@ -382,7 +382,7 @@ A phylogenetic tree is a hierarchical representation of your modelled data to re
 + and sometimes a **root**.  
   
 <p align="center">
-<img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/SimpleTree1.png" width="500" height="300">
+<img src="https://github.com/treangenlab/radmicrobes/blob/main/session4/Images/SimpleTree1.png" width="500" height="300">
 </p>
 
 One note: there is a lot of synonymous nomenclature describing parts of trees, as anybody from biologists to mathematicians to arborists may work with trees regularly.  For instance, branches can also be called **edges** in graph vernacular.  Leaves can also be thought of as an external node.  Branches can also be be classified as internal if both ends are connected to either internal nodes or the root, or external if it terminates at a leaf.
@@ -398,7 +398,7 @@ There are a few important points to always keep in mind when interpreting trees:
   + Order and spacing of leaves are always arbitrary; Branches can always be swapped (or rotated about an internal node)
 
 <p align="center">
-<img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/SimpleTree1_rotated.png" width="500" height="300">
+<img src="https://github.com/treangenlab/radmicrobes/blob/main/session4/Images/SimpleTree1_rotated.png" width="500" height="300">
 </p>
 
 <p align="center">This tree is the same as the previous one</p>
@@ -547,15 +547,15 @@ etc
 We can use the [BioNJ algorithm](https://academic.oup.com/mbe/article/14/7/685/1119804?login=true) to create a midpoint rooted, neighbor-joining tree inferred from the Mash distance matrix using a simple Rscript from [bacsort](https://github.com/rrwick/Bacsort). 
 
 ```
-cd ~/radmicrobes/session3/Files/phylogenetics
-Rscript ~/radmicrobes/session3/RScripts/bionj_tree.R kpneumo.mash.phylip kpneumo.mash.tre
+cd ~/radmicrobes/session4/Files/phylogenetics
+Rscript ~/radmicrobes/session4/RScripts/bionj_tree.R kpneumo.mash.phylip kpneumo.mash.tre
 ```
 
 You can now view `kpneumo.mash.tre` in [Gingr](https://github.com/marbl/gingr), which you should have already downloaded yesterday. 
 
 Use scp from your local terminal to transfer:
 ```
-scp -r -J hpc4@radmicrobes.rice.edu hpc4@nots.rice.edu:/home/hpc4/radmicrobes/session3/Files/phylogenetics/kpneumo.mash.tre .
+scp -r -J hpc4@radmicrobes.rice.edu hpc4@nots.rice.edu:/home/hpc4/radmicrobes/session4/Files/phylogenetics/kpneumo.mash.tre .
 ```
 
 #### Example 2 - Maximum-likelihood Inferred Phylogeny
@@ -585,14 +585,14 @@ Tools that are useful for molecular clock analysis are:
 We recently performed a BactDating analysis of ST307 *K. pneumoniae* ([Selvaraj Anand *et. al.* Microbial Genomics](https://doi.org/10.1099/mgen.0.001201) to determine how a potential new cluster of ST307 isolates were expanding in Houston, TX. Here is output of root-to-tip distance to measure the correlation between sampling dates and phylogenetic signal:
 
 <p align="center">
-<img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/Root-to-tip_test.jpg" width="600" height="450">
+<img src="https://github.com/treangenlab/radmicrobes/blob/main/session4/Images/Root-to-tip_test.jpg" width="600" height="450">
 <em>(Selvaraj Anand et al., 2024 Microbial Genomics)</em>
 </p>
 
 Here is the molecular dated tree of 224 CG307 isolates from different geographic locales with 37 isolates included from our recent study: 
 
 <p align="center">
-<img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/BactDating_CG307.png" width="700" height="600">
+<img src="https://github.com/treangenlab/radmicrobes/blob/main/session4/Images/BactDating_CG307.png" width="700" height="600">
 <em>(Selvaraj Anand et al., 2024 Microbial Genomics)</em>
 </p>
 
