@@ -1,4 +1,4 @@
-# Session 4 - Functional Annotation and Pan Genomes
+# Session 5 - Functional Annotation and Pan Genomes
 *by Rodrigo de Paula Baptista, PhD*
 
 <details>
