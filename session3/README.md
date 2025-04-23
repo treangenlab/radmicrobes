@@ -54,12 +54,15 @@ If you have not already done so, please download:
 By this point everyone should be able to `ssh` into the NOTS server:
 ```
 # First ssh into the jumpstation
-ssh hpc4@radmicrobes.rice.edu
+ssh <your_username_here>@radmicrobes.rice.edu
 
 # Should be in the SSH gateway
-ssh hpc4@nots
+ssh <your_username_here>@nots
 
 # Now you have accessed in the NOTS cluster
+
+# Clone this git repository into your home directory so that you have all the files and scripts necessary for the latter parts of this session
+git clone https://github.com/treangenlab/radmicrobes.git
 ```
 
 * **Enter 'interactive' compute node so that we don't crash the server using limited compute resources in the compute node:
@@ -72,22 +75,18 @@ srun --partition=commons --pty --export=ALL --ntasks=1 --reservation=workshop --
 Most of the bioinformatic tools we use today will be used through the creation of a conda environment I already have packaged that just needs to be uncompressed within a `~/miniconda3/envs/radmicrobes-s3` directory that you'll create after successfully setting up Conda:
 ```
 # Copy Conda install bash script into home directory
-cp /projects/k2i/Miniconda3-latest-Linux-x86_64.sh ~
+cp /projects/k2i/Miniconda3.sh ~
 
-# Run through the interactive conda setup guide, which I'll install on the SSH gateway (NOTE it's won't work in the gateway!) with everyone.
-bash ~/Miniconda3-latest-Linux-x86_64.sh
+# Run through the interactive conda setup guide.
+bash ~/Miniconda3.sh
 # Enter 'yes' when the prompt asks "Do you wish to update your shell profile to automatically initialize conda?" 
 
 # Once you have successfully downloaded Conda, we are going to add and set channels
-conda config --add channels defaults
 conda config --add channels conda-forge
 conda config --add channels bioconda
 
-# Install mamba for package management
-conda install -c conda-forge mamba
-
 # Create radmicrobes-s3 environment
-mamba create -n radmicrobes-s3
+conda create -n radmicrobes-s3
 
 # Activate the environment
 conda activate radmicrobes-s3
@@ -99,15 +98,8 @@ cp /projects/k2i/radmicrobes-s3.tar.gz ~/miniconda3/envs/radmicrobes-s3
 cd ~/miniconda3/envs/radmicrobes-s3
 tar -xvzf radmicrobes-s3.tar.gz
 
-# Prepare conda-pack
-cd ~/miniconda3/envs/radmicrobes-s3
-./conda-unpack
-
 # Test and see if mlst is in pathway
 mlst -h
-
-# Clone this git repository into your home directory so that you have all the files and scripts necessary for the latter parts of this session
-git clone https://github.com/treangenlab/radmicrobes.git
 ```
 
 This is **NOT** a coding class, so we won't be going over in detail first principles of programming (*i.e.*, coding syntax, structure, etc.); however, background on R/Python will be helpful when we go through some basic code that we will use to execute scripts from a command line interface. 
@@ -141,7 +133,7 @@ While John Snow was certainly ahead of his time, had he known that a microorgani
 
 ### Precision Public Health 
 
-The application of genomics to traditional epidemiology has revolutionized how we measure the spread of disease. As next generation sequencing (NGS) has become more affordable in the past two decades, the ability to track high-risk pathogens and respond rapidly has become more evident. NGS data allows for much higher resolution to characterize potential pathogenic causitive agents and better discern signal from noise. 
+The application of genomics to traditional epidemiology has revolutionized how we measure the spread of disease. As whole genome sequencing (WGS) has become more affordable in the past two decades, the ability to track high-risk pathogens and respond rapidly has become more evident. NGS data allows for much higher resolution to characterize potential pathogenic causitive agents and better discern signal from noise. 
 
 #### Case Study 1 - Salmonellosis Outbreak
 
@@ -152,7 +144,7 @@ The following example provided by [**Armstrong *et al.*, 2019**](https://www.nej
 <em>(Adapted from Armstrong et al., 2019 NEJM)</em>
 </p>
 
-This figure succinctly demonstrates the added value of whole genome sequencing in the detection of a particular outbreak of the foodborne-pathogen *Salmonella enterica* serovar Enteritidis that occurred in a region of the United States in 2018. Panel A represents unsorted cases of gastroenteritis, with each dot representing a singular case, that without proper molecular typing, provides insufficient information as to the source of differential outbreaks. United States public health agencies began to apply pulsed-field gel electrophoresis (PFGE) in the 1990s, with a notable example of successful application being the CDC laboratory network 'PulseNet', which greatly increased capacity to pinpoint related cases through this revolutionary genotyping technique. PFGE involves digesting genomic DNA with restriction enzymes followed by agarose gel separation, which ultimately results in a particular gDNA fragment band pattern that can be used to compare other sample digests to determine if two or more organisms are related. Panel B shows how through PFGE, related cases as represented by red and yellow, cluster together; however, due to limited resolution given band patterns typically consist of a limited number of gDNA fragments, interlaboratory variability in protocols, as well as differential interpretations, 'sporadic', unrelated cases cluster with outbreak cases, which further complicates tracing if incorrect sources are ascertained. Panel C demonstrates how whole genome sequencing (WGS) provided much higher resolution to determine relatedness among cases and gave public health investigators much more confidence as to their outbreak definition. In this example, WGS data allowed state officials for the 'red' cases to identify the correct source, contaminated egg shells, and were able to definitively match the *Salmonella* Entertidis to the contaminated source. 
+This figure succinctly demonstrates the added value of WGS in the detection of a particular outbreak of the foodborne-pathogen *Salmonella enterica* serovar Enteritidis that occurred in a region of the United States in 2018. Panel A represents unsorted cases of gastroenteritis, with each dot representing a singular case, that without proper molecular typing, provides insufficient information as to the source of differential outbreaks. United States public health agencies began to apply pulsed-field gel electrophoresis (PFGE) in the 1990s, with a notable example of successful application being the CDC laboratory network 'PulseNet', which greatly increased capacity to pinpoint related cases through this revolutionary genotyping technique. PFGE involves digesting genomic DNA with restriction enzymes followed by agarose gel separation, which ultimately results in a particular gDNA fragment band pattern that can be used to compare other sample digests to determine if two or more organisms are related. Panel B shows how through PFGE, related cases as represented by red and yellow, cluster together; however, due to limited resolution given band patterns typically consist of a limited number of gDNA fragments, interlaboratory variability in protocols, as well as differential interpretations, 'sporadic', unrelated cases cluster with outbreak cases, which further complicates tracing if incorrect sources are ascertained. Panel C demonstrates how WGSprovided much higher resolution to determine relatedness among cases and gave public health investigators much more confidence as to their outbreak definition. In this example, WGS data allowed state officials for the 'red' cases to identify the correct source, contaminated egg shells, and were able to definitively match the *Salmonella* Entertidis to the contaminated source. 
 
 #### Case Study 2 - Cephalosporin Resistant *Escherichia coli* Surveillance
 
@@ -193,11 +185,12 @@ Multi-locus sequence typing (MLST) is based on a PCR assay that would identify 7
 
 ### Databases
 
-There are three primary databases for the curation of microbial typing schemes used across the microbinfie (*i.e.*, microbioinformatics) community: 
+There are a few well curated databases for microbial typing schemes used across the microbinfie (*i.e.*, microbioinformatics) community. Here are some of the most commonly utilized: 
   
   - [PubMLST](https://pubmlst.org/)
   - [BIGSdb-Pasteur](https://bigsdb.pasteur.fr/)
   - [Enterobase](https://enterobase.warwick.ac.uk/)
+  - [chewie-ns](https://chewie-ns.readthedocs.io/en/latest/#)
 
 Each of these databases curate specific genus/species combinations of taxa with a little overlap. For example, **Enterobase** is the primary repository for *Escherichia coli* typing information, however, **PubMLST** also hosts data from Enterobase. The underlying software that is used for both **PubMLST** and **BIGSdb-Pasteur** is the [Bacterial Isolate Genome Sequence database (BIGSdb)](https://pubmlst.org/software/bigsdb). Each of these databases host web interfaces for querying taxa schema, typing assembly input files, as well as performing other analyses. **PubMLST** also provides an [Application Programming Interface](https://bigsdb.readthedocs.io/en/latest/rest.html#db-isolates-search) that allows for scripting in specific queries based on the user's needs. We will use three examples to demonstrate the powerful utility of these databases using the PubMLST RESTful API tool. I also want to briefly go into each script to see if we can determine how the code works.
 
@@ -207,13 +200,13 @@ A colleague has sent you bacterial genome assemblies in fasta file format and wa
 
 ```
 cd ~/radmicrobes/session3/Scripts
-python3 ./species_api_upload.py -f ./../Files/assemblies/ARLG-3180_consensus_assembly.fasta
+python3 ./api_species_download.py -f ./../Files/assemblies/ARLG-3180_consensus_assembly.fasta
 ```
 
 If we want to loop through two or more assemblies, we can use a ```for``` loop structure: 
 
 ```
-for file in $(cat ./../Files/lists/assembly_subset.tsv);do echo $file; python ./species_api_upload.py -f ./../Files/assemblies/${file}_consensus_assembly.fasta;done
+for file in $(cat ./../Files/lists/assembly_subset.tsv);do echo $file; python ./api_species_download.py -f ./../Files/assemblies/${file}_consensus_assembly.fasta;done
 ```
 
 This prelininary check of our draft assemblies suggests we have *K. pneumoniae* taxa. 
@@ -589,7 +582,7 @@ Tools that are useful for molecular clock analysis are:
   * [BEAST](https://beast.community/)
   * [BactDating](https://github.com/xavierdidelot/BactDating)
 
-We recently performed a BactDating analysis of ST307 *K. pneumoniae* ([Selvaraj Anand *et. al.* medrxiv](https://doi.org/10.1099/mgen.0.001201) to determine how a potential new cluster of ST307 isolates were expanding in Houston, TX. Here is output of root-to-tip distance to measure the correlation between sampling dates and phylogenetic signal:
+We recently performed a BactDating analysis of ST307 *K. pneumoniae* ([Selvaraj Anand *et. al.* Microbial Genomics](https://doi.org/10.1099/mgen.0.001201) to determine how a potential new cluster of ST307 isolates were expanding in Houston, TX. Here is output of root-to-tip distance to measure the correlation between sampling dates and phylogenetic signal:
 
 <p align="center">
 <img src="https://github.com/treangenlab/radmicrobes/blob/main/session3/Images/Root-to-tip_test.jpg" width="600" height="450">
