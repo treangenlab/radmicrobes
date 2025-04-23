@@ -1,4 +1,4 @@
-# Session 3 - Genomic Epidemiology, Strain-Level Analyses, and Phylogenomics
+# Session 4 - Genomic Epidemiology, Strain-Level Analyses, and Phylogenomics
 *by William Shropshire, PhD*
 
 ## Table of contents
