@@ -1,5 +1,5 @@
 # Session 4 - Genomic Epidemiology, Strain-Level Analyses, and Phylogenomics
-*by William Shropshire, PhD*
+*by William Shropshire, PhD and An Dinh, MSc*
 
 ## Table of contents
 
@@ -42,7 +42,6 @@
 
 
 
-
 ## Preparation
 
 * **Download R/RStudio**
@@ -80,28 +79,25 @@ bash ~/Miniconda3.sh
 conda config --add channels conda-forge
 conda config --add channels bioconda
 
-# Create radmicrobes-s3 environment
-conda create -n radmicrobes-s3
+# Activate/deactivate radmicrobes-s3 environment in k2i directory
 
-# Activate the environment
-conda activate radmicrobes-s3
-
-# Copy the tarball radmicrobes-s3.tar.gz file into the conda environment directory
-cp /projects/k2i/radmicrobes-s3.tar.gz ~/miniconda3/envs/radmicrobes-s3
-
-# Uncompress environment in conda environment directory
-cd ~/miniconda3/envs/radmicrobes-s3
-tar -xvzf radmicrobes-s3.tar.gz
+# Activate:
+source /projects/k2i/radmicrobes-s3/bin/activate
 
 # Test and see if mlst is in pathway
 mlst -h
+
+# When finished with this session, you can deactivate:
+
+source /projects/k2i/radmicrobes-s3/bin/deactivate
 ```
 
 This is **NOT** a coding class, so we won't be going over in detail first principles of programming (*i.e.*, coding syntax, structure, etc.); however, background on R/Python will be helpful when we go through some basic code that we will use to execute scripts from a command line interface. 
 
-As an aside, there are multiple data analysis software that you can choose to perform genomic analyses. Additionally, there are multiple interactive development environments you can choose to work from such as:
+As an aside, there are multiple data analysis software that you can choose to perform genomic analyses. Additionally, there are multiple interactive development environments (IDEs) you can choose to work from such as:
  - [PyCharm](https://www.jetbrains.com/pycharm/) 
  - [JupyterLab](https://jupyter.org/)
+ - [VS Code](https://code.visualstudio.com/)
 
 If you're just getting started, I suggest testing out multiple platforms to see what feels most intuitive to you in conjunction of what serves your analytical needs the best. That being said, this section of the workshop is going to focus on high level theory in addition to some tools I find useful in my own work. 
 
