@@ -53,13 +53,8 @@ If you have not already done so, please download:
 * **Set up conda environment on NOTS**
 By this point everyone should be able to `ssh` into the NOTS server:
 ```
-# First ssh into the jumpstation
-ssh <your_username_here>@radmicrobes.rice.edu
-
-# Should be in the SSH gateway
-ssh <your_username_here>@nots
-
-# Now you have accessed in the NOTS cluster
+# First ssh into the jumpstation and then login to NOTS
+ssh -tY hpc2@radmicrobes.rice.edu ssh nots
 
 # Clone this git repository into your home directory so that you have all the files and scripts necessary for the latter parts of this session
 git clone https://github.com/treangenlab/radmicrobes.git
