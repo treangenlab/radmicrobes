@@ -220,6 +220,7 @@ Another useful API utility is you can download files to create your own local da
 
 ```
 sh download_kpneumoniae_mlst.sh
+head ./../db/pubmlst/klebsiella/pgi.tfa
 ```
 Now you have a directory (`./../db/pubmlst/klebsiella`) that has all the up-to-date *K. pneumoniae* MLST information! I hope these three examples demonstrate the power and flexibility of interfacing with these databases and how one can potentially incorporate these API commands into bespoke scripts that serve your needs! Remember, these databases host a wealth of additional information beyond simple taxa typing (*e.g.,* **PubMLST** also has antimicrobial resistance genes, plasmid replicon types, etc.) so I strongly encourage everyone to look through these sources. 
 
@@ -251,7 +252,8 @@ NC_017040.fna  spyogenes  172  gki(56)  gtr(24)  murI(39)  mutS(7)  recP(30)   x
 The only required argument is a FASTA/GenBank/E formatted assembly or assemblies. There are 144 schemas preloaded with the current version of mlst as of 2023-12-12, `mlst-v2.23.0`. Given that this release was over two years ago, it would be prudent to upbdate the pubmlst databases with the following companion script available in the mlst package. This takes awhile, so I would suggest executing this command at a later time. Also note that your database pathway will be different from mine. 
 
 ```
-mlst-download_pub_mlst -d  -j 2
+# Uncomment if you want to run this later
+# mlst-download_pub_mlst -d  -j 2
 ```
 
 For a quick example, we are going to use ARLG-3179 and ARLG-3180 assemblies as input for the mlst command using another `for loop` structure. I'm also going to use **wildcard** notation, specifically `*` to have any matching number, string, or special character match following the assigned `for loop` variable up to **.fasta**. 
@@ -290,6 +292,7 @@ From the standard output, one can see that *Klebsiella_pneumoniae* is included a
 
 ```
 cd ~/radmicrobes/session4/Files
+
 for file in $(cat ./lists/assembly_subset.tsv);do amrfinder -p ./prokka_dirs/${file}*_dir/${file}*.faa -g ./prokka_dirs/${file}*_dir/${file}*.gff -n ./prokka_dirs/${file}*_dir/${file}*.fna -a prokka --plus -O Klebsiella_pneumoniae --threads 8 -o ./results/${file}_AMRFinderPlus.tsv;done
 
 head ./results/*_AMRFinderPlus.tsv
@@ -304,21 +307,26 @@ There are many *ad hoc* tools available to do analysis on your favorite organism
 ```
 # Make sure you're in the Files directory 
 for file in $(cat ./lists/assembly_subset.tsv);do kleborate -a ./assemblies/${file}*.fasta -o ./results/${file}_kleborate -p kpsc --trim_headers;done
+
 head ./results/*kleborate/*txt
-
 ```
-
-Let's explore through some of the output and compare to the AMRFinderPlus output. 
 
 #### Center for Genomic Epidemiology
 
 As mentioned, this is not an exhaustive list of strain-level analysis tools by any means. One great repository of tools is hosted through the Technical University of Denmark called [Center for Genomic Epidemiology](https://www.genomicepidemiology.org). We do not have time to go over all tools available, but they do have some great tools from simple typing schemes such as plasmid typing [*e.g.*, PlasmidFinder](https://cge.food.dtu.dk/services/PlasmidFinder/) or full blown workflows such as phylogenetic analysis using [MinTyper](https://cge.food.dtu.dk/services/MINTyper/). One tool I have found useful is [KmerResistance](https://cge.food.dtu.dk/services/KmerResistance/). KmerResistance uses **k-mer alignment (KMA)** of short- or long-reads against redundant databases. Using a 'ConClave' sorting algorithm for non-unique matches, `kmerresistance` can identify with good sensitivity/specificity orthologous genes that may not elsewise be resolved in short-read assemblies where similar genes often get collapsed into a consensus. I like this tool so much, that I've incorporated it into my own tool that estimates copy number variants called [convict](https://github.com/wshropshire/convict). Instructions for installation are [here](https://bitbucket.org/genomicepidemiology/kma/src/master/), but I've set up `kmerresistance` to work in this conda environment. Let's quickly run through kmerresistance, using the ARLG-4673 short-read fastq files we used from session one. 
 
 `
+cd ./results
+
 kmerresistance -i /projects/k2i/data/fastq_files/ARLG-3180_SRR12509439_1.fastq.gz /projects/k2i/data/fastq_files/ARLG-3180_SRR12509439_2.fastq.gz -o ARLG-3180_kmerresistance -s_db /projects/k2i/databases/kma_databases/species_db/bacteria.ATG -t_db /projects/k2i/databases/kma_databases/resfinder_db/resfinder_db
 `
 
 With short reads alone, this output indicates the likely organism (*i.e.*, *K. pneumoniae*) in addition to the AMR profile. Importantly, like many database tools that use some form of an alignment-based detection algorithm, you can use this tool with your own bespoke database to search for any genomic signature of your interest. 
+
+Let's explore through some of the output and compare to the AMRFinderPlus output. 
+```
+scp -r -J hpc2@radmicrobes.rice.edu hpc2@nots.rice.edu:/home/hpc2/radmicrobes/session4/Files/results .
+```
 
 While non-exhaustive, I hope that these strain-level analysis tools serve as a good starting point for those of you who are getting started in genomic epidemiology analyses. 
 
