@@ -91,8 +91,11 @@ my_genome.gff  | Pre-generated gff output | /projects/k2i/session5/Files/Prokka
 ```
 ###Prepare to run in interactive node
 srun --pty --export=ALL --ntasks=1 --reservation=workshop --cpus-per-task=8 --mem=15GB --time=04:00:00 /bin/bash
-###Call prokka in bootcamp server
-source /projects/k2i/radmicrobes-s4/bin/activate
+
+###Activate Prokka's enviroment
+ml Mamba
+mamba activate /projects/k2i/session_conda_environments/S5_prokka_roary
+
 ##Run prokka
 prokka --outdir prokka_test --prefix my_genome --rfam genome.fasta
 ```
