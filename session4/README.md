@@ -66,30 +66,23 @@ srun --partition=commons --pty --export=ALL --ntasks=1 --reservation=workshop --
 ```
 
 * **Set up conda environment on NOTS**
-Most of the bioinformatic tools we use today will be used through the creation of a conda environment I already have packaged that just needs to be uncompressed within a `~/miniconda3/envs/radmicrobes-s3` directory that you'll create after successfully setting up Conda:
+Most of the bioinformatic tools we use today will be used through a conda environment I already have packaged
+
 ```
-# Copy Conda install bash script into home directory
-cp /projects/k2i/Miniconda3.sh ~
+# Load mamba module
+module load Mamba/23.11.0-0
 
-# Run through the interactive conda setup guide.
-bash ~/Miniconda3.sh
-# Enter 'yes' when the prompt asks "Do you wish to update your shell profile to automatically initialize conda?" 
-
-# Once you have successfully downloaded Conda, we are going to add and set channels
-conda config --add channels conda-forge
-conda config --add channels bioconda
-
-# Activate/deactivate radmicrobes-s3 environment in k2i directory
+# Activate/deactivate radmicrobes-s4 environment in k2i directory
 
 # Activate:
-source /projects/k2i/radmicrobes-s3/bin/activate
+source /projects/k2i/session_conda_environments/radmicrobes-s4/bin/activate
 
 # Test and see if mlst is in pathway
 mlst -h
 
 # When finished with this session, you can deactivate:
 
-source /projects/k2i/radmicrobes-s3/bin/deactivate
+source /projects/k2i/session_conda_environments/radmicrobes-s4/bin/deactivate
 ```
 
 This is **NOT** a coding class, so we won't be going over in detail first principles of programming (*i.e.*, coding syntax, structure, etc.); however, background on R/Python will be helpful when we go through some basic code that we will use to execute scripts from a command line interface. 
@@ -200,7 +193,7 @@ If we want to loop through two or more assemblies, we can use a ```for``` loop s
 for file in $(cat ./../Files/lists/assembly_subset.tsv);do echo $file; python ./api_species_download.py -f ./../Files/assemblies/${file}_consensus_assembly.fasta;done
 ```
 
-This prelininary check of our draft assemblies suggests we have *K. pneumoniae* taxa. 
+This preliminary check of our draft assemblies suggests we have *K. pneumoniae* taxa. 
 
 #### Example 2 - Multilocus sequence typing
 
@@ -313,13 +306,23 @@ head ./results/*kleborate/*txt
 
 #### Center for Genomic Epidemiology
 
-As mentioned, this is not an exhaustive list of strain-level analysis tools by any means. One great repository of tools is hosted through the Technical University of Denmark called [Center for Genomic Epidemiology](https://www.genomicepidemiology.org). We do not have time to go over all tools available, but they do have some great tools from simple typing schemes such as plasmid typing [*e.g.*, PlasmidFinder](https://cge.food.dtu.dk/services/PlasmidFinder/) or full blown workflows such as phylogenetic analysis using [MinTyper](https://cge.food.dtu.dk/services/MINTyper/). One tool I have found useful is [KmerResistance](https://cge.food.dtu.dk/services/KmerResistance/). KmerResistance uses **k-mer alignment (KMA)** of short- or long-reads against redundant databases. Using a 'ConClave' sorting algorithm for non-unique matches, `kmerresistance` can identify with good sensitivity/specificity orthologous genes that may not elsewise be resolved in short-read assemblies where similar genes often get collapsed into a consensus. I like this tool so much, that I've incorporated it into my own tool that estimates copy number variants called [convict](https://github.com/wshropshire/convict). Instructions for installation are [here](https://bitbucket.org/genomicepidemiology/kma/src/master/), but I've set up `kmerresistance` to work in this conda environment. Let's quickly run through kmerresistance, using the ARLG-4673 short-read fastq files we used from session one. 
+As mentioned, this is not an exhaustive list of strain-level analysis tools by any means. One great repository of tools is hosted through the Technical University of Denmark called [Center for Genomic Epidemiology](https://www.genomicepidemiology.org). We do not have time to go over all tools available, but they do have some great tools from simple typing schemes such as plasmid typing [*e.g.*, PlasmidFinder](https://cge.food.dtu.dk/services/PlasmidFinder/) or full blown workflows such as phylogenetic analysis using [MinTyper](https://cge.food.dtu.dk/services/MINTyper/). One tool I have found useful is [KmerResistance](https://cge.food.dtu.dk/services/KmerResistance/). KmerResistance uses **k-mer alignment (KMA)** of short- or long-reads against redundant databases. Using a 'ConClave' sorting algorithm for non-unique matches, `kmerresistance` can identify with good sensitivity/specificity orthologous genes that may not elsewise be resolved in short-read assemblies where similar genes often get collapsed into a consensus. I like this tool so much, that I've incorporated it into my own tool that estimates copy number variants called [convict](https://github.com/wshropshire/convict). Instructions for installation are [here](https://bitbucket.org/genomicepidemiology/kma/src/master/), but I've set up `kmerresistance` to work in this conda environment. Let's quickly run through kmerresistance, using the ARLG-3180 short-read fastq files we used from session one. 
 
+<<<<<<< HEAD
 `
 cd ./results
 
 kmerresistance -i /projects/k2i/data/fastq_files/ARLG-3180_SRR12509439_1.fastq.gz /projects/k2i/data/fastq_files/ARLG-3180_SRR12509439_2.fastq.gz -o ARLG-3180_kmerresistance -s_db /projects/k2i/databases/kma_databases/species_db/bacteria.ATG -t_db /projects/k2i/databases/kma_databases/resfinder_db/resfinder_db
 `
+=======
+```
+kmerresistance \
+  -i /projects/k2i/data/fastq_files/ARLG-3180_SRR12509439_1.fastq.gz /projects/k2i/data/fastq_files/ARLG-3180_SRR12509439_2.fastq.gz \
+  -o ARLG-3180_kmerresistance \
+  -s_db /projects/k2i/databases/kma_databases/species_db/bacteria.ATG \
+  -t_db /projects/k2i/databases/kma_databases/resfinder_db/resfinder_db
+```
+>>>>>>> 9564ed22fd16014ca6112c5379b31bcbd0f492a9
 
 With short reads alone, this output indicates the likely organism (*i.e.*, *K. pneumoniae*) in addition to the AMR profile. Importantly, like many database tools that use some form of an alignment-based detection algorithm, you can use this tool with your own bespoke database to search for any genomic signature of your interest. 
 
@@ -603,7 +606,7 @@ There are multiple tools employed for visualizing phylogenies not limited to:
   - [FigTree](http://tree.bio.ed.ac.uk/software/figtree/)
   - [ggtree](https://bioconductor.org/packages/release/bioc/html/ggtree.html#:~:text='ggtree'%20is%20designed%20for%20visualization,%5Bctb%5D%2C%20Watal%20M.)
 
-Each has advantages and disadvantages, but for our final exercise, I'm going to use `ggtree` to create a simple visual aid of our tree. 
+Each has advantages and disadvantages, but for our final exercise, I'm going to use `ggtree` to create a simple visual aid of our tree. Last exercise will be using [this R Markdown file](https://github.com/treangenlab/radmicrobes/blob/main/session4/RScripts/3.3_GGtree_phylogeny_example.Rmd) on your computer.
 
 ## Tips
 

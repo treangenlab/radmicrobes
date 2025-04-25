@@ -1,0 +1,181 @@
+---
+title: "Phylogenies"
+output:
+  html_document:
+    df_print: paged
+---
+
+## Core genome alignment of toy dataset of K. pneumoniae (n=11)
+
+#### Initial GGtree was inspired/borrowed from https://aschuerch.github.io/posts/2017-04-24-blog-post-1
+
+```{r import libraries}
+pacman::p_load(
+        tidyverse,
+        ape,
+        ggtree,
+        phytools,
+        ggnewscale,
+        ggtreeExtra,
+        ggpubr,
+        ggstar,
+        svglite,
+        scales
+)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# This will set working directory to the folder containing this Rmd
+if (requireNamespace("here", quietly = TRUE)) {
+  library(here)
+} else {
+  install.packages("here")
+  library(here)
+}
+```
+
+```{r set pathways}
+iqtree.file.kp <- "./../Files/phylogenetics/kpneumo.clean.full.aln.contree"
+iqtree.metadata <- "./../Files/datasets/crackle2_kleborate_subset.csv"
+```
+
+### Create basic ggtree and midroot the tree
+
+```{r pull tree and metadata file}
+# Create metadata set
+df1 <- read.csv(iqtree.metadata)
+
+# Change sra_id == "SRR12509439" to reference to match tip labels
+df1$sra_id[df1$sra_id =="SRR12509439"] <- "Reference"
+
+# Make rownames based off sra_id and move to front of dataframe
+rownames(df1) <- df1$sra_id
+df1 <- df1 %>% relocate(sra_id, .before = everything())
+
+# Make ST a categorical 
+df1$ST <- as.factor(df1$ST)
+
+# Create tree for CRACKLE2 Subset and midpoint root
+tree_kp <- read.tree(iqtree.file.kp)
+tree_kp <- midpoint.root(tree_kp)
+
+#Visualize nodes
+treenode <- ggtree(tree_kp) + geom_text(aes(label=node), hjust=0.3)
+print(treenode)
+```
+
+### Add metadata to ggtree and make publish quality phylogeny figure
+
+```{r build up tree metadata using ggtree}
+# Color schemes and breaks - try to use colorblind friendly palette's if possible
+cbPalette3_cat <- c("#0072B2", "#D55E00", "#E6B800")
+cbPalette4_cont <- c("#215eed", "#dbe8fb", "#e7a397", "#76231d")
+color_breaks <- c(0,2,4,6,8)
+
+# Create ggtree basic plot
+ggtree_kp <- ggtree(tree_kp)
+
+# Assess only integer/internal nodes so as not to convert tip labels
+ggtree_kp$data$label_num <- suppressWarnings(as.numeric(ggtree_kp$data$label))
+ggtree_kp <- ggtree_kp + 
+        geom_treescale(fontsize = 5, linesize = 1, family = "Arial Bold") +
+        geom_point2(aes(subset = (!isTip & !is.na(label_num) & label_num > 95)), size = 1.5)
+
+# Create tip labels and parameterize
+p1 <- ggtree_kp %<+% df1 + 
+  geom_tiplab(aes(color = as.factor(ST)), 
+              show.legend=FALSE,
+              geom="text", 
+              fontface=2, 
+              align = TRUE, 
+              family ="Helvetica", 
+              size = 3) +
+      theme(legend.text=element_text(size=6, face="bold"),
+            legend.title=element_text(size=8, face="bold", hjust = 0.5),
+            legend.key.size = unit(0.5, 'cm')) +
+      geom_polygon(aes(fill = ST, x = 0, y = 0)) +
+      scale_color_manual(values = cbPalette3_cat, na.translate = F) +
+      scale_fill_manual(values = cbPalette3_cat, na.translate = F) +
+      labs(fill = "ST")
+
+# Re-initiate plots to allow for >2 ggplot2 objects for metadata
+p2 <- p1 + new_scale_fill()
+
+p3 <- gheatmap(
+  p2, 
+  df1[, "num_resistance_genes", drop = FALSE], 
+  offset = 0.001, 
+  width = 0.05, 
+  hjust = 1, 
+  colnames_angle = -45,
+  colnames_position = "top",
+  color = "white",
+  font.size = 5, 
+  family = "Arial Bold",
+  custom_column_labels = c("Resistance\nGenes")
+) +
+  theme(
+    legend.text = element_text(size = 10, face = "bold"),
+    legend.title = element_text(size = 12, face = "bold", hjust = 0.5),
+    legend.key.size = unit(0.7, 'cm'),
+    plot.margin = margin(t = 20, r = 5, b = 5, l = 5, unit = "mm")
+  ) +
+  ggplot2::ylim(0, NA) + 
+  coord_cartesian(clip = "off", ylim = c(-1.0, NA)) +  
+  scale_fill_stepsn(
+    colors = cbPalette4_cont,
+    values = scales::rescale(c(2, 4, 6, 8, 10)),
+    breaks = c(2, 4, 6, 8, 10),
+    labels = c("2", "4", "6", "8", "10"),
+    limits = c(2, 10),
+    name = "Number of Resistance\nGenes",
+    na.value = "white"
+  )
+
+print(p3)
+
+# Save phylogeny visualization
+#ggsave("phylogeny_example.svg",  
+#       p3,         
+#       device = "svg",       
+#       dpi = 300,             
+#       units = "cm",         
+#       height = 50,          
+#       width = 50)   
+
+```
+
+```{r other metadata to play around with in freetime}
+#p4 <- p3 + new_scale_fill()
+#p5 <- gheatmap(p4, df1[, "Bla_Carb_acquired", drop=FALSE], offset=0.00055, width=0.013, hjust = 1, colnames_angle = -45, colnames_position = "top", color = "white", font.size = 3, family="Arial Bold", custom_column_labels = c("Carb"))+
+#  theme(legend.text=element_text(size=6, face="bold"),
+#        legend.title=element_text(size=10, face="bold"),
+#        legend.key.size = unit(0.5, 'cm'),
+#        legend.title.align=0.5) +
+#  ggplot2::ylim(-1.0, NA) + 
+#  coord_cartesian(clip = "off") + 
+#  scale_fill_manual(values = c("#ff00e3", "#FFFFFFFF"), 
+#                    name = "KPC-2",
+#                    breaks = c("KPC-2", "-"), 
+#                    labels = c("Present", "Absent"))
+```
+
+
+```{r clean up, echo=FALSE}
+# Clear data
+rm(list = ls())  
+
+# Clear packages
+pacman::p_unload(all)  
+
+# Clear plots
+graphics.off()  
+
+# Clear console
+cat("\014") 
+```
+
+
+
