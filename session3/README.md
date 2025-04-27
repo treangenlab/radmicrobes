@@ -623,7 +623,7 @@ cp clair3_output/merge_output.vcf.gz variants/ont_variants.vcf.gz
 gunzip -f variants/ont_variants.vcf.gz
 
 # Basic filtering of low-quality variants
-bcftools filter -i 'QUAL>20 && INFO/DP>10' variants/ont_variants.vcf > variants/ont_variants_filtered.vcf
+bcftools filter -i 'QUAL>20 && DP>10' variants/ont_variants.vcf > variants/ont_variants_filtered.vcf
 
 # Basic stats on variants
 bcftools stats variants/ont_variants_filtered.vcf > variants/ont_variants_stats.txt
