@@ -32,21 +32,21 @@ Sampling, Sequencing, QC, and Assembly Part II
 Genome Assembly to Alignment to SNPs Part I  
 **[Dr. Todd Treangen](https://treangenlab.com/) & [Dr. Michael Nute](https://treangenlab.com/profiles/mnute/)** (Department of Computer Science, Rice University)
 
-**12:20 PM – 1:00 PM**:  
+**12:30 PM – 1:10 PM**:  
 RAD Lunch Talks:
 
-- **12:20 PM – 12:40 PM**:  
+- **12:30 PM – 12:50 PM**:  
   *Omi: Bridging the Bioinformatics Expertise Gap with a Natural Language-Driven Metagenomics Co-pilot*  
   **Dr. Prashant Kalvapalle** (Department of Computer Science, Rice University)
 
-- **12:40 PM – 1:00 PM**:  
+- **12:50 PM – 1:10 PM**:  
   *Gut Microbiome Dynamics Reveal Enterococcus Species as a Marker Of AMR Pathogen Colonization and Dysbiosis*  
   **Hossaena Ayele** (University of Texas Health Science Center at Houston School of Public Health)
 
-**1:00 PM – 1:15 PM**:  
+**1:10 PM – 1:30 PM**:  
 Break
 
-**1:15 PM – 2:00 PM**:  
+**1:30 PM – 2:15 PM**:  
 Genome Assembly to Alignment to SNPs Part II  
 **[Dr. Michael Nute](https://treangenlab.com/profiles/mnute/) & Rossie Luo** (Department of Computer Science & SSPB graduate program, Rice University)
 
@@ -54,25 +54,25 @@ Genome Assembly to Alignment to SNPs Part II
 
 ### [RAD Session 3: 2h15m]
 
-**2:00 PM – 2:45 PM**:  
+**2:15 PM – 3:00 PM**:  
 Mapping and Variant Calling Part I  
 **Dr. Daniel Agustinho** (Baylor College of Medicine)
 
-**2:45 PM – 3:00 PM**:  
+**3:00 PM – 3:15 PM**:  
 Break
 
-**3:00 PM – 4:30 PM**:  
+**3:15 PM – 4:45 PM**:  
 Mapping and Variant Calling Part II  
 **Dr. Daniel Agustinho** (Baylor College of Medicine)
 
 ---
 
-**4:30 PM – 4:45 PM**:  
+**4:45 PM – 5:00 PM**:  
 Day 1 Wrap-up (Todd & Daniel)
 
 ---
 
-**4:45 PM – 6:15 PM**:  
+**5:00 PM – 6:15 PM**:  
 RAD Social
 
 ---
