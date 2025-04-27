@@ -10,7 +10,7 @@ Computational Resource Overview (Clinton Heider, Rice CRC)
 
 ---
 
-### [RAD Session 1]
+### [RAD Session 1: 2h15m]
 
 **9:00 AM – 10:30 AM**:  
 Sampling, Sequencing, QC, and Assembly Part I  
@@ -19,17 +19,17 @@ Sampling, Sequencing, QC, and Assembly Part I
 **10:30 AM – 10:45 AM**:  
 Break
 
-**10:45 AM – 11:15 AM**:  
+**10:45 AM – 11:30 AM**:  
 Sampling, Sequencing, QC, and Assembly Part II  
 **Dr. Blake Hanson** (University of Texas Health Science Center at Houston School of Public Health)
 
 ---
 
-### [RAD Session 2]
+### [RAD Session 2: 1h15m]
 
-**11:15 AM – 12:00 PM**:  
-Genome Alignment Part I  
-**Dr. Michael Nute & Dr. Todd Treangen** (Department of Computer Science, Rice University)
+**11:30 AM – 12:00 PM**:  
+Genome Assembly to Alignment to SNPs Part I  
+**[Dr. Todd Treangen](https://treangenlab.com/) & [Dr. Michael Nute](https://treangenlab.com/profiles/mnute/)** (Department of Computer Science, Rice University)
 
 **12:20 PM – 1:00 PM**:  
 RAD Lunch Talks:
@@ -46,12 +46,12 @@ RAD Lunch Talks:
 Break
 
 **1:15 PM – 2:00 PM**:  
-Genome Alignment Part II  
-**Dr. Michael Nute & Dr. Todd Treangen** (Department of Computer Science, Rice University)
+Genome Assembly to Alignment to SNPs Part II  
+**[Dr. Michael Nute](https://treangenlab.com/profiles/mnute/) & Rossie Luo** (Department of Computer Science & SSPB graduate program, Rice University)
 
 ---
 
-### [RAD Session 3]
+### [RAD Session 3: 2h15m]
 
 **2:00 PM – 2:45 PM**:  
 Mapping and Variant Calling Part I  
@@ -83,7 +83,7 @@ Breakfast/Check-in + Day 2 Kickoff (Todd & Will)
 
 ---
 
-### [RAD Session 4]
+### [RAD Session 4: 2h45m]
 
 **9:00 AM – 10:30 AM**:  
 Strain Typing and Genomic Epidemiology Part I  
@@ -92,7 +92,7 @@ Strain Typing and Genomic Epidemiology Part I
 **10:30 AM – 10:45 AM**:  
 Break
 
-**10:45 AM – 12:15 PM**:  
+**10:45 AM – Noon**:  
 Strain Typing and Genomic Epidemiology Part II  
 **Dr. Will Shropshire & Dr. An Dinh** (MD Anderson)
 
@@ -105,7 +105,7 @@ RAD Lunch and Learn:
 
 ---
 
-### [RAD Session 5]
+### [RAD Session 5: 2h45h]
 
 **1:15 PM – 2:45 PM**:  
 Pan Genomes and Functional Annotation Part I  
