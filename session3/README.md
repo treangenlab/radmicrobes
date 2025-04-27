@@ -8,22 +8,6 @@ This 2-2.5 hour hands-on workshop covers the fundamentals of genomic alignment a
 - (Very) Basic command line knowledge
 - Familiarity with basic genomic concepts
 
-**Environment preparation**
-```bash
-# Requesting an interactive session
-srun --partition=commons --mem=16G --ntasks=4 --export=ALL --time=04:00:00 --pty bash -i
-
-# Loading the mamba module
-module load Mamba/23.11.0-0
-
-# Activating our first work environment
-mamba activate /home/hpc9/.conda/envs/session3_clair
-
-#If you get an error, you might have to run this first:
-## mamba init
-## source ~/.bashrc
-```
-
 **Data preparation:**
 For this analysis, we are working with a single sample, sequenced in two different platforms: Illumina and ONT.
 ```bash
@@ -51,6 +35,23 @@ wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/009/885/GCF_000009885.1_AS
 gunzip GCF_000009885.1_ASM988v1_genomic.gff.gz
 
 ```
+
+**Environment preparation**
+```bash
+# Requesting an interactive session
+srun --partition=commons --mem=16G --ntasks=4 --export=ALL --time=04:00:00 --pty bash -i
+
+# Loading the mamba module
+module load Mamba/23.11.0-0
+
+# Activating our first work environment
+mamba activate /home/hpc9/.conda/envs/session3_clair
+
+#If you get an error, you might have to run this first:
+## mamba init
+## source ~/.bashrc
+```
+
 
 ---
 
