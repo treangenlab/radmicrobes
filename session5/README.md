@@ -470,7 +470,7 @@ There are several options of instances available:
 
 * [PIRATE](https://github.com/SionBayliss/PIRATE) (another good alternative)
 
-* [tMHG-Finder](https://github.com/yongze-yin/tMHG-Finder) (de Novo Tree-Based Maximal Homologous Group Finder, can be used to find pangenomic homologous sites)
+* [tMHG-Finder](https://github.com/yongze-yin/tMHG-Finder) (de Novo Tree-Based Maximal Homologous Group Finder, can be used to find homologous sites for pangenome analysis)
   
 <details>
 <summary>
