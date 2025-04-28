@@ -72,7 +72,7 @@ Day 1 Wrap-up (Todd & Daniel)
 
 ---
 
-**5:00 PM – 6:15 PM**:  
+**5:00 PM – 6:30 PM**:  
 RAD Social
 
 ---
