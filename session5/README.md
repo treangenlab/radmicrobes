@@ -29,7 +29,7 @@
 
      * the gff file
 
-   * Gene Ontology and InterproScan (adding functions)
+   * Gene Ontology Functional annotation
      
    * Visualization
   
@@ -71,6 +71,7 @@ There are several options of instances available:
 - [PROKKA](https://github.com/tseemann/prokka) (Which will be used in this boot camp)
 - [RAST](https://rast.nmpdr.org/) (Webserver application)
 - [PGAP](https://github.com/ncbi/pgap) (Usually the best option, but runs slow)
+- [bakta](https://github.com/oschwengers/bakta) (besides being heavily inspired by prokka Bakta is reported to find sligthly more of everything compare to prokka.)
 
 <details>
 <summary>
@@ -91,8 +92,11 @@ my_genome.gff  | Pre-generated gff output | /projects/k2i/session5/Files/Prokka
 ```
 ###Prepare to run in interactive node
 srun --pty --export=ALL --ntasks=1 --reservation=workshop --cpus-per-task=8 --mem=15GB --time=04:00:00 /bin/bash
-###Call prokka in bootcamp server
-source /projects/k2i/radmicrobes-s4/bin/activate
+
+###Activate Prokka's enviroment
+ml Mamba
+mamba activate /projects/k2i/session_conda_environments/S5_prokka_roary
+
 ##Run prokka
 prokka --outdir prokka_test --prefix my_genome --rfam genome.fasta
 ```
@@ -356,7 +360,7 @@ more my_genome.gff| grep "KPC"
 <details>
 <summary>
 
- ### Gene Ontology and InterproScan (adding functions) <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20">
+ ### Gene Ontology Functional Annotation <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20">
 </summary> 
 
 The Gene Ontology (GO) serves as a framework and set of concepts for delineating the functions of gene products across various organisms. Tailored for supporting the computational representation of biological systems, GO annotations establish associations between specific gene products and GO concepts. Together, these annotations create statements relevant to the function of the respective genes.
@@ -393,6 +397,28 @@ Using [InterproScan](https://www.ebi.ac.uk/interpro/search/sequence/) ou can als
 ![image](https://github.com/treangenlab/radmicrobes/assets/28576450/0ae73a5e-8eda-4a50-b8d5-3fdad1057eef)
 
 **Exercise:** copy the first sequence on your prokka faa result and paste [here](https://www.ebi.ac.uk/interpro/search/sequence/). What do you see?
+
+
+#### EggNOG
+
+[EggNOG-mapper](https://github.com/eggnogdb/eggnog-mapper) is a tool for fast functional annotation of novel sequences. It uses precomputed orthologous groups and phylogenies from the [eggNOG database](http://eggnog5.embl.de) to transfer functional information from fine-grained orthologs only.
+
+EggNOG-mapper is more accurate and runs ∼15× faster than BLAST and at least 2.5× faster than InterProScan. Can run on a [web-service](http://eggnog-mapper.embl.de/) or command line.  
+
+<img width="612" alt="image" src="https://github.com/user-attachments/assets/267ba074-ba18-4273-8e82-1c0bca260bb8" />
+
+
+**Basic usage (diamond blastp)**
+```
+emapper.py -i FASTA_FILE_PROTEINS -o test
+```
+
+**Run search and annotation for a genome, using Diamond search on proteins predicted by Prodigal, changing the output directory**
+```
+emapper.py -m diamond --itype genome --genepred prodigal -i FASTA_FILE_NTS -o test --output_dir /home/me/mydir
+```
+
+
 
 </details>
 <details>
@@ -444,10 +470,12 @@ There are several options of instances available:
 
 * [PIRATE](https://github.com/SionBayliss/PIRATE) (another good alternative)
 
+* [tMHG-Finder](https://github.com/yongze-yin/tMHG-Finder) (de Novo Tree-Based Maximal Homologous Group Finder)
+  
 <details>
 <summary>
  
- ### RUNNING ROARY <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20"></summary>
+ ### RUNNING ROARY and PANAROO <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20"></summary>
 <p></p>
  
 #### [Roary Documentation](https://sanger-pathogens.github.io/Roary/)
@@ -492,6 +520,35 @@ File name  | Description
 core_gene_alignment.aln	| Core gene aligment 
 accessory_binary_genes.fa.newick | Accessory gene tree
 gene_presence_absence.csv | Table with information of gene presence and absense
+
+##### Running Panaroo <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20">
+
+**[Panaroo documentation](https://gthlab.au/panaroo/#/gettingstarted/quickstart)**
+
+**Basic usage**
+```
+panaroo -i *.gff -o ./results/ --clean-mode strict -a core --aligner mafft
+```
+**Flag explanation**
+
+**-i**                     input GFF3 files (Genbank file formats are also supported with extensions '.gbk', '.gb' or '.gbff')
+
+**--clean-mode**           The stringency mode at which to run panaroo. (strict,moderate,sensitive)
+
+**-a**                     Output alignments of core genes or all genes. Options are 'core' and 'pan'. Default: 'None'
+
+**--core_threshold**       frequency of a gene in the your sample required to classify it as 'core' (example: 0.95)
+
+**--aligner**              Specify an aligner. Options:'prank', 'clustal', and default: 'mafft'
+
+**--merge_paralogs**       Panaroo splits paralogs into separate clusters by default. Merging paralogs can be enabled.
+
+**--remove-invalid-genes** ignore invalid annotation that do not conform to the expected Prokka format such as those including premature stop codons
+
+* Clean-modes explained:
+  * strict: Requires fairly strong evidence (present in  at least 5% of genomes) to keep likely contaminant genes. Will remove genes that are refound more often than they were called originally.
+  * moderate: Requires moderate evidence (present in  at least 1% of genomes) to keep likely contaminant genes. Keeps genes that are refound more often than they were called originally.
+  * sensitive: Does not delete any genes and only performes merge and refinding operations. Useful if rare plasmids are of interest as these are often hard to disguish from contamination. Results will likely include  higher number of spurious annotations.
 
 ##### Running Raxml to make a phylogenetic tree <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20">
 
