@@ -38,14 +38,15 @@ I am trained as an epidemiologist and have extensive experience in applying adva
 
 #### Rossie Luo
 
-Rossie: add description + photo
+<img width="200" alt="image" src="">
+
+Rossie Luo is a 1st year PhD student in the Treangen lab. She worked in the synthetic biology industry for two years before starting her PhD program in Systems, Synthetic and Physical Biology (SSPB) at Rice. Her research is currently focused on microbial metagenomics and strain-level analysis to identify virulence factors. Outside of research, she enjoys nature, running and spending time with her dog.
 
 #### Michael Nute, PhD
 
 <img width="200" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/761469/32dbac1b-04f5-49da-97fa-c33e728b5f2f">
 
-Mike is a Research Scientist at Rice University in Todd Treangen's lab and has been working on Microbial bioinformatics since 2015. He did his Ph.D. in Statistics at UIUC under Tandy Warnow, where he worked on algorithms for phylogenetics and multiple sequence alignment with a particular emphasis on applications to microbes. He was co-advised by Rebecca Stumpf researching the microbiome of non-human primates. After finishing in 2019, he patiently waited for a global pandemic to take hold in order to find a postdoc that could be done remotely, which he found in 2020 with the Treangen Lab. 
-
+Mike Nute is a Research Scientist at Rice University in Todd Treangen's lab and has been working on Microbial bioinformatics since 2015. He did his Ph.D. in Statistics at UIUC under Tandy Warnow, where he worked on algorithms for phylogenetics and multiple sequence alignment with a particular emphasis on applications to microbes. He was co-advised by Rebecca Stumpf researching the microbiome of non-human primates. After finishing in 2019, he patiently waited for a global pandemic to take hold in order to find a postdoc that could be done remotely, which he found in 2020 with the Treangen Lab. 
 
 #### Dr. Todd Treangen, PhD
 
