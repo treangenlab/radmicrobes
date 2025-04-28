@@ -613,22 +613,32 @@ run_clair3.sh \
 **What is this command doing:**
 
 `--bam_fn=alignment/ont_sorted.bam`: Input BAM file containing sorted reads from Oxford Nanopore Technology (ONT) sequencing
+
 `--ref_fn=reference/GCF_000009885.1_ASM988v1_genomic.fna`: Reference genome file in FASTA format against which variants will be called
+
 `--output=clair3_output`: Directory where output files will be saved
+
 `--threads=4`: Number of CPU threads to use for parallel processing
+
 `--platform="ont"`: Specifies the sequencing platform as Oxford Nanopore Technology
+
 `--model_path="/home/hpc9/.conda/envs/session3_clair/bin/models/ont"`: Path to the pre-trained machine learning model for ONT data
+
 `--include_all_ctgs`: Include all contigs from the reference genome for variant calling, not just the primary ones
+
 `--no_phasing_for_fa`: Disables phasing when generating FASTA output (phasing is the process of determining which variants are on the same chromosome)
+
 `--haploid_precise`: Optimizes variant calling for haploid genomes, improving precision for organisms with a single set of chromosomes
 
 **Note that:**
+
 - Long-read variant callers must account for higher error rates
 - ONT reads tend to have more indel errors than substitution errors
 - Neural network models help distinguish true variants from sequencing errors
 - Structural variants are more easily detected with long reads
 
 **Step 2: Analyze the variants**
+
 ```bash
 # Copy the merged VCF to our working directory
 cp clair3_output/merge_output.vcf.gz variants/ont_variants.vcf.gz
@@ -642,6 +652,7 @@ bcftools stats variants/ont_variants_filtered.vcf > variants/ont_variants_stats.
 ```
 
 **Unique aspects of long-read variant calling:**
+
 - Better detection of structural variants
 - Potential for direct methylation detection
 - Higher false positive rates for SNVs compared to Illumina
@@ -661,10 +672,15 @@ sniffles --minsupport 5 --minsvlen 50 --mapq 20 --min-alignment-length 500 --thr
 **What is this command doing?**
 
 `--minsupport 3-5`: For bacterial genomes, lower support values work well. Bacterial genomes tolerate lower support (haploidy + high coverage). Trade-off: 3 for sensitive plasmid detection; 5 for stricter chromosomal SVs.
+
 `--minsvlen 30-50`: Detect SVs of at least 30bp (or 50bp). Captures small but meaningful SVs (e.g., antimicrobial resistance gene indels). Balance: 50bp reduces noise; 30bp increases sensitivity for plasmids.
+
 `--mapq 20`: Minimum mapping quality threshold
+
 `--min-alignment-length 500`: Ensures reads span SV breakpoints confidently (avoids false positives).
+
 `--threads 4`: Use of 4 threads
+
 `--min-af 0.1`: Detect variants with at least 10% allele frequency. Controversial for haploid bacteria: Pure clonal samples should have `AF=1.0`. Use only if expecting mixed populations.
 
 **Investigating the Sniffles2 results:
