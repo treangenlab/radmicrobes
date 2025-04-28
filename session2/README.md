@@ -32,9 +32,9 @@
  
 </summary>
 
-## Michael Nute
+## Michael Nute and Todd Treangen
 
-RAD Microbes 2025
+RAD Microbes
 April 28th, 2025
 
 ### Whole-Genome Alignment
@@ -256,10 +256,167 @@ _3\.\) This will give you the standard _  _Gingr_  _ view\. Other options to re\
 
 </details>
 
+ <details>
+ <summary> 
+  
+
+## Run this during lunch talks
+ 
+</summary>
+This parsnp quick start guide covers launching an interactive session on NOTS, installing and activating a Conda environment with Parsnp, and verifying the installation. Each step includes a brief description and links to further documentation (where appropriate).
+
+---
+
+### Step-by-Step Instructions
+
+| Step | Command(s) | Description | Reference |
+| ---- | ---------- | ----------- | --------- |
+| 1 | ```bash<br>srun --partition=commons \  <br>--pty \  <br>--export=ALL \  <br>--ntasks=1 \  <br>--reservation=workshop \  <br>--cpus-per-task=8 \  <br>--mem=15GB \  <br>--time=04:00:00 \  <br>/bin/bash``` | Launch an interactive SLURM job with 1 task, 8 CPUs, 15 GB RAM, 4 h walltime. | [srun docs](https://slurm.schedmd.com/srun.html) |
+| 2 | `module load Mamba/23.11.0-0` | Load the Mamba/Conda module for environment management | — |
+| 3 | `mamba create --name radsession2 bioconda::parsnp` | Create a Conda env named `radsession2` and install Parsnp from Bioconda. | [Bioconda](https://bioconda.github.io) |
+| 4 | `mamba init` | Initialize Conda in your shell startup file (e.g. `.bashrc`). | — |
+| 5 | `source /home/<userid>/.bashrc` | Reload your shell so `conda`/`mamba` commands become available. | — |
+| 6 | `mamba activate radsession2` | Activate the `radsession2` environment (Parsnp on your PATH). | — |
+| 7 | `parsnp -h` | Verify Parsnp is installed by printing its help message. | [Parsnp usage](https://github.com/marbl/parsnp#usage) |
+
+---
+
+### Example Session
+
+```console
+$ srun --partition=commons --pty --export=ALL --ntasks=1 --reservation=workshop --cpus-per-task=8 --mem=15GB --time=04:00:00 /bin/bash
+# (on NOTS compute node)
+$ module load Mamba/23.11.0-0
+$ mamba create --name radsession2 bioconda::parsnp
+$ mamba init
+$ source /home/<userid>/.bashrc
+$ mamba activate radsession2
+(radsession2) $ parsnp -h
+Parsnp v1.5.6
+Usage: parsnp -c <config_file> -d <input_dir> -r <reference.fa> [options]
+```
+
+Place green sticky note on the back of your laptop once you see the below on your screen, else red stick note:
+
+```console
+22:55:13 - INFO - |--Parsnp 2.1.3--|
+
+usage: parsnp [-h] [-r REFERENCE] -d SEQUENCES [SEQUENCES ...] [-g GENBANK [GENBANK ...]] [-o OUTPUT_DIR]
+              [-q QUERY] [-c] [--skip-ani-filter] [-U MAX_MUMI_DISTR_DIST | -mmd MAX_MUMI_DISTANCE] [-F]
+              [-M] [--use-ani] [--min-ani MIN_ANI] [--min-ref-cov MIN_REF_COV] [--use-mash]
+              [--max-mash-dist MAX_MASH_DIST] [-a MIN_ANCHOR_LENGTH] [-m MUM_LENGTH] [-C MAX_CLUSTER_D]
+              [-z MIN_CLUSTER_SIZE] [-D MAX_DIAG_DIFF] [-n {mafft,muscle,fsa,prank}] [-u] [--no-partition]
+              [--min-partition-size MIN_PARTITION_SIZE] [--extend-lcbs]
+              [--extend-ani-cutoff EXTEND_ANI_CUTOFF] [--extend-indel-cutoff EXTEND_INDEL_CUTOFF]
+              [--match-score MATCH_SCORE] [--mismatch-penalty MISMATCH_PENALTY]
+              [--gap-penalty GAP_PENALTY] [--skip-phylogeny] [--validate-input] [--use-fasttree] [--vcf]
+              [--no-maf] [-p THREADS] [--force-overwrite] [-P MAX_PARTITION_SIZE] [-v] [-x] [-i INIFILE]
+              [-e] [-V]
+
+    Parsnp quick start for three example scenarios:
+    1) With reference & genbank file:
+    python Parsnp.py -g <reference_genbank_file1 reference_genbank_file2 ...> -d <seq_file1 seq_file2 ...>  -p <threads>
+
+    2) With reference but without genbank file:
+    python Parsnp.py -r <reference_genome> -d <seq_file1 seq_file2 ...> -p <threads>
+    
+
+options:
+  -h, --help            show this help message and exit
+
+Input/Output:
+  -r REFERENCE, --reference REFERENCE
+                        (r)eference genome (set to ! to pick random one from sequence dir)
+  -d SEQUENCES [SEQUENCES ...], --sequences SEQUENCES [SEQUENCES ...]
+                        A list of files containing genomes/contigs/scaffolds. If the file ends in .txt, each line in the file corresponds to the path to an input file.
+  -g GENBANK [GENBANK ...], --genbank GENBANK [GENBANK ...]
+                        A list of Genbank file(s) (gbk)
+  -o OUTPUT_DIR, --output-dir OUTPUT_DIR
+  -q QUERY, --query QUERY
+                        Specify (assembled) query genome to use, in addition to genomes found in genome dir
+
+Filtering:
+  -c, --curated         (c)urated genome directory, use all genomes in dir and ignore MUMi.
+  --skip-ani-filter     Skip the filtering step which discards inputs based on the ANI/MUMi distance to the reference.
+                        Unlike --curated, this will still filter inputs based on their length compared to the reference
+  -U MAX_MUMI_DISTR_DIST, --max-mumi-distr-dist MAX_MUMI_DISTR_DIST, --MUMi MAX_MUMI_DISTR_DIST
+                        Max MUMi distance value for MUMi distribution
+  -mmd MAX_MUMI_DISTANCE, --max-mumi-distance MAX_MUMI_DISTANCE
+                        Max MUMi distance (default: autocutoff based on distribution of MUMi values)
+  -F, --fastmum         Fast MUMi calculation
+  -M, --mumi_only, --onlymumi
+                        Calculate MUMi and exit? overrides all other choices!
+  --use-ani             Use ANI for genome filtering
+  --min-ani MIN_ANI     Min ANI value required to include genome
+  --min-ref-cov MIN_REF_COV
+                        Minimum percent of reference segments to be covered in FastANI
+  --use-mash            Use mash for genome filtering
+  --max-mash-dist MAX_MASH_DIST
+                        Max mash distance.
+
+MUM search:
+  -a MIN_ANCHOR_LENGTH, --min-anchor-length MIN_ANCHOR_LENGTH, --anchorlength MIN_ANCHOR_LENGTH
+                        Min (a)NCHOR length (default = 1.1*(Log(S)))
+  -m MUM_LENGTH, --mum-length MUM_LENGTH, --mumlength MUM_LENGTH
+                        Mum length
+  -C MAX_CLUSTER_D, --max-cluster-d MAX_CLUSTER_D, --clusterD MAX_CLUSTER_D
+                        Maximal cluster D value
+  -z MIN_CLUSTER_SIZE, --min-cluster-size MIN_CLUSTER_SIZE, --minclustersize MIN_CLUSTER_SIZE
+                        Minimum cluster size
+
+LCB alignment:
+  -D MAX_DIAG_DIFF, --max-diagonal-difference MAX_DIAG_DIFF, --DiagonalDiff MAX_DIAG_DIFF
+                        Maximal diagonal difference. Either percentage (e.g. 0.2) or bp (e.g. 100bp)
+  -n {mafft,muscle,fsa,prank}, --alignment-program {mafft,muscle,fsa,prank}, --alignmentprog {mafft,muscle,fsa,prank}
+                        Alignment program to use
+  -u, --unaligned       Output unaligned regions
+
+Sequence Partitioning:
+  --no-partition        Run all query genomes in single parsnp alignment, no partitioning.
+  --min-partition-size MIN_PARTITION_SIZE
+                        Minimum size of a partition. Input genomes will be split evenly across partitions at least this large.
+
+LCB Extension:
+  --extend-lcbs         Extend the boundaries of LCBs with an ungapped alignment
+  --extend-ani-cutoff EXTEND_ANI_CUTOFF
+                        Cutoff ANI for lcb extension
+  --extend-indel-cutoff EXTEND_INDEL_CUTOFF
+                        Cutoff for indels in LCB extension region. LCB extension will be at most min(seqs) + cutoff bases
+  --match-score MATCH_SCORE
+                        Value of match score for extension
+  --mismatch-penalty MISMATCH_PENALTY
+                        Value of mismatch score for extension (should be negative)
+  --gap-penalty GAP_PENALTY
+                        Value of gap penalty for extension (should be negative)
+
+Misc:
+  --skip-phylogeny      Do not generate phylogeny from core SNPs
+  --validate-input      Use Biopython to validate input files
+  --use-fasttree        Use fasttree instead of RaxML
+  --vcf                 Generate VCF file.
+  --no-maf              Do not generage MAF file (XMFA only)
+  -p THREADS, --threads THREADS
+                        Number of threads to use
+  --force-overwrite, --fo
+                        Overwrites any results in the output directory if it already exists
+  -P MAX_PARTITION_SIZE, --max-partition-size MAX_PARTITION_SIZE
+                        Max partition size (limits memory usage)
+  -v, --verbose         Verbose output
+  -x, --recomb-filter, --xtrafast
+                        Run recombination filter (phipack)
+  -i INIFILE, --inifile INIFILE, --ini-file INIFILE
+  -e, --extend
+  -V, --version         show program's version number and exit
+```
+
+</details>
+
 <details>
  <summary>
   
- ## Multiple Genome Alignment (hands-on) </summary>
+ ## Multiple Genome Alignment (hands-on)
+
+</summary>
  <p></p>
 ========
 
