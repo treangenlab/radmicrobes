@@ -736,7 +736,12 @@ If a field starts with SVTYPE=, print it (e.g., SVTYPE=INS, SVTYPE=DEL).
 
 
 ### Setting Up IGV
-Copy the alignment and variant files to your computer
+Copy the alignment and variant files to your computer.
+
+To install IGV on your computer, you can go to this website: https://igv.org/download/html/oldtempfixForDownload.html
+
+You can also run it online from here: https://igv.org/
+
 **Step 1: Load the data**
 ```bash
 # Change back to our session3_clair enviroment
