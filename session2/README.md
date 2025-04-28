@@ -424,7 +424,9 @@ This tutorial is to go over how to use Parsnp for multiple genome alignment (cor
 
 ## <a name ="first">Installation</a> 
 
-Have ParSNP installed. Parsnpcan be run on macOS / linux  
+**NOTE**: The following includes installation instructions for a general machine, although if you have successfully run the commands above under "Run this during lunch", you should have parsnp installed already so you do _not_ need to run these.
+
+Parsnp can be run on macOS / linux using the following commands:
 
 1)Download & install Parsnp on MacOS
 
@@ -459,6 +461,7 @@ To install:
 
 [gingr-Linux64-v1.3.tar.gz](https://github.com/marbl/gingr/releases/download/v1.3/gingr-Linux64-v1.3.tar.gz/)  
    
+## <a name ="second">Hands-On Tutorial</a> 
 
    1) <a name="part3e1">Example 1: 49 MERS Coronavirus genomes </a>
    
@@ -476,7 +479,7 @@ To install:
 
         ![merscmd](https://github.com/marbl/harvest/raw/master/docs/content/parsnp/run_mers.cmd1.png?raw=true)
 
-      * Visualize with Gingr [download](https://github.com/marbl/harvest/raw/master/docs/content/parsnp/run_mers.gingr1.ggr)
+      * Visualize with Gingr [download .ggr file](https://github.com/marbl/harvest/raw/master/docs/content/parsnp/run_mers.gingr1.ggr)
       
         ![mers1](https://github.com/marbl/harvest/raw/master/docs/content/parsnp/run_mers.gingr1.png?raw=true)
 
@@ -507,26 +510,27 @@ To install:
  
    2) <a name="part3e2">Example 2: 31 Streptococcus pneumoniae genomes </a>
    
-     --Download genomes:
-   * `cd $HOME`
-   * `mkdir parsnp_demo2`
-   * `cd parsnp_demo2`
-   *  `wget https://github.com/marbl/harvest/raw/master/docs/content/parsnp/strep31.tar.gz`
-   *  `tar -xvf strep31.tar.gz`
+      Download genomes:
+     
+       * `cd $HOME`
+       * `mkdir parsnp_demo2`
+       * `cd parsnp_demo2`
+       * `wget https://github.com/marbl/harvest/raw/master/docs/content/parsnp/strep31.tar.gz`
+       * `tar -xvf strep31.tar.gz`
     
-     --Run parsnp:
-      
-    parsnp -r ./strep31/NC_011900.fna -d ./strep31 -p 8
+      Run parsnp:
 
-     --Force inclusion of all genomes (-c):
-      
-    parsnp -r ./strep31/NC_011900.fna -d ./strep31 -p 8 -c
+      ```parsnp -r ./strep31/NC_011900.fna -d ./strep31 -p```
 
-     --Enable recombination detection/filter (-x):
+      Force inclusion of all genomes (-c):
       
-    parsnp -r ./strep31/NC_011900.fna -d ./strep31 -p 8 -c -x
+      ```parsnp -r ./strep31/NC_011900.fna -d ./strep31 -p 8 -c```
 
-     --Inspect Output:
+      Enable recombination detection/filter (-x):
+      
+      ```parsnp -r ./strep31/NC_011900.fna -d ./strep31 -p 8 -c -x```
+
+      Inspect Output:
       
          * Multiple alignment: parsnp.xmfa
          * Phylogeny: parsnp.tree
@@ -549,6 +553,28 @@ This last step requires you to download software and is to highlight the ability
     * Load MFA file:
 
     File->Open File
+
+### Other Parsnp Options & Example Script
+
+There are a variety of different options that can be given to parsnp. The script below contains several different examples of how you might want to run parsnp on the example MERS data. (Note that the command to download and extract the MERS data is duplicated, but it's not very big.)
+
+```
+# Run all Parsnp tests
+curl https://github.com/marbl/harvest/raw/master/docs/content/parsnp/mers_examples.tar.gz -L --output mers_examples.tar.gz
+tar -xzvf mers_examples.tar.gz
+
+# CPU=$(grep -c ^processor /proc/cpuinfo)
+CPU=2
+parsnp -V 
+parsnp -g mers_virus/ref/England1.gbk -d mers_virus/genomes -C 1000 -c -o test-gbk --verbose --use-fasttree --vcf
+parsnp -r ! -d mers_virus/genomes/*.fna -o test-skips --verbose -p $CPU --force-overwrite --skip-phylogeny --skip-ani-filter
+parsnp -r ! -d mers_virus/genomes/*.fna -o test-mash --verbose -p $CPU --skip-phylogeny --use-mash
+# parsnp -r mers_virus/ref/England1.fna -d mers_virus/genomes/*.fna -o test-fastani --verbose -p $CPU --skip-phylogeny --use-ani #Skip for MacOS but fix in future build
+parsnp -r ! -d mers_virus/genomes/*.fna -o test-nopartition --verbose -p $CPU --no-partition --xtrafast
+parsnp -r ! -d mers_virus/genomes/*.fna -o test-minpartition10 --verbose -p $CPU --min-partition-size 10 --xtrafast
+```
+
+If you are able to run any of these, you may try downloading the output `.ggr` file to your local machine and visualizing the results using Gingr.
 
 </details>
  <details>
