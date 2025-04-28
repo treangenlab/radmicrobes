@@ -398,9 +398,9 @@ Using [InterproScan](https://www.ebi.ac.uk/interpro/search/sequence/) ou can als
 **Exercise:** copy the first sequence on your prokka faa result and paste [here](https://www.ebi.ac.uk/interpro/search/sequence/). What do you see?
 
 
-#### Eggnog
+#### EggNOG
 
-[Eggnog-mapper](https://github.com/eggnogdb/eggnog-mapper) is a tool for fast functional annotation of novel sequences. It uses precomputed orthologous groups and phylogenies from the [eggNOG database](http://eggnog5.embl.de) to transfer functional information from fine-grained orthologs only.
+[EggNOG-mapper](https://github.com/eggnogdb/eggnog-mapper) is a tool for fast functional annotation of novel sequences. It uses precomputed orthologous groups and phylogenies from the [eggNOG database](http://eggnog5.embl.de) to transfer functional information from fine-grained orthologs only.
 
 EggNOG-mapper is more accurate and runs ∼15× faster than BLAST and at least 2.5× faster than InterProScan. Can run on a [web-service](http://eggnog-mapper.embl.de/) or command line.  
 
