@@ -158,6 +158,7 @@ Open IGV https://igv.org/app/
 ### Running Roary
 
 ```
+mamba activate /projects/k2i/session_conda_environments/S5_prokka_roary
 roary -p 5 -n -e -v /scratch/hpc##/session5/dataset/gffs/*.gff
 ```
 
@@ -184,6 +185,7 @@ gene_presence_absence.csv | Table with information of gene presence and absense
 
 **Basic usage**
 ```
+mamba activate /projects/k2i/session_conda_environments/S5_toolset/
 panaroo -i /scratch/hpc##/session5/dataset/gffs/*.gff -o ./panaroo_results/ --clean-mode strict -a core --aligner mafft
 ```
 **Flag explanation**
@@ -211,7 +213,7 @@ panaroo -i /scratch/hpc##/session5/dataset/gffs/*.gff -o ./panaroo_results/ --cl
 
 **Basic usage:**
 ```
-source /projects/k2i/radmicrobes-s4/bin/activate
+mamba activate /projects/k2i/session_conda_environments/S5_toolset/
 raxml-ng --msa <path to roary or panaroo>/core_gene_alignment.aln --model GTR+G --all --bs-trees 1000
 ```
 **Flag explanation**
@@ -232,15 +234,19 @@ raxml-ng --msa <path to roary or panaroo>/core_gene_alignment.aln --model GTR+G 
 #### Run tMHG-Finder
 
 ```
-tmhgf find -g /scratch/hpc##/session5/dataset/tmhgf_genomes/
+tmhgf find -g /scratch/hpc##/session5/dataset/tmhgf_genomes/ -o /scratch/hpc##/tMHG_OUTPUT_DIR
 ```
 
 #### Run eggNOG 
 
+Eggnog Bacteria db is located at ```/projects/k2i/databases/eggnog/```
+
+<img width="1104" alt="image" src="https://github.com/user-attachments/assets/6c580a62-4feb-4008-b4c7-dcd207ed700a" />
+
 ```
 #testing with annotated proteins
-emapper.py -i <prokka.faa> -o /scratch/hpc##/eggnog_p_test
+emapper.py -i <prokka.faa> -o /scratch/hpc##/eggnog_p_test --data_dir /projects/k2i/databases/eggnog
 
 #testing with a genome
-emapper.py -m diamond --itype genome --genepred prodigal -i <genome.fasta> -o test --output_dir /scratch/hpc##/eggnog_g_test
+emapper.py -m diamond --itype genome --genepred prodigal -i <genome.fasta> -o test --output_dir /scratch/hpc##/eggnog_g_test --data_dir /projects/k2i/databases/eggnog
 ```
