@@ -236,7 +236,7 @@ BWA-MEM (Burrows-Wheeler Aligner with Maximal Exact Matches) is the gold standar
 **Step 1: Index the reference**
 ```bash
 # First, we need to index our reference genome
-cd reference
+cd reference # (if not still in this directory)
 bwa index GCF_000009885.1_ASM988v1_genomic.fna
 
 # This creates several index files (.amb, .ann, .bwt, .pac, .sa)
