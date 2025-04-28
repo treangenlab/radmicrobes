@@ -43,12 +43,13 @@ RAD Lunch Talks:
   *Gut Microbiome Dynamics Reveal Enterococcus Species as a Marker Of AMR Pathogen Colonization and Dysbiosis*  
   **Hossaena Ayele** (University of Texas Health Science Center at Houston School of Public Health)
 
-**1:15 PM – 1:30 PM**:  
-Break
-
-**1:30 PM – 2:30 PM**:  
+**1:15 PM – 2:15 PM**:  
 Genome Assembly to Alignment to SNPs Part II  
 **[Dr. Michael Nute](https://treangenlab.com/profiles/mnute/) & Rossie Luo** (Department of Computer Science & SSPB graduate program, Rice University)
+
+
+**2:15 PM – 2:30 PM**:  
+Break
 
 ---
 
