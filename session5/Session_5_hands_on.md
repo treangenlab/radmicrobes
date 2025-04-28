@@ -229,7 +229,7 @@ raxml-ng --msa <path to roary or panaroo>/core_gene_alignment.aln --model GTR+G 
 ### Open your tree on ITOL (https://itol.embl.de/upload.cgi)
 
 
-### Extra work if time permits
+### Extra work if time permits 
 
 #### Run tMHG-Finder
 
@@ -237,7 +237,7 @@ raxml-ng --msa <path to roary or panaroo>/core_gene_alignment.aln --model GTR+G 
 tmhgf find -g /scratch/hpc##/session5/dataset/tmhgf_genomes/ -o /scratch/hpc##/tMHG_OUTPUT_DIR
 ```
 
-#### Run eggNOG 
+#### Run eggNOG
 
 Eggnog Bacteria db is located at ```/projects/k2i/databases/eggnog/```
 
