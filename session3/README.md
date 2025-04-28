@@ -35,6 +35,8 @@ wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/009/885/GCF_000009885.1_AS
 gunzip GCF_000009885.1_ASM988v1_genomic.gff.gz
 
 ```
+You can inspect the reference genome here: https://www.ncbi.nlm.nih.gov/nuccore/NC_012731.1
+
 
 **Environment preparation**
 ```bash
