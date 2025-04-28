@@ -4,11 +4,15 @@
 DATES: April 28th and 29th, 2025
 LOCATION: Room 280, BRC (https://brc.rice.edu/) 
 
-SSH/LOGIN info: click [here](https://docs.google.com/document/d/1jvBkiV3lGPSbIcffjx0xm_hfVzciBWNJ8emBlrNCY_k/edit?usp=sharing)
+RAD logistics:
 
-SLACK link: click [here](https://join.slack.com/t/radmicrobes/shared_invite/zt-34jca39ci-VoTCcvMlmBcdAPPFegM_GA)
+- NOTS background: click [here](https://kb.rice.edu/147970)
+  
+- SSH/LOGIN info: click [here](https://docs.google.com/document/d/1jvBkiV3lGPSbIcffjx0xm_hfVzciBWNJ8emBlrNCY_k/edit?usp=sharing)
 
-AGENDA: click [here](https://github.com/treangenlab/radmicrobes/blob/main/agenda.md)
+- SLACK link: click [here](https://join.slack.com/t/radmicrobes/shared_invite/zt-34jca39ci-VoTCcvMlmBcdAPPFegM_GA)
+
+- AGENDA: click [here](https://github.com/treangenlab/radmicrobes/blob/main/agenda.md)
 
 SUMMARY: Computational analyses of microbial genomes through genomic sequencing hold tremendous promise yet can become riddled with various sources of potential bias. The microbial genome analysis workshop is designed for graduate students, postdoctoral fellows, and investigators from diverse backgrounds and interests for clarity on how to effectively utilize ubiquitous computational pipelines for answering specific research questions. This hands-on workshop will cover end-to-end microbial genome analysis, discussing the pros and cons of decisions made during the process (library preparation, sequencing, bioinformatic tool selection, parameter settings, and interpretation of results).
 
