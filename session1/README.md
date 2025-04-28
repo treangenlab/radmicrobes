@@ -766,9 +766,9 @@ Within this command, we are using the `PE` command flag as our data is paired-en
 
 From there you can set the -threads command if you would like, I use 4 threads below as that is a safe number to use on my laptop while also performing other actions. I then provide the following file details:
 
-- Input Files (the pathing here assumes you are in the session1 workshop directory of the git repository)
-	- Read 1 - `Files/illumina_reads/raw/ARLG-4673_R1.fastq.gz`
-	- Read 2 - `Files/illumina_reads/raw/ARLG-4673_R2.fastq.gz`
+- Input Files (the pathing here assumes you are in the session_1 workshop directory of the git repository)
+	- Read 1 - `illumina/ARLG-4673_R1.fastq.gz`
+	- Read 2 - `illumina/ARLG-4673_R2.fastq.gz`
 
 - Output Files (this will write files into the base session1 directory to make sure I don't overwrite existing data)
 	- Read 1 paired read output - `ARLG-4673_R1_paired.fastq.gz` (this is one of the files we want as we want to make sure we move forward with paired files for both read 1 and read 2. Utilizing unpaired files, where one read was not removed, but the other was removed can cause issues with downstream bioinformatics tools and thus should be discarded unless very specifically needed)
@@ -914,7 +914,7 @@ EXAMPLES:
 While there are a LOT of options to customize the output of this tool, we are keeping it simple and running the following command:
 
 ```
-NanoPlot --fastq Files/oxford_nanopore_reads/ARLG-4673_ONT.fastq.gz -o ARLG-4673_NanoPlot_output
+NanoPlot --fastq ARLG-4673_ONT.fastq.gz -o ARLG-4673_NanoPlot_output
 ```
 
 Below is the NanoPlot output that gives us information on the general quality of the data we are utilizing. 
@@ -954,12 +954,12 @@ For our short-read assembly, we will be utilizing the SPAdes genome assembler. T
 The usage of SPAdes is:
 
 ```
-SPAdes.py --help
+spades.py --help
 SPAdes genome assembler v3.15.5
 ```
 
 ```
-Usage: SPAdes.py [options] -o <output_dir>
+Usage: spades.py [options] -o <output_dir>
 
 Basic options:
   -o <output_dir>             directory to store all the resulting files (required)
@@ -1059,7 +1059,7 @@ Advanced options:
 The command we are using is:
 
 ```
-SPAdes.py -t 8 --isolate --only-assembler -1 ARLG-4673_R1_paired.fastq.gz -2 ARLG-4673_R2_paired.fastq.gz -o ARLG-4673_SPAdes_out
+spades.py -t 8 --isolate --only-assembler -1 ARLG-4673_R1_paired.fastq.gz -2 ARLG-4673_R2_paired.fastq.gz -o ARLG-4673_SPAdes_out
 ```
 
 This utilizes the following parameters:
