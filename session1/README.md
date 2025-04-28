@@ -914,7 +914,7 @@ EXAMPLES:
 While there are a LOT of options to customize the output of this tool, we are keeping it simple and running the following command:
 
 ```
-NanoPlot --fastq Files/oxford_nanopore_reads/ARLG-4673_ONT.fastq.gz -o ARLG-4673_NanoPlot_output
+NanoPlot --fastq ARLG-4673_ONT.fastq.gz -o ARLG-4673_NanoPlot_output
 ```
 
 Below is the NanoPlot output that gives us information on the general quality of the data we are utilizing. 
