@@ -95,7 +95,7 @@ Fixme: Add description and photo
 
 ### Natalie Kokroko  
 
-<img width="200" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/761469/41e8dbd8-16ed-4fec-b612-de8f16613762">
+<img width="200" alt="image" src="https://github.com/user-attachments/assets/0bdc3db7-3bf5-4c43-b41c-115d7281df9f">
 
 Natalie Kokroko is a second year PhD student at Rice University in the Computer Science program. Her background is in Biomedical Engineering. Natalie worked in a research Institute at the University of Ghana (West African Centre for cell Biology of Infectious Pathogens) where she mainly did research and bioinformatics data analysis for the genomics and infectious disease laboratory. As a member of the Treangen lab, her research interest is to make use of computational tools and algorithms to interpret and analyze clinical and environmental microbiome data. Generally, Natalie is interested in Computational Biology, Bioinformatics, Genomics and Metagenomic data analysis. Her future goal is to be in academia and impart the knowledge and skills gained from her PhD to the next generation of scientists. 
 
