@@ -412,7 +412,7 @@ EggNOG-mapper is more accurate and runs ∼15× faster than BLAST and at least 2
 ```
 emapper.py -i FASTA_FILE_PROTEINS -o test
 ```
-
+*note: it needs to have eggNOG database downloaded. For this workshop we have the Bacterial database*
 **Run search and annotation for a genome, using Diamond search on proteins predicted by Prodigal, changing the output directory**
 ```
 emapper.py -m diamond --itype genome --genepred prodigal -i FASTA_FILE_NTS -o test --output_dir /home/me/mydir
@@ -470,7 +470,7 @@ There are several options of instances available:
 
 * [PIRATE](https://github.com/SionBayliss/PIRATE) (another good alternative)
 
-* [tMHG-Finder](https://github.com/yongze-yin/tMHG-Finder) (de Novo Tree-Based Maximal Homologous Group Finder)
+* [tMHG-Finder](https://github.com/yongze-yin/tMHG-Finder) (de Novo Tree-Based Maximal Homologous Group Finder, can be used to find pangenomic homologous sites)
   
 <details>
 <summary>
@@ -498,7 +498,6 @@ cd roary_analysis
 ##### Running Roary <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20">
 **Basic usage**
 ```
-source /projects/k2i/roary/bin/activate
 roary -p 5 -n -e -v *.gff
 ```
 
