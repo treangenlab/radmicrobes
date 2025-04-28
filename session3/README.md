@@ -280,13 +280,17 @@ reads/illumina_R2_unpaired.fastq.gz: Reverse reads that lost their pairs
 `ILLUMINACLIP:adapters.fa:2:30:10`: Removes Illumina adapters specified in adapters.fa file
 
 `2`: Seed mismatches allowed
+
 `30`: Palindrome clip threshold. This refers to the minimum alignment score required to detect and remove adapter read-through events in paired-end data, where the sequencer has read through a short DNA fragment and into the adapter on the opposite end.
+
 `10`: Simple clip threshold. This refers to the minimum alignment score required when directly matching adapter sequences against the reads, allowing for identification and removal of standard adapter contamination.
 
-
 `LEADING:3`: Cuts bases from start of read if quality below 3
+
 `TRAILING:3`: Cuts bases from end of read if quality below 3
+
 `SLIDINGWINDOW:4:15`: Scans in 4-base windows, cutting when average quality falls below 15
+
 `MINLEN:36`: Discards reads shorter than 36 bases after trimming
 
 **Step 3: Align the reads**
