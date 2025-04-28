@@ -27,9 +27,104 @@
  <details>
  <summary> 
   
-
-## Bespoke Strain-Level Analysis of Bacterial Genomes (lecture)
+## Parsnp 1.0 to Parsnp 2.0 (lecture, part 1: Todd) 
  
+</summary>
+
+### Overview
+
+[Slides](https://docs.google.com/presentation/d/1qwSSQjpR6APU3fxtVVeoEAhy7gZGgCCkZIy4zCpTBWU/edit?usp=sharing)
+
+Parsnp 2.0 is a command-line tool designed to **rapidly align core genomes** across thousands to hundreds of thousands of microbial genomes.
+
+Key features:
+- **Scalability**: Handles datasets up to 100,000 genomes.
+- **Accuracy**: High-accuray SNP discovery in microbial core genomes.
+- **Speed**: Orders of magnitude faster than traditional whole-genome aligners.
+
+---
+
+### Core Concepts and Methods
+
+#### What is Core-Genome Alignment?
+- Focuses only on **regions shared across all genomes**.
+- Avoids alignment of unique insertions or deletions.
+
+#### Key Innovations in Parsnp 2.0:
+- **Compressed Suffix Graph (CSG)**:
+  - A memory-efficient data structure to index the reference genome.
+  - Enables ultra-fast discovery of **Maximal Unique Matches (MUMs)** across all genomes.
+- **Anchor-Based Alignment**:
+  - Uses MUMs to anchor conserved regions between genomes.
+  - Rapidly builds a multiple alignment without performing expensive pairwise alignments.
+- **Memory and Speed Optimizations**:
+  - Core alignment step reduces alignment size down to key regions enriched in evolutionary signal.
+  - Output compression stores only core genome variants relative to reference.
+
+#### General Workflow:
+1. **Index** the reference genome with a compressed suffix graph (CSG).
+2. **Find MUMs** across all genomes relative to the reference.
+3. **Anchor** alignments based on shared MUMs.
+4. **Align** the sequences between MUM anchors.
+5. **Compress** output SNPs in VCF and harvest variants format.
+
+---
+
+### Highlight: *Klebsiella* Dataset Study
+
+#### Why *Klebsiella pneumoniae*?
+- Major human pathogen, especially in healthcare settings.
+- Highly diverse genome content and large available datasets.
+- Bonus: great for benchmarking large-scale core-genome alignment.
+
+#### Dataset Details:
+- **4,326 genomes** from NCBI RefSeq.
+- Genome sizes: typically 5–6 Mb.
+- Samples include clinical, animal, and environmental isolates.
+
+---
+
+#### Performance Comparison: Parsnp 2.0 vs CoreDector
+
+| Tool          | Runtime on Klebsiella | Peak Memory | Core SNP Recall | Notes |
+|---------------|------------------------|-------------|-----------------|-------|
+| Parsnp 2.0 | ~5 hours                 | ~25 GB      | High (98–99%)    | Only tool that scaled to full dataset |
+| CoreDector    | ~18+ hours               | ~120 GB     | Moderate (92–95%)| Struggled with high diversity; slower |
+
+![parsnp_kleb_alignment](https://github.com/user-attachments/assets/92402d89-bc83-4feb-b8fd-12e63ed2cb3a)
+
+
+- Parsnp 2.0 aligned the 4,326 Klebsiella genomes **~4× faster** than CoreDector.
+- **Lower memory** footprint: Parsnp 2.0 needed <30GB versus CoreDector needing >100GB RAM.
+- **Higher SNP accuracy** across deep phylogenetic clades.
+- Core SNPs discovered were highly consistent with gold-standard alignments.
+- Enabled rapid downstream phylogenetic analysis across >4,000 bacterial strains.
+
+---
+
+### Key Takeaways
+
+- Parsnp 2.0 enables massive microbial core-genome alignments on a laptop.
+- The use of Compressed Suffix Graphs (CSG) and Maximal Unique Matches (MUMs) is key to speed and scalability.
+- The *Klebsiella* dataset demonstrates Parsnp 2.0's robustness across highly diverse genomes.
+
+---
+
+### Explore More
+
+- 🔗 [Parsnp 2.0 GitHub Repository](https://github.com/marbl/parsnp)
+- 📖 [Full Paper in *Bioinformatics*](https://academic.oup.com/bioinformatics/article/40/5/btae311/7667868)
+
+---
+
+</details>
+
+ 
+<details>
+ 
+<summary>
+ 
+## Bespoke Strain-Level Analysis of Bacterial Genomes (lecture, part 2: Mike) 
 </summary>
 
 ## Michael Nute and Todd Treangen
