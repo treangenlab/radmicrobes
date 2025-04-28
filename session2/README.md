@@ -664,7 +664,18 @@ Here, the files beginning with `GCF_` are fasta and genbank annotations from the
 parsnp -r /projects/k2i/archive_2023/parsnp/parsnp_demo3/GCF_000598005.1_ASM59800v1_genomic.fna -d /projects/k2i/archive_2023/parsnp/parsnp_demo3/input_genomes_ex8054_nots.txt -g /projects/k2i/archive_2023/parsnp/parsnp_demo3/GCF_000598005.1_ASM59800v1_genomic.gbff -p 2 -o ~/parsnp_kleb
 ```
 
-NOTE: This will take something like 15-20 minutes to run with only 2 threads, but it should produce an alignment that you can look at and explore in Gingr yourself.
+**NOTE:** This will take something like 15-20 minutes to run with only 2 threads, but it should produce an alignment that you can look at and explore in Gingr yourself. However, the output of this has been run and is located on the server at: `/projects/k2i/archive_2023/parsnp/parsnp_demo3/parsnp_kleb/`. 
+
+##### Downloading Outputs Locally to View in Gingr
+
+If you have a mac or linux machine (or windows with WSL and X-server enabled) and have installed Gingr locally, you can download the output of this mutltiple genome alignment using `scp` with the following commands. (Replace `userXX` with your assigned user ID. You will also need the password associated with it.)
+
+```
+scp hpcXX@nots.rice.edu:/projects/k2i/archive_2023/parsnp/parsnp_demo3/parsnp_kleb/parsnp.ggr ./
+scp hpcXX@nots.rice.edu:/projects/k2i/archive_2023/parsnp/parsnp_demo3/parsnp_kleb/parsnp.tree ./
+```
+
+You can then use Gingr to open the ggr file first, and then after that is opened, do "File --> Open Tree" and open the .tree file. This will let you explore the Kleb genomes that we have been looking at in this course.
 
 ### Other Parsnp Options & Example Script
 
