@@ -754,16 +754,16 @@ Now let's compare the results from both technologies to understand their strengt
 
 ```bash
 # How many variants were called by each technology?
-echo "Illumina variants: $(grep -v "#" variants/illumina_filtered_annotated.vcf | wc -l)"
+echo "Illumina variants: $(grep -v "#" variants/illumina_variants_filtered_annotated.vcf | wc -l)"
 echo "ONT variants: $(grep -v "#" variants/ont_variants_filtered_annotated.vcf | wc -l)"
 
 # Find variants called by both technologies
-bedtools intersect -a variants/illumina_filtered_annotated.vcf -b variants/ont_variants_filtered_annotated.vcf > variants/common_variants.vcf
+bedtools intersect -a variants/illumina_variants_filtered_annotated.vcf -b variants/ont_variants_filtered_annotated.vcf > variants/common_variants.vcf
 echo "Common variants: $(grep -v "#" variants/common_variants.vcf | wc -l)"
 
 # Find technology-specific variants
-bedtools subtract -a variants/illumina_filtered_annotated.vcf -b variants/ont_variants_filtered_annotated.vcf > variants/illumina_only.vcf
-bedtools subtract -a variants/ont_variants_filtered_annotated.vcf -b variants/illumina_filtered_annotated.vcf > variants/ont_only.vcf
+bedtools subtract -a variants/illumina_variants_filtered_annotated.vcf -b variants/ont_variants_filtered_annotated.vcf > variants/illumina_only.vcf
+bedtools subtract -a variants/ont_variants_filtered_annotated.vcf -b variants/illumina_variants_filtered_annotated.vcf > variants/ont_only.vcf
 echo "Illumina-only variants: $(grep -v "#" variants/illumina_only.vcf | wc -l)"
 echo "ONT-only variants: $(grep -v "#" variants/ont_only.vcf | wc -l)"
 ```
