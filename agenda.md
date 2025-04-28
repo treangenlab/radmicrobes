@@ -5,7 +5,7 @@
 **8:00 AM – 8:30 AM**:  
 Breakfast/Check-in + Kickoff (Todd & Blake)
 
-**8:30 AM – 9:00 AM**:  
+**8:30 AM – 9:15 AM**:  
 * Computational Resource Overview (Clinton Heider, Rice CRC)
 * TA session check: ensure everyone is connected to the HPC nodes
 
@@ -13,14 +13,14 @@ Breakfast/Check-in + Kickoff (Todd & Blake)
 
 ### [RAD Session 1: 2h30m]
 
-**9:00 AM – 10:30 AM**:  
+**9:15 AM – 10:30 AM**:  
 Sampling, Sequencing, QC, and Assembly Part I  
 **Dr. Blake Hanson** (University of Texas Health Science Center at Houston School of Public Health)
 
 **10:30 AM – 10:45 AM**:  
 Break
 
-**10:45 AM – 11:45 AM**:  
+**10:45 AM – noon**:  
 Sampling, Sequencing, QC, and Assembly Part II  
 **Dr. Blake Hanson** (University of Texas Health Science Center at Houston School of Public Health)
 
@@ -28,7 +28,7 @@ Sampling, Sequencing, QC, and Assembly Part II
 
 ### [RAD Session 2: 1h15m]
 
-**11:45 AM – 12:15 PM**:  
+**12:00 PM – 12:30 PM**:  
 Genome Assembly to Alignment to SNPs Part I  
 **[Dr. Todd Treangen](https://treangenlab.com/) & [Dr. Michael Nute](https://treangenlab.com/profiles/mnute/)** (Department of Computer Science, Rice University)
 
