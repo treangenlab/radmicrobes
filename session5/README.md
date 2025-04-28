@@ -85,8 +85,8 @@ There are several options of instances available:
 #### <ins>Files to be used in this hands-on</ins>
 File name  | Description | Location in the cluster
 ------------- | ------------- | ------------- 
-ARLG-4673_assembly.fasta  | Assembled genome generated on session 1 | /projects/k2i/session5/Files/Prokka
-my_genome.gff  | Pre-generated gff output | /projects/k2i/session5/Files/Prokka
+ARLG-10777_022435095.1_assembly.genomic.fna  | Assembled genome generated on session 1 | /projects/k2i/data/session5/dataset
+ARLG-10777_022435095.1_assembly.genomic.fna.gff  | Pre-generated gff output | /projects/k2i/data/session5/Results/Prokka_results
 
 **Basic Usage:**
 ```
