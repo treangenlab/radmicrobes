@@ -1,4 +1,4 @@
-# Session 5 hands on
+# Session 5 hands-on
 
 ## Request an interactive session
 ```
@@ -9,7 +9,7 @@ srun --partition=commons --pty --export=ALL --ntasks=1 --reservation=workshop --
 module load Mamba/23.11.0-0
 ```
 
-### coping files for the hands-on
+### Coping files for the hands-on
 ```
 mkdir /scratch/hpc<your user number>
 cd /scratch/hpc<##>
@@ -145,7 +145,7 @@ samtools sort -o aln.s.bam aln.sam
 samtools index aln.s.bam 
 ```
 
-you can download the fna, gff, bam and ba.bai to your computer and open IGV in your web browser
+you can download the fna, gff, bam and ba.bai to your computer and open IGV in your web browser, but I also made it available at github on session5/Files/dRNA_ONT
 
 ```
 # From your lcomputer run something like this to copy e.g. all the alignment files.
@@ -227,9 +227,19 @@ raxml-ng --msa <path to roary or panaroo>/core_gene_alignment.aln --model GTR+G 
 **--bs-trees 1000   number of bootstraps replicates 
 
 ### Open your tree on ITOL (https://itol.embl.de/upload.cgi)
+* Trees available at github session5/Files/roary_files/2025_hands_on
+* Bigger trees are available at github session5/Files/roary_files/
 
 
 ### Extra work if time permits 
+
+#### Play with Eukaryotic genomes (under github session5/files/WEBAUGUSTUS)
+
+* play with WEBAUGUSTUS see Session5 README (https://bioinf.uni-greifswald.de/webaugustus/prediction/create)
+
+* Play with GENSAS (https://www.gensas.org/user?destination=/gensas)
+  
+* Play with Companion (https://companion.gla.ac.uk/jobs/new)
 
 #### Run tMHG-Finder
 
