@@ -1225,7 +1225,7 @@ There are multiple output files you can look at but we will check the report.txt
 
 Quast Summary Statistics
 <p align="center">
-<img src="Images/quast_SPAdes.png" width="1000" align="center"> 
+<img src="Images/quast_spades.png" width="1000" align="center"> 
 </p>	
 		
 From this report, we can see that there are 443 contigs, which is a bit more than we want, but is within the acceptable range. We can aslo see that the total assembly size is 5.6Mb, which is what we expect for *Klebsiella pneumoniae*. 
@@ -1285,7 +1285,7 @@ busco -i ARLG-4673_SPAdes_out/scaffolds.fasta -o ARLG-4673_SPAdes_busco -m genom
 
 BUSCO Summary Statistics - SPAdes assembly
 <p align="center">
-<img src="Images/busco_SPAdes.png" width="1000" align="center"> 
+<img src="Images/busco_spades.png" width="1000" align="center"> 
 </p>	
 
 While there are no strict cutoffs for BUSCO scores, we are looking for high 90% values for completeness to assure we have a high quality assembly. We can see from the output that our assembly is 98.9% complete, indicating our short-read assembly is high quality. 
