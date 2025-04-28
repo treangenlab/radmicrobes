@@ -466,6 +466,7 @@ Freebayes is a Bayesian variant caller that identifies SNVs and indels.
 ```bash
 # Call variants using Freebayes
 # This will take ~5-10 minutes
+mkdir variants
 freebayes -f reference/GCF_000009885.1_ASM988v1_genomic.fna -p 1 -m 20 alignment/illumina_sorted.bam > variants/illumina_variants.vcf
 ```
 
@@ -482,7 +483,7 @@ freebayes -f reference/GCF_000009885.1_ASM988v1_genomic.fna -p 1 -m 20 alignment
 bcftools filter -i 'QUAL>20 && INFO/DP>10' variants/illumina_variants.vcf > variants/illumina_filtered.vcf
 
 # Summarize variants
-bcftools stats illumina_filtered.vcf > illumina_variants_stats.txt
+bcftools stats variants/illumina_filtered.vcf > variants/illumina_variants_stats.txt
 ```
 
 **What is this command doing?**
