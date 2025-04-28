@@ -10,6 +10,20 @@ SUMMARY: Computational analyses of microbial genomes through genomic sequencing 
 
 TOPICS: Short and long-read sequencing, amplicon and isolate genome sequence, genome assembly and validation, functional annotation, phylogenomic analysis, and strain typing. This workshop will be taught by scientists with expertise in bioinformatics and analysis of clinical samples, allowing participants to get individualized training on how to accurately sample, sequence, and characterize microbial genomes.
 
+# RAD Microbes Boot Camp Cheat Sheet
+
+| Session | Topics Covered | Key Tools/Concepts | Tips |
+|:-------:|:---------------|:------------------|:----|
+| **[Session 1: Sampling, Sequencing, Quality Assessment and Control, and Assembly](https://github.com/treangenlab/radmicrobes/tree/main/session1)** | - Introduction to Unix Shell<br>- Sampling and study design<br>- Sequencing technologies (short and long reads)<br>- Sequencing quality assessment and control | - Unix shell<br>- Sequencing platforms (Illumina, ONT, PacBio)<br>- QC tools: FastQC, Raspberry | - Master basic Unix commands early.<br>- Choose sequencing tech to match goals!<br>- Always QC your raw reads! |
+| **[Session 2: Microbial Reference Genomes, Variant Calling, and Multiple Genome Alignment](https://github.com/treangenlab/radmicrobes/tree/main/session2)** | - Strain-level analyses<br>- Core and whole-genome alignment<br>- Visualization of genome variation | - Parsnp, Mauve, SibeliaZ<br>- Gingr (visualization) | - Check assembly quality first.<br>- Visualize to spot genome rearrangements.<br>- Use the right aligner for genome size/number. |
+| **[Session 3: Genomic Alignment and Variant Discovery Workshop](https://github.com/treangenlab/radmicrobes/tree/main/session3)** | - Align reads to reference<br>- Bacterial variant discovery | - Short/long-read data<br>- Variant calling pipelines | - Preprocess reads (QC+trim).<br>- Pick the best reference genome.<br>- Validate variants if possible! |
+| **[Session 4: Genomic Epidemiology, Strain-Level Analyses, and Phylogenomics](https://github.com/treangenlab/radmicrobes/tree/main/session4)** | - Public health genomics<br>- Genotyping and strain typing<br>- Building phylogenetic trees | - MLST, AMRFinderPlus, Kleborate<br>- Mash, Snippy<br>- RAxML, IQ-TREE | - Integrate genomic + metadata.<br>- Confirm results with multiple tools.<br>- Interpret trees carefully! |
+| **[Session 5: Functional Annotation and Pan Genomes](https://github.com/treangenlab/radmicrobes/tree/main/session5)** | - Genome annotation (prokaryotes/eukaryotes)<br>- Functional analysis<br>- Pan-genome analysis | - Prokka, AUGUSTUS, BRAKER<br>- InterProScan, Roary, ITOL | - Customize annotation pipelines.<br>- Use broad databases for annotation.<br>- Visualize pan-genomes for insight! |
+
+---
+
+🔹 **Pro Tip**: Always record software versions and key parameters!  
+
 # RAD Microbes Instructors and TAs
 
 ## RAD Instructors
