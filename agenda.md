@@ -2,10 +2,10 @@
 
 ## Day 1 (Monday, 4/28): 8:30 AM to 4:30 PM
 
-**8:00 AM – 8:30 AM**:  
+**8:00 AM – 8:45 AM**:  
 Breakfast/Check-in + Kickoff (Todd & Blake)
 
-**8:30 AM – 9:15 AM**:  
+**8:45 AM – 9:15 AM**:  
 * Computational Resource Overview (Clinton Heider, Rice CRC)
 * TA session check: ensure everyone is connected to the HPC nodes
 
