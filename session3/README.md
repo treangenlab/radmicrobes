@@ -764,7 +764,9 @@ You can also run it online from here: https://igv.org/
 ```bash
 # From your lcomputer run something like this to copy e.g. all the alignment files.
 mkdir -p alignment
+mkdir -p variants
 scp -o ProxyJump=hpcX@radmicrobes.rice.edu "hpcX@nots:/home/hpcX/alignment/*" ./alignment
+scp -o ProxyJump=hpcX@radmicrobes.rice.edu "hpcX@nots:/home/hpcX/variants/*" ./variants
 
 ```
 2. Load the reference genome with annotation.
