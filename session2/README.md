@@ -271,7 +271,7 @@ This parsnp quick start guide covers launching an interactive session on NOTS, i
 
 | Step | Command(s) | Description | Reference |
 | ---- | ---------- | ----------- | --------- |
-| 1 | ```bash<br>srun --partition=commons \  <br>--pty \  <br>--export=ALL \  <br>--ntasks=1 \  <br>--reservation=workshop \  <br>--cpus-per-task=8 \  <br>--mem=15GB \  <br>--time=04:00:00 \  <br>/bin/bash``` | Launch an interactive SLURM job with 1 task, 8 CPUs, 15 GB RAM, 4 h walltime. | [srun docs](https://slurm.schedmd.com/srun.html) |
+| 1 | ```srun --partition=commons --pty --export=ALL --ntasks=1 --reservation=workshop --cpus-per-task=8 --mem=15GB --time=04:00:00 /bin/bash``` | Launch an interactive SLURM job with 1 task, 8 CPUs, 15 GB RAM, 4 h walltime. | [srun docs](https://slurm.schedmd.com/srun.html) |
 | 2 | `module load Mamba/23.11.0-0` | Load the Mamba/Conda module for environment management | — |
 | 3 | `mamba create --name radsession2 bioconda::parsnp` | Create a Conda env named `radsession2` and install Parsnp from Bioconda. | [Bioconda](https://bioconda.github.io) |
 | 4 | `mamba init` | Initialize Conda in your shell startup file (e.g. `.bashrc`). | — |
