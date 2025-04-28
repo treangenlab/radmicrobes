@@ -22,7 +22,7 @@ TOPICS: Short and long-read sequencing, amplicon and isolate genome sequence, ge
 
 ---
 
-🔹 **Pro Tip**: Always keep track of software versions, key parameters, and database versions!  
+🔹 **RAD tip**: Always keep track of software versions, key parameters, and database versions!  
 
 # RAD Microbes Instructors and TAs
 
