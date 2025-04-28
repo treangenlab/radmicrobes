@@ -46,8 +46,7 @@ ls
 
 ```prokka -h```
 
-<details>
- <summary>prokka options</summary>
+prokka options
 
 ```
 General:
