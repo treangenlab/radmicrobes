@@ -245,6 +245,7 @@ cd ..
 ```
 
 **What is this command doing?**
+
 - The Burrows-Wheeler Transform compresses the reference
 - Indexing allows rapid searching of the reference
 - This is a one-time operation per reference; once the files are created, you don't need to run this again to analyse other samples.
@@ -265,6 +266,7 @@ trimmomatic PE reads/illumina_R1.fastq.gz reads/illumina_R2.fastq.gz \
 
 ```
 **What is this command doing?**
+
 **Command Structure:**
 
 `PE`: Indicates paired-end mode
@@ -303,6 +305,7 @@ samtools index alignment/illumina_sorted.bam
 ```
 
 **What is this command doing?**
+
 - Paired-end information improves alignment accuracy
 - The `-t 4` flag uses 4 CPU threads to speed up alignment
 - The output is piped to samtools to create a sorted BAM file
@@ -474,6 +477,7 @@ freebayes -f reference/GCF_000009885.1_ASM988v1_genomic.fna -p 1 -m 20 alignment
 ```
 
 **What is this command doing?**
+
 - `-p 1` specifies ploidy (bacteria are typically haploid)
 - `-m 20`: ensures that only reads with a mapping quality of 20 are used
 - Variant calling combines evidence across multiple reads
@@ -490,6 +494,7 @@ bcftools stats illumina_filtered.vcf > illumina_variants_stats.txt
 ```
 
 **What is this command doing?**
+
 `bcftools`: A toolkit for variant calling and manipulating VCF files
 `filter`: The subcommand used to include or exclude variants based on specified criteria
 `-i`: The "include" flag that specifies which variants to keep
@@ -536,6 +541,7 @@ samtools index alignment/ont_sorted.bam
 ```
 
 **What is this command doing?**
+
 - `-ax map-ont` specifies ONT-specific parameters
 - Minimap2 is much faster than BWA for long reads
 - Long reads often span repetitive regions that confuse short reads
@@ -653,6 +659,7 @@ mamba activate /home/hpc9/.conda/envs/session3_sniffles
 sniffles --minsupport 5 --minsvlen 50 --mapq 20 --min-alignment-length 500 --threads 4 --input alignment/ont_sorted.bam -v variants/sniffles.vcf
 ```
 **What is this command doing?**
+
 `--minsupport 3-5`: For bacterial genomes, lower support values work well. Bacterial genomes tolerate lower support (haploidy + high coverage). Trade-off: 3 for sensitive plasmid detection; 5 for stricter chromosomal SVs.
 `--minsvlen 30-50`: Detect SVs of at least 30bp (or 50bp). Captures small but meaningful SVs (e.g., antimicrobial resistance gene indels). Balance: 50bp reduces noise; 30bp increases sensitivity for plasmids.
 `--mapq 20`: Minimum mapping quality threshold
