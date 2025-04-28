@@ -605,6 +605,7 @@ run_clair3.sh \
 ```
 
 **What is this command doing:**
+
 `--bam_fn=alignment/ont_sorted.bam`: Input BAM file containing sorted reads from Oxford Nanopore Technology (ONT) sequencing
 `--ref_fn=reference/GCF_000009885.1_ASM988v1_genomic.fna`: Reference genome file in FASTA format against which variants will be called
 `--output=clair3_output`: Directory where output files will be saved
