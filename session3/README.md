@@ -39,7 +39,7 @@ gunzip GCF_000009885.1_ASM988v1_genomic.gff.gz
 **Environment preparation**
 ```bash
 # Requesting an interactive session
-srun --partition=commons --mem=16G --ntasks=4 --export=ALL --time=04:00:00 --pty bash -i
+srun --partition=commons --reservation=workshop --mem=16G --ntasks=1 --cpus-per-task=8 --export=ALL --time=04:00:00 --pty bash -i
 
 # Loading the mamba module
 module load Mamba/23.11.0-0
@@ -236,7 +236,7 @@ BWA-MEM (Burrows-Wheeler Aligner with Maximal Exact Matches) is the gold standar
 **Step 1: Index the reference**
 ```bash
 # First, we need to index our reference genome
-cd reference
+cd reference # (if not still in this directory)
 bwa index GCF_000009885.1_ASM988v1_genomic.fna
 
 # This creates several index files (.amb, .ann, .bwt, .pac, .sa)
@@ -475,6 +475,7 @@ Freebayes is a Bayesian variant caller that identifies SNVs and indels.
 ```bash
 # Call variants using Freebayes
 # This will take ~5-10 minutes
+mkdir variants
 freebayes -f reference/GCF_000009885.1_ASM988v1_genomic.fna -p 1 -m 20 alignment/illumina_sorted.bam > variants/illumina_variants.vcf
 ```
 
@@ -496,7 +497,7 @@ freebayes -f reference/GCF_000009885.1_ASM988v1_genomic.fna -p 1 -m 20 alignment
 bcftools filter -i 'QUAL>20 && INFO/DP>10' variants/illumina_variants.vcf > variants/illumina_filtered.vcf
 
 # Summarize variants
-bcftools stats illumina_filtered.vcf > illumina_variants_stats.txt
+bcftools stats variants/illumina_filtered.vcf > variants/illumina_variants_stats.txt
 ```
 
 **What is this command doing?**
@@ -738,6 +739,9 @@ If a field starts with SVTYPE=, print it (e.g., SVTYPE=INS, SVTYPE=DEL).
 Copy the alignment and variant files to your computer
 **Step 1: Load the data**
 ```bash
+# Change back to our session3_clair enviroment
+mamba activate /home/hpc9/.conda/envs/session3_clair
+
 # Use a pre-built SnpEff database to annotate our variants of interest.
 java -Xmx4g -jar /home/hpc9/.conda/envs/session3_clair/share/snpeff-5.2-1/snpEff.jar -c /home/hpc9/.conda/envs/session3_clair/share/snpeff-5.2-1/snpEff.config -v Klebsiella_pneumoniae_ASM988v1 variants/illumina_filtered.vcf > variants/illumina_variants_filtered_annotated.vcf
 java -Xmx4g -jar /home/hpc9/.conda/envs/session3_clair/share/snpeff-5.2-1/snpEff.jar -c /home/hpc9/.conda/envs/session3_clair/share/snpeff-5.2-1/snpEff.config -v Klebsiella_pneumoniae_ASM988v1 variants/ont_variants_filtered.vcf > variants/ont_variants_filtered_annotated.vcf
@@ -797,20 +801,17 @@ Now let's compare the results from both technologies to understand their strengt
 ### Comparing Variant Calls
 
 ```bash
-# Change back to our session3_clair enviroment
-mamba activate /home/hpc9/.conda/envs/session3_clair
-
 # How many variants were called by each technology?
-echo "Illumina variants: $(grep -v "#" variantsillumina_filtered_annotated.vcf | wc -l)"
+echo "Illumina variants: $(grep -v "#" variants/illumina_variants_filtered_annotated.vcf | wc -l)"
 echo "ONT variants: $(grep -v "#" variants/ont_variants_filtered_annotated.vcf | wc -l)"
 
 # Find variants called by both technologies
-bedtools intersect -a variants/illumina_filtered_annotated.vcf -b variants/ont_variants_filtered_annotated.vcf > variants/common_variants.vcf
+bedtools intersect -a variants/illumina_variants_filtered_annotated.vcf -b variants/ont_variants_filtered_annotated.vcf > variants/common_variants.vcf
 echo "Common variants: $(grep -v "#" variants/common_variants.vcf | wc -l)"
 
 # Find technology-specific variants
-bedtools subtract -a variants/illumina_filtered_annotated.vcf -b variants/ont_variants_filtered_annotated.vcf > variants/illumina_only.vcf
-bedtools subtract -a variants/ont_variants_filtered_annotated.vcf -b variants/illumina_filtered_annotated.vcf > variants/ont_only.vcf
+bedtools subtract -a variants/illumina_variants_filtered_annotated.vcf -b variants/ont_variants_filtered_annotated.vcf > variants/illumina_only.vcf
+bedtools subtract -a variants/ont_variants_filtered_annotated.vcf -b variants/illumina_variants_filtered_annotated.vcf > variants/ont_only.vcf
 echo "Illumina-only variants: $(grep -v "#" variants/illumina_only.vcf | wc -l)"
 echo "ONT-only variants: $(grep -v "#" variants/ont_only.vcf | wc -l)"
 ```
