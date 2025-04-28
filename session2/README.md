@@ -649,6 +649,23 @@ This last step requires you to download software and is to highlight the ability
 
     File->Open File
 
+### Parsnp Example on Shropshire, et al. Kleb Genomes
+
+We have been using data from the this paper throughout the RAD Microbes seminar, so those genomes have been uploaded to NOTS to run as a test case. The files needed for this are all located in the folder `/projects/k2i/archive_2023/parsnp/parsnp_demo3`, so the first thing to do is to make sure you can see those files. To do this, run the command `ls /projects/k2i/archive_2023/parsnp/parsnp_demo3` and you should see output that looks like this:
+
+```
+(base) [hpc12@loginx2 ~]$ ls /projects/k2i/archive_2023/parsnp/parsnp_demo3
+GCF_000598005.1_ASM59800v1_genomic.fna  GCF_000598005.1_ASM59800v1_genomic.gbff  input_genomes_ex8054_nots.txt  Klebsiella_Genomes  Klebsiella_Genomes.zip
+```
+
+Here, the files beginning with `GCF_` are fasta and genbank annotations from the Kleb reference genome GCF_000598005.1 on RefSeq. The folder `Klebsiella_Genomes` contains fasta files with all of the assemblies from the Shropshire, et al. paper, and the file `input_genomes_ex8054_nots.txt` contains a list of paths to those fasta files. To run Parsnp on these files, use the following command:
+
+```
+parsnp -r /projects/k2i/archive_2023/parsnp/parsnp_demo3/GCF_000598005.1_ASM59800v1_genomic.fna -d /projects/k2i/archive_2023/parsnp/parsnp_demo3/input_genomes_ex8054_nots.txt -g /projects/k2i/archive_2023/parsnp/parsnp_demo3/GCF_000598005.1_ASM59800v1_genomic.gbff -p 2 -o ~/parsnp_kleb
+```
+
+NOTE: This will take something like 15-20 minutes to run with only 2 threads, but it should produce an alignment that you can look at and explore in Gingr yourself.
+
 ### Other Parsnp Options & Example Script
 
 There are a variety of different options that can be given to parsnp. The script below contains several different examples of how you might want to run parsnp on the example MERS data. (Note that the command to download and extract the MERS data is duplicated, but it's not very big.)
