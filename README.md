@@ -85,7 +85,9 @@ Rodrigo Baptista is a researcher with over a decade of expertise in eukaryotic p
 
 ### Ryan Doughty
 
-Fixme: Add description and photo
+<img width="200" alt="image" src="https://github.com/user-attachments/assets/74c28d0c-7a9d-4e65-a584-8a1231866c51">
+
+Ryan Doughty is a first year PhD student at Rice University in the Department of Computer Science supervised by Dr. Todd Treangen. He is also a predoctoral fellow in the NLM Training Program in Biomedical Informatics and Data Science, with a secondary mentor Dr. Michael Tisza at Baylor College of Medicine. His research focuses on methods for the detection of viruses from metagenomic sequencing data, as well as pathogenicity prediction of viral and microbial species. Previously he obtained his BS in Computer Science from Case Western Reserve University. During his undergraduate studies, he worked with Dr. Treangen on large-scale wastewater analyses and targeted metagenomic sequencing methods. He also spent six months in Vigo, Spain, working in Dr. David Posada’s lab, focusing on gut-virome biomarkers in colorectal cancer. Additionally, he interned at Intellia Therapeutics for a summer, where he contributed to developing machine learning methods for CRISPR Cas-9 guide design.
 
 ### Eddy Huang
 
