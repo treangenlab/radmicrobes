@@ -53,7 +53,7 @@
    * Visualization using ITOL
 </details>
 
-#### **All Files from this session will be available during the bootcamp at "/projects/k2i/session5/Files/"**
+#### **All Files from this session will be available during the bootcamp at "/projects/k2i/data/session5/"**
 
 ## Genome Annotation
 Genome annotation involves the identification of functional elements along the sequence of a genome, assigning meaning to it. This process is essential because DNA sequencing often yields sequences of unknown function. Over the past three decades, genome annotation has transformed from computationally annotating long protein-coding genes in single genomes (one per species) and experimentally annotating short regulatory elements on a limited number of them, to the population-wide annotation of individual nucleotides across thousands of genomes (many per species). This enhanced resolution and inclusivity in genome annotations, spanning from genotypes to phenotypes, are providing precise insights into the biology of species, populations, and individuals.
