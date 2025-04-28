@@ -883,7 +883,7 @@ Important Behavior Notes
 
 ---
 
-## 7. Wrap-up and Best Practices
+## 8. Wrap-up and Best Practices
 
 ### Key Takeaways
 
