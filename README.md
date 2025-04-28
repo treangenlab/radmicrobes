@@ -93,7 +93,7 @@ Ryan Doughty is a first year PhD student at Rice University in the Department of
 
 <img width="200" alt="image" src="https://github.com/user-attachments/assets/370cd8a2-d047-4bf9-94e9-2079640eae15">
 
-Eddy is a third year PhD studentat Rice University in the Department of Computer Science supervised by Dr. Todd Treangen. She obtained a B.S. degree with Honors in Computer Science and a minor in Mathematics from North Carolina State University. Before she entered the journey of computer science, she obtained a B.S. degree in Preventive Medicine from the Southwest Medical University in China. Her primary research interests are in the area of computational biology with a focus on microbial community analysis and applications of deep learning in heterogeneous multi-omics data analysis. Her current research works are centered with investigating, processing, and analysis large-scale metagenomic database related studies.
+Eddy is a third year PhD student at Rice University in the Department of Computer Science supervised by Dr. Todd Treangen. She obtained a B.S. degree with Honors in Computer Science and a minor in Mathematics from North Carolina State University. Before she entered the journey of computer science, she obtained a B.S. degree in Preventive Medicine from the Southwest Medical University in China. Her primary research interests are in the area of computational biology with a focus on microbial community analysis and applications of deep learning in heterogeneous multi-omics data analysis. Her current research works are centered with investigating, processing, and analysis large-scale metagenomic database related studies.
 
 ### Natalie Kokroko  
 
