@@ -397,6 +397,28 @@ Using [InterproScan](https://www.ebi.ac.uk/interpro/search/sequence/) ou can als
 
 **Exercise:** copy the first sequence on your prokka faa result and paste [here](https://www.ebi.ac.uk/interpro/search/sequence/). What do you see?
 
+
+#### Eggnog
+
+[Eggnog-mapper](https://github.com/eggnogdb/eggnog-mapper) is a tool for fast functional annotation of novel sequences. It uses precomputed orthologous groups and phylogenies from the [eggNOG database](http://eggnog5.embl.de) to transfer functional information from fine-grained orthologs only.
+
+EggNOG-mapper is more accurate and runs ∼15× faster than BLAST and at least 2.5× faster than InterProScan. Can run on a [web-service](http://eggnog-mapper.embl.de/) or command line.  
+
+<img width="612" alt="image" src="https://github.com/user-attachments/assets/267ba074-ba18-4273-8e82-1c0bca260bb8" />
+
+
+**Basic usage (diamond blastp)**
+```
+emapper.py -i FASTA_FILE_PROTEINS -o test
+```
+
+**Run search and annotation for a genome, using Diamond search on proteins predicted by Prodigal, changing the output directory**
+```
+emapper.py -m diamond --itype genome --genepred prodigal -i FASTA_FILE_NTS -o test --output_dir /home/me/mydir
+```
+
+
+
 </details>
 <details>
 <summary>
@@ -450,7 +472,7 @@ There are several options of instances available:
 <details>
 <summary>
  
- ### RUNNING ROARY <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20"></summary>
+ ### RUNNING ROARY and PANAROO <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20"></summary>
 <p></p>
  
 #### [Roary Documentation](https://sanger-pathogens.github.io/Roary/)
@@ -495,6 +517,35 @@ File name  | Description
 core_gene_alignment.aln	| Core gene aligment 
 accessory_binary_genes.fa.newick | Accessory gene tree
 gene_presence_absence.csv | Table with information of gene presence and absense
+
+##### Running Panaroo <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20">
+
+**[Panaroo documentation](https://gthlab.au/panaroo/#/gettingstarted/quickstart)**
+
+**Basic usage**
+```
+panaroo -i *.gff -o ./results/ --clean-mode strict -a core --aligner mafft
+```
+**Flag explanation**
+
+**-i**                     input GFF3 files (Genbank file formats are also supported with extensions '.gbk', '.gb' or '.gbff')
+
+**--clean-mode**           The stringency mode at which to run panaroo. (strict,moderate,sensitive)
+
+**-a**                     Output alignments of core genes or all genes. Options are 'core' and 'pan'. Default: 'None'
+
+**--core_threshold**       frequency of a gene in the your sample required to classify it as 'core' (example: 0.95)
+
+**--aligner**              Specify an aligner. Options:'prank', 'clustal', and default: 'mafft'
+
+**--merge_paralogs**       Panaroo splits paralogs into separate clusters by default. Merging paralogs can be enabled.
+
+**--remove-invalid-genes** ignore invalid annotation that do not conform to the expected Prokka format such as those including premature stop codons
+
+* Clean-modes explained:
+  * strict: Requires fairly strong evidence (present in  at least 5% of genomes) to keep likely contaminant genes. Will remove genes that are refound more often than they were called originally.
+  * moderate: Requires moderate evidence (present in  at least 1% of genomes) to keep likely contaminant genes. Keeps genes that are refound more often than they were called originally.
+  * sensitive: Does not delete any genes and only performes merge and refinding operations. Useful if rare plasmids are of interest as these are often hard to disguish from contamination. Results will likely include  higher number of spurious annotations.
 
 ##### Running Raxml to make a phylogenetic tree <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20">
 
