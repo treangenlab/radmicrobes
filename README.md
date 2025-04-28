@@ -38,7 +38,7 @@ I am trained as an epidemiologist and have extensive experience in applying adva
 
 #### Rossie Luo
 
-<img width="200" alt="image" src="">
+<img width="200" alt="image" src="https://github.com/user-attachments/assets/cbacf0ff-7c62-499b-92ea-df43ff6c5f04">
 
 Rossie Luo is a 1st year PhD student in the Treangen lab. She worked in the synthetic biology industry for two years before starting her PhD program in Systems, Synthetic and Physical Biology (SSPB) at Rice. Her research is currently focused on microbial metagenomics and strain-level analysis to identify virulence factors. Outside of research, she enjoys nature, running and spending time with her dog.
 
@@ -50,7 +50,7 @@ Mike Nute is a Research Scientist at Rice University in Todd Treangen's lab and 
 
 #### Dr. Todd Treangen, PhD
 
-<img width="200" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/28576450/892207aa-f0e5-4299-8989-e03429ce5baf">
+<img width="200" alt="image" src="https://github.com/user-attachments/assets/31e502ae-36ed-4c81-b46e-5e0aed62acfd">
 
 Todd Treangen is a Associate Professor in the Computer Science department at Rice University. His primary research interests lie at the intersection of computer science and genomics, and his research group is focused on the development of novel computational methods and software tools with relevance to real-time monitoring of microbial community dynamics, infectious disease, and biothreats. Given the computational challenges presented by the metagenomic data deluge, coupled with the time-sensitive nature of problems specific to tracking pandemics and synthetic DNA screening, the Treangen lab strives to develop efficient and accurate computational solutions to emerging problems in these fields. Specifically, his research group focuses on the design, development, and implementation of novel algorithms, heuristics, and data structures to solve emerging computational research questions specific to biosecurity, infectious disease monitoring, and host-associated microbiome characterization. The Treangen lab is also dedicated to the dissemination and development of novel open-source bioinformatics methods, software, and pipelines.
 
