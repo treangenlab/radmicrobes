@@ -55,7 +55,7 @@ By this point everyone should be able to `ssh` into the NOTS server:
 # First ssh into the jumpstation and then login to NOTS
 ssh -tY hpc2@radmicrobes.rice.edu ssh nots
 
-# Clone this git repository into your home directory so that you have all the files and scripts necessary for the latter parts of this session
+# Clone this git repository into your scratch directory, i.e., /scratch/<your_hpc_username>, so that you have all the files and scripts necessary for the latter parts of this session
 git clone https://github.com/treangenlab/radmicrobes.git
 ```
 
@@ -183,7 +183,7 @@ Each of these databases curate specific genus/species combinations of taxa with 
 A colleague has sent you bacterial genome assemblies in fasta file format and wants you to determine what bacterial species it is. We are now going to leverage the PubMLST API tool with a very simple python script that Dr. Keith Jolley, [one of the primary developers of BIGSdb](https://doi.org/10.1186/1471-2105-11-595), wrote that queries fasta assemblies against the ribosomal Multilocus Sequence Type (rMLST) database through the PubMLST RESTful API using the ```curl``` command.
 
 ```
-cd ~/radmicrobes/session4/Scripts
+cd /scratch/hpc2/radmicrobes/session4/Scripts
 python3 ./api_species_download.py -f ./../Files/assemblies/ARLG-3180_consensus_assembly.fasta
 ```
 
@@ -252,7 +252,7 @@ The only required argument is a FASTA/GenBank/E formatted assembly or assemblies
 For a quick example, we are going to use ARLG-3179 and ARLG-3180 assemblies as input for the mlst command using another `for loop` structure. I'm also going to use **wildcard** notation, specifically `*` to have any matching number, string, or special character match following the assigned `for loop` variable up to **.fasta**. 
 
 ```
-cd ~/radmicrobes/session4/Files
+cd /scratch/hpc2/radmicrobes/session4/Files
 mkdir -p results
 for file in $(cat ./lists/assembly_subset.tsv);do mlst assemblies/${file}_*.fasta >> ./results/kpneumoniae_mlst.tsv;done
 head ./results/kpneumoniae_mlst.tsv
@@ -284,7 +284,7 @@ amrfinder --list_organisms
 From the standard output, one can see that *Klebsiella_pneumoniae* is included as an available organism. In order to properly run AMRFinderPlus with the plus functions, you need to include a nucleotide file (.fna), a protein file (.faa), a gff file (.gff), and specify the organism, `-O`. Additionally set the `--plus` flag as well as the annotation format `-a` which is `prokka` for this case. Here is an example of code you can run with each parameter looping through our two assemblies in their respective prokka directories:
 
 ```
-cd ~/radmicrobes/session4/Files
+cd /scratch/hpc2/radmicrobes/session4/Files
 
 for file in $(cat ./lists/assembly_subset.tsv);do amrfinder -p ./prokka_dirs/${file}*_dir/${file}*.faa -g ./prokka_dirs/${file}*_dir/${file}*.gff -n ./prokka_dirs/${file}*_dir/${file}*.fna -a prokka --plus -O Klebsiella_pneumoniae --threads 8 -o ./results/${file}_AMRFinderPlus.tsv;done
 
@@ -344,7 +344,7 @@ One of the last concepts I want to bring up before jumping into phylogenetics is
 There are a total of 11 *K. pneumoniae* assemblies that are available in the `./Files/assemblies` directory. I'm going to demonstrate how simple it is to create an all-to-all Mash estimated distance matrix: 
 
 ```
-cd ~/radmicrobes/session4/Files/assemblies
+cd /scratch/hpc2/radmicrobes/session4/Files/assemblies
 
 # Create a reduced sketch file of all 11 assemblies that will be used to estimate distance
 mash sketch -o ./reference -s 100000 *.fasta
@@ -549,8 +549,8 @@ etc
 We can use the [BioNJ algorithm](https://academic.oup.com/mbe/article/14/7/685/1119804?login=true) to create a midpoint rooted, neighbor-joining tree inferred from the Mash distance matrix using a simple Rscript from [bacsort](https://github.com/rrwick/Bacsort). 
 
 ```
-cd ~/radmicrobes/session4/Files/phylogenetics
-Rscript ~/radmicrobes/session4/RScripts/bionj_tree.R kpneumo.mash.phylip kpneumo.mash.tre
+cd /scratch/hpc2/radmicrobes/session4/Files/phylogenetics
+Rscript /scratch/hpc2/radmicrobes/session4/RScripts/bionj_tree.R kpneumo.mash.phylip kpneumo.mash.tre
 ```
 
 You can now view `kpneumo.mash.tre` in [Gingr](https://github.com/marbl/gingr), which you should have already downloaded yesterday. 
