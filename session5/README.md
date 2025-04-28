@@ -71,6 +71,7 @@ There are several options of instances available:
 - [PROKKA](https://github.com/tseemann/prokka) (Which will be used in this boot camp)
 - [RAST](https://rast.nmpdr.org/) (Webserver application)
 - [PGAP](https://github.com/ncbi/pgap) (Usually the best option, but runs slow)
+- [bakta](https://github.com/oschwengers/bakta) (besides being heavily inspired by prokka Bakta is reported to find sligthly more of everything compare to prokka.)
 
 <details>
 <summary>
@@ -469,6 +470,8 @@ There are several options of instances available:
 
 * [PIRATE](https://github.com/SionBayliss/PIRATE) (another good alternative)
 
+* [tMHG-Finder](https://github.com/yongze-yin/tMHG-Finder) (de Novo Tree-Based Maximal Homologous Group Finder)
+  
 <details>
 <summary>
  
