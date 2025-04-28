@@ -1,22 +1,12 @@
 # Session 1 - Sampling, Sequencing, Quality Assessment and Control, and Assembly
 *by Blake Hanson, MS, PhD*
-
-<details>
- <summary>
-  
-  # Session Summary</summary>
+ 
+## Session Summary
  <p></p>
 
- * [Introduction to the Unix Shell](#introduction-to-the-unix-shell)
- 	* [Unix shell learning resources](#unix-shell-learning-resources)
- 	* [Accessing the workshop computational environment](#accessing-the-workshop-computational-environment)
- 	* [Enough commands to make you dangerous](#enough-commands-to-make-you-dangerous)
- 	* [Zsh as compared to bash](#zsh-as-compared-to-bash)
- 	* [Cheat sheets are your friends](#cheat-sheets-are-your-friends)
-    
  * [Sampling and study design](#sampling-and-study-design)
  	* [Determine your goals](#determine-your-goals)
- 	* [Sampling](#sampling-considerations-for-microbial-genomics)
+ 	* [Sampling considerations for microbial genomics](#sampling-considerations-for-microbial-genomics)
  		* [Working with reference isolates](#collecting-samples)
  		* [Clinical isolate sampling](#clinical-isolates)
  		* [Environmental isolate sampling](#environmental-isolates)
@@ -36,7 +26,15 @@
  			* [PacBio](#pacbio-sequencing)  
  	* [How do I pick which one to use?](#how-do-i-pick-which-one-to-use)
  
+ * [Preparing for analyses](#preparing-for-analyses)
+ 	* [Connect to NOTS](#connect-to-nots)
+ 	* [Enter an interactive compute node](#enter-an-interactive-compute-node)
+ 	* [Accessing the conda environment](#accessing-the-conda-environment)
+ 	* [Copying the fastq data](#copying-the-fastq-data)
+
  * [Sequencing quality assessment and control](#sequencing-quality-assessment-and-control)
+ 	* [Why Quality Assessment is Critical](#why-quality-assessment-is-critical)
+ 	* [Controlling for Low-Quality Data](#controlling-for-low-quality-data) 
  	* [Short read QC/QA](#short-read-qcqa)
  		* [FastQC](#fastqc)
  		* [FastQC Alternatives](#fastqc-alternatives)
@@ -45,443 +43,24 @@
  	* [Long read QC/QA](#long-read-qcqa)
  		* [NanoPlot and associated scripts](#nanoplot-and-associated-scripts)
  		* [pycoQC](#pycoqc)
+ 	* [Assessment of our reads](#assessment-of-our-reads)    
  
  * [Assembly](#assembly)
  	* [Short read assembly](#short-read-assembly)
- 		* [Spades](#spades)
+ 		* [SPAdes](#spades)
  	* [Long read assembly](#long-read-assembly)
+ 		* [Downsampling our Data](downsampling-our-data)
  		* [Flye](#flye)
 
  * [Assembly QC/QA](#assembly-qcqa)
  	* [Quast](#quast)
- 	* [Bandage](#bandage)
- 	* [Busco and CheckM](#busco-and-checkm)
+ 	* [Busco](#busco-assessment-of-the-assemblies)
 
-</details>
-
-
-#  Introduction to the Unix Shell
-
-## Unix shell learning resources
-
-There are many fantastic resources that can help you start your journey using Unix and bash/zsh or help you take your skills to the next level.  A few are listed here:
- * [Happy Belly Bioinformatics](https://astrobiomike.github.io/unix/unix-intro) (Which will be used in this boot camp)
- * [Software Carpentry - The Unix Shell](https://swcarpentry.github.io/shell-novice/)
- * [Bioinformatics Workbook](https://bioinformaticsworkbook.org/Appendix/Unix/unix-basics-1.html#gsc.tab=0)
-
-As a gentile introduction for the sessions during this workshop, we will loosely follow the [Happy Belly Bioinformatics](https://astrobiomike.github.io/unix/unix-intro) guide with some abbreviated sections to better fit our workshop.
-
-## A few notes before we start
-
-In Unix-based systems, spaces in file names can often lead to confusion and scripting errors, as the space character is a delimiter that separates command line arguments. To avoid these issues, it's recommended to use dashes (-) or underscores (_) instead of spaces in file names.
-
-These characters provide visual separation between words in a file name while ensuring the name is interpreted as a single entity by the shell and other command-line tools. 
-
-For instance, instead of naming a file `My Document.txt`, you would name it `My-Document.txt` (using dashes) or `My_Document.txt` (using underscores). 
-
-This naming convention enhances readability and makes it easier to handle files in scripts or command-line operations. When typing commands, you can simply refer to the file without needing to wrap the name in quotes or escape the spaces. Adopting this practice is especially beneficial in scripting and programming, where consistency and predictability in file names are essential.
-
-It is equally important to adopt this practice for folder names in addition to file names. Spaces in folder names, like in file names, can lead to unexpected behavior or errors in various scripts, software programs, and command-line operations. By using dashes or underscores in folder names, you avoid potential complications that arise from spaces being misinterpreted as argument separators or requiring additional handling such as escape characters or quotes. 
-
-## Accessing the workshop computational environment
-
-To access the workshop computational resources, we will utilize the `ssh` command, which stands for secure shell. 
-
-On MacOS, this can be accessed using Terminal, which can be found two ways: 
- * Opening spotlight and typing "terminal", then selecting the option called "Terminal"
-
-<p align="center">
-<img src="Images/macOS_terminal.gif" width="600" align="center"> 
-</p>
- 
- * Navigating to Applications -> Utilities -> Terminal
- 
-On Windows, this can be accomplished by opening PowerShell:
- * From the start menu, enter "powershell" in the search bar
- <p align="center">
- <img src="Images/powershell.png" width="600" align="center">
- </p>
- 	
-Once you have accessed either Terminal or PowerShell, you then need to enter the following command, making sure to swap in your user name in place of "username".
-
-``` 
-ssh username@radmicrobes.rice.edu
-```
-
-As an example, my username for our workshop is `hpc3` so my login command is:
-
-```
-ssh hpc3@radmicrobes.rice.edu
-```
-
-Once you hit enter, the connection between your computer and the radmicrobes.rice.edu server will be established and you will be greeted with the interactive command line. This server is called a gateway server, or a jump station, and acts as our portal to the workshop infrastructure.
-
-<p align="center">
-<img src="Images/radmicrobes_login.png" width="600" align="center"> 
-</p>
-
-
-Note, that the first time you log in, you may see details on the key fingerprint for the server asking you if you are sure you want to continue connecting. This is normal behavior for the first time you log into a new server using ssh, and is OK to inter "yes" to confirm your login. Once you do that, you can enter in your password and will be greeted with the interactive command line of the server. 
-
-<p align="center">
-<img src="Images/radmicrobes_login.gif" width="600" align="center">
-</p>
-	
-	  
-**Your unique credentials for the server will be distributed via the workshop slack channel.**
-
-Once you have logged into the radmicrobes.rice.edu server, you will need to connect one step further to access our NOTS cluster where we will be running our analyses. To accomplish this, you will enter the following command:
-
-```
-ssh nots
-```
-
-<p align="center">
-<img src="Images/nots_login.png" width="600" align="center">
-</p>
-
-
-Congratulations! You now have access to our workshop computational infrastructure. Let's get started. 
-
-## Enough commands to make you dangerous
-
-### Useful commands for our workshop
-
-#### Navigating the Filesystem:
-
-1. `pwd` (Print Working Directory)
-   - **Description:** Shows the current directory path.
-   - **Example:** 
-     ```
-     pwd
-     ```
-
-2. `ls` (List)
-   - **Description:** Lists files and directories in the current directory.
-   - **Examples:** 
-     ```
-     #If you want to list files with associated details
-     ls -l
-     
-     #If you want to list files without associated details (often useful to see more file names in less space)
-     ls -s
-     ```
-
-3. `cd` (Change Directory)
-   - **Description:** Changes the current directory.
-   - **Example:** To change to a directory named `Documents`:
-     ```
-     cd Documents
-     ```
-
-4. `mkdir` (Make Directory)
-   - **Description:** Creates a new directory.
-   - **Example:** To create a new directory named `NewFolder`:
-     ```
-     mkdir NewFolder
-     ```
-
-5. `rmdir` (Remove Directory)
-   - **Description:** Deletes an empty directory.
-   - **Example:** To remove a directory named `OldFolder`:
-     ```
-     rmdir OldFolder
-     ```
-
-6. `touch`
-   - **Description:** Creates an empty file or updates the timestamp of an existing file.
-   - **Example:** To create a new file named `example.txt`:
-     ```
-     touch example.txt
-     ```
-
-#### File Manipulation:
-
-1. `cp` (Copy)
-   - **Description:** Copies files or directories.
-   - **Example:** To copy a file named `file1.txt` to `file2.txt`:
-     ```
-     #Create a copy in the same directory
-     cp file1.txt file2.txt
-     #Create a copy in a different directory (assumes different directory exists)
-     cp file1.txt new_directory/file1.txt
-     OR
-     cp file1.txt new_directory/file2.txt
-     ```
-
-2. `mv` (Move)
-   - **Description:** Moves or renames files or directories.
-   - **Example:** To rename `file1.txt` to `file2.txt`:
-     ```
-     #Move the file within the same directory (works as renaming the file)
-     mv file1.txt file2.txt
-     #Move the file to a different directory (assumes different directory exists)
-     mv file1.txt new_directory/file1.txt
-     OR
-     mv file1.txt new_directory/file2.txt
-     ```
-
-3. `rm` (Remove)
-   - **Description:** Removes files or directories.
-   - **Example:** To remove a file named `file.txt`:
-     ```
-     rm file.txt
-     ```
-
-4. `cat` (Concatenate)
-   - **Description:** Displays file content, combines files.
-   - **Example:** To display the contents of `file.txt`:
-   - **Note:** If this is a large file, it will print the entire thing to your screen, which may be slow or unwieldy. In that situation, consider the options of `head`, `tail`, `less`, and `grep`.
-     ```
-     cat file.txt
-     ```
-
-5. `head`
-   - **Description:** Shows the first few lines of a file.
-   - **Example:** To show the first 10 lines of `file.txt`:
-     ```
-     head file.txt
-     #If you want to show a different number of lines, use the -n command
-     head -n 50 file.txt
-     ```
-
-6. `tail`
-   - **Description:** Shows the last few lines of a file.
-   - **Example:** To show the last 10 lines of `file.txt`:
-     ```
-     tail file.txt
-     #If you want to show a different number of lines, use the -n command
-     tail -n 50 file.txt
-     ```
-
-7. `less`
-   - **Description:** Allows backward and forward navigation through the content of a file.
-   - **Example:** To open `file.txt` in `less`:
-     ```
-     less file.txt
-     ```
-
-8. `grep`
-   - **Description:** Searches for patterns within files. This supports a wide range of patterns such as regular expressions, which are beyond the scope of this workshop. 
-   - **Example:** To search for the word "example" in `file.txt`:
-     ```
-     grep "example" file.txt
-     ```
-
-9. `find`
-   - **Description:** Searches for files and directories within the file system.
-   - **Example:** To find files named `file.txt` in the current directory and subdirectories:
-   - **Note:** The period in this sentence tells find to search starting in the current directory. 
-   	 ```
-     find . -name "file.txt"
-     ```
-
-10. `wc` (Word Count)
-   - **Description:** Counts lines, words, and characters in a file.
-   - **Example:** To count the number of lines, words, and characters in `file.txt`:
-     ```
-     wc file.txt
-     ```
-
-#### Scripting and Automation 
-
-1. `nano`, `vi`, `emacs`
-   - **Description:** Text editors for writing scripts or editing files.
-   - **Example:** To edit a file named `script.sh` using `nano`:
-     ```
-     nano script.sh
-     ```
-
-2. `bash`
-   - **Description:** Executes commands read from a script file.
-   - **Example:** To execute a script file named `script.sh`:
-     ```
-     bash script.sh
-     ```
-
-3. `ssh` (Secure Shell)
-   - **Description:** Connects to a remote machine securely.
-   - **Example:** To connect to a remote host at `example.com` with username `user`:
-     ```
-     ssh user@example.com
-     ```
-
-4. `scp` (Secure Copy)
-   - **Description:** Securely transfers files between hosts.
-   - **Example:** To copy a file `file.txt` to a remote host `example.com`:
-     ```
-     #To transfer a file from your local computer to a remote host
-     scp file.txt user@example.com:/path/to/destination
-     #To transfer a file from a remote host to your local computer
-     scp user@example.com:/path/to/file /path/to/local/destination
-     ```
-
-5. `tar`
-   - **Description:** Archives files.
-   - **Example:** To create a tar archive of a directory `folder`:
-     ```
-     tar -cvf archive.tar folder/
-     ```
-
-6. `zip`/`unzip`
-   - **Description:** Compresses files and extracts compressed files.
-   - **Example:** To zip a directory `folder` into a new file called archive.zip:
-     ```
-     zip -r archive.zip folder/
-     ```
-   - **Example:** To unzip an archive `archive.zip`:
-     ```
-     unzip archive.zip
-     ```
-     
- 7. `echo`
-   - **Description:** Displays a line of text.
-   - **Example:** To display "Hello World":
-     ```
-     echo "Hello World"
-     ```
-
-#### Networking:
-
-1. `ping`
-   - **Description:** Checks network connectivity to another host.
-   - **Example:** To ping `google.com`:
-     ```
-     ping google.com
-     ```
-
-2. `curl`
-   - **Description:** Transfers data from or to a server.
-   - **Example:** To download a webpage from `example.com`:
-     ```
-     curl http://example.com
-     ```
-
-3. `wget`
-   - **Description:** Non-interactive network downloader.
-   - **Example:** To download a file from `example.com/file.txt`:
-     ```
-     wget http://example.com/file.txt
-     ```
-
-
-### Navigating the Filesystem:
-
-Let's start with how to move around using unix commands. 
-
-While you are only able to use text commands while using terminal and PowerShell, the same fundamental structure you have on your local computer also applies, and files and folders are stored hierarchically. 
-
-As an example, consider that I am working on the desktop of my laptop, and I want to find a file using terminal that I know is in a folder called `test_folder`. To start with, I can confirm I am in the folder I think I am in using the `pwd` command:
-
-<p align="center">
-<img src="Images/pwd.gif" width="600" align="center"> 
-</p>
-
-As you can see, `pwd` tells us we are currently in the folder **Desktop/test_folder**. This is reflected in the finder window below where you can see that on my desktop is a folder called `test_folder`.
-
-Next, we want to look and see what is within `test_folder`. For this, we will use the ls command:
-
-<p align="center">
-<img src="Images/ls.gif" width="600" align="center"> 
-</p>
-
-As you can see, I used three different versions of the ls command, each with differing information:
- * **ls** which simply lists the names of the files and directories, but does not differentiate between the different types clearly 
- * **ls -s** which provides a similar output to ls, but provides information on the size in blocks of the files and directories listed
- * **ls -l** which provides the list of the directories and files, but also provides information on the size of the files, indicates which are files (a dash as the first character in the column to the left) vs directories (the character d is the first character in the column to the left), as well as the [read and write privileges](https://www.tutorialspoint.com/unix/unix-file-permission.htm) for the objects listed. 
-
-Due to the additional information shown, I prefer `ls -l`, but each have their utilities (and there are additional sub-commands you can use to further refine the output).
-
-Now that we have seen within the `test_folder`, I have identified another folder nested within that directory called `test_subfolder`.  I did not find what I was looking for within the current directory, so let's use the `cd` command to change directories and look within the `test_subfolder` directory. 
-
-<p align="center">
-<img src="Images/cd.gif" width="600" align="center"> 
-</p>
-
-Now we see there is a single file within the `test_subfolder` called `test_file_2.txt`. This file is larger than the `test_file_1.txt` that we saw within the previous directory, which we can see using the file size section of the `ls -l` command. That said, while we can see the contents of the file within the finder window when I click on the file name, we cannot see that in our terminal. To see what is within this file, we have a few options:
- * `cat`
- * `head/tail`
- * `nano/vim`
- 
- For this example, I am going to use `cat` as my file is not too long, but I encourage you to try the other options after consulting the command descriptions listed above. 
- 
-<p align="center">
-<img src="Images/cat.gif" width="600" align="center"> 
-</p>
- 
-After seeing the contents of `test_file_2.txt`, I have identified this is the file I want, but it is not in the location I thought it was in and I want to move the file. To do this, I can use the `mv` command:
-
-<p align="center">
-<img src="Images/mv.gif" width="600" align="center"> 
-</p>
-
-By using the `mv test_file_2.txt ../` command, what I am doing is using a key character `../` to tell the `mv` command that I want to move the file up one directory from where I am, which will move it from `test_subfolder` to `test_folder`. I could have also accomplished this by using the command `mv test_file_2.txt ~/Desktop/test_folder/`, which uses the `~` key character to tell the system to go to my base directory, which on my laptop is my user folder that contains my Desktop, Downloads, and Documents, among other things. 
- 
-Now that I have moved the file up a directory, I also want to go to that directory. I can do this by using the `cd` command again. 
-
-<p align="center">
-<img src="Images/cd_part_2.gif" width="600" align="center"> 
-</p>
-
-
-Note that I used the `cd ../` command here, which uses the same key character as the last set of commands. I could have also accomplished this via the command `cd ~/Desktop/test_folder`, which would accomplish the same thing using the path names and the `~` key character.
-
-To round out my search for and move of my `test_file_2.txt`, I want to see what is inside of the `test_file_1.txt` file I found first, and if it is empty, delete it using the `rm` command. 
-
-<p align="center">
-<img src="Images/rm.gif" width="600" align="center"> 
-</p>
-
-While I do not show this step here, I may also want to remove the now empty `test_subfolder`that I am no longer using. The safest way to do this is using `rmdir test_subfolder`. I could also use the `rm -r test_subfolder` command, and it would have the same behavior as the `rmdir test_subfolder` command in this example. That said, it is much better to use `rmdir` in this situation as the directory is empty and `rmdir` will only remove empty directories by default. If there is something in the directory being deleted, `rmdir` will generate and error to make sure I don't accidentally delete something I may have wanted/needed. If you are sure you want to remove a directory and all of its contents, `rm -r` is a more powerful command that can accomplish this task, but be careful. 
-   
-Now you should be ready to go for our workshop and be able to navigate throughout the file structures and everything we need. Remember, if you are ever lost, `pwd`, `cd`, and `ls` are your friends. Additionally, as you continue to learn, there are plenty of cheat sheets online to help you identify and apply new commands and sub-commands. 
-
-## Cheat sheets are your friends
-
-There are many different cheat sheets on the internet that have similar but unique sets of reference commands and details on them. Here are a few cheat sheets I have found useful but please feel free to adopt or create your own.
-
-[FOSSwire Unix/Linux Command Cheat Sheet](https://files.fosswire.com/2007/08/fwunixrefshot.png) 
-<p align="center">
-<img src="https://files.fosswire.com/2007/08/fwunixrefshot.png" width="600">
-</p>
-
-[Bash & zsh Terminal Basics Cheat Sheet](https://images.datacamp.com/image/upload/v1700048361/Bash_Cheat_Sheet_4503e68287.png)
-<p align="center">
-<img src="https://images.datacamp.com/image/upload/v1700048361/Bash_Cheat_Sheet_4503e68287.png" width="600">
-</p>
-
-
-## Zsh as compared to bash
-
-`zsh` (Z Shell) is an extended version of `bash` (Bourne Again SHell) with many improvements and additional features. `zsh` includes many of the features of `bash`, but it enhances them with better scriptability, spell check for command entry, extended file globbing, improved variable handling, and more. It also incorporates features from other shells such as `ksh` and `tcsh`. One of the notable features of `zsh` is its themeable and highly customizable prompt. Additionally, `zsh` has a powerful completion system that can be used to create complex command-line completions.
-
-That said, most unix high-performance compute servers and resources come with `bash` as the default shell, and `zsh` scripts are not backwards compatible by default with `bash`. For this reason, I recommend sticking with `bash` for your scripting and if you need advanced computational scripting support, utilizing a more powerful and flexible scripting language such as `python`.
-
-It's also important to note that as of macOS Catalina, `zsh` has replaced `bash` as the default shell, so Mac users may need to adapt to `zsh` going forward or [revert their shell to `bash`](https://www.howtogeek.com/444596/how-to-change-the-default-shell-to-bash-in-macos-catalina/#:~:text=Apple%20now%20uses%20Zsh%20as,in%20Terminal%20and%20reopen%20it.). Users should test their scripts and environment setup when switching between the shells to ensure compatibility.
-
-<details>
-
-<summary>
-
-### Users transitioning from `bash` to `zsh` should be aware of the following changes:
-
-</summary>
-
- * **Syntax Differences:** While `zsh` is largely compatible with `bash`, there are syntax differences that can affect scripts. For example, `zsh` handles loop syntax and conditionals slightly differently and has different expansion rules for some pattern matches.
-
- * **Scripting:** Scripts written for `bash` might need adjustments to run on `zsh` due to the differences in shell built-ins and behavior.
- ****Configuration Files:** `zsh` uses different configuration files (`.zshrc`, `.zshenv`, `.zprofile`, and `.zlogin`) compared to `bash` (`.bashrc`, `.bash_profile`, `.bash_login`, and `.profile`).
-
- * **Startup/Interactive Shells:** `zsh` and `bash` have different rules for which configuration files they read on startup, depending on whether the shell is a login shell or an interactive shell.
-- **Completion System:** `zsh`'s autocompletion is more robust and provides better context-sensitive options than `bash`.
-
-</details>
-
-# Sampling and study design
+## Sampling and study design
 
 Microbial genomics is a powerful tool in understanding the genetics of microorganisms. This section outlines key considerations in the study design and sampling for various applications in microbial genomics.
 
-## Determine your goals
+### Determine your goals
 
 Determining clear goals before embarking on microbial genomics sequencing and analyses is crucial for several reasons:
 1.  Firstly, it guides the choice of sequencing technology, as different platforms offer varying read lengths, accuracies, and throughputs, which can significantly impact the resolution and quality of genomic data. For instance, short-read sequencing might suffice for single nucleotide polymorphism (SNP) analysis, but long-read sequencing is more suitable for resolving complex genomic structures. 
@@ -492,7 +71,7 @@ In summary, clear, well-defined goals are the cornerstone of a successful microb
 
 Below is a non-exhaustive set of reasons you may want to generate and/or analyze microbial genomics data. 
 
-### Generating a Reference Isolate for a Microbiology Experiment
+#### Generating a Reference Isolate for a Microbiology Experiment
 - **Objective**: To create a well-characterized reference isolate that can be used as a standard for comparison in microbiological studies.
 - **Methodology**:
 	- Isolate Selection: Choose a representative isolate from a known source.
@@ -503,7 +82,7 @@ Below is a non-exhaustive set of reasons you may want to generate and/or analyze
 	- Reproducibility: The isolate should be easy to culture and maintain to ensure reproducibility in experiments.
 	- Level of completeness needed: Depending on the planned use of your reference, you may need to consider if short-reads, long-reads, or a combination of both are needed.
 
-### Confirming a Mutation Following Genetic Modification
+#### Confirming a Mutation Following Genetic Modification
 - **Objective**: To confirm the presence and correctness of introduced mutations, as well as to assess for potential off-target mutations.
 - **Methodology**:
 	- **PCR and Sanger Sequencing**: For specific, targeted mutations. Does not provide insights for potential off-target mutations.
@@ -512,7 +91,7 @@ Below is a non-exhaustive set of reasons you may want to generate and/or analyze
 	- Target Verification: Verify that the mutation occurs at the intended site.
 	- Off-target Analysis: Screen for unintended mutations elsewhere in the genome.
 
-### Pathogen Identification and Characterization
+#### Pathogen Identification and Characterization
 - **Objective**: To identify unknown pathogens and characterize known ones, including studying antibiotic resistance mechanisms (AMR).
 - **Methodology**:
 	- 16S rRNA Sequencing: For bacterial identification.
@@ -525,7 +104,7 @@ Below is a non-exhaustive set of reasons you may want to generate and/or analyze
 	- Extraction and library preparation methodology. 
 	- Data Analysis Plan: Bioinformatics tools for sequence alignment, phylogenetics, and resistance gene identification.
 
-### Outbreak Investigation
+#### Outbreak Investigation
 - **Objective**: To trace the source and transmission pathway of infectious disease outbreaks.
 - **Methodology**:
 	- **Same methods as pathogen identification**
@@ -535,7 +114,7 @@ Below is a non-exhaustive set of reasons you may want to generate and/or analyze
 	- Timeliness: Rapid sequencing and analysis are crucial in outbreak settings.
 	- Spatial and Temporal Sampling: Important for tracking the spread and evolution of the pathogen.
 
-### Epidemiology Surveillance
+#### Epidemiology Surveillance
 - **Objective**: To monitor the population structure of pathogens and identify genomic factors associated with virulence or environmental adaptation.
 - **Methodology**:
 	- **Same methods as pathogen identification**
@@ -548,34 +127,34 @@ Below is a non-exhaustive set of reasons you may want to generate and/or analyze
 In conclusion, microbial genomics requires careful consideration of study design and sampling, with methodologies tailored to the specific objectives of the study. The integration of genomic data with clinical, environmental, and epidemiological information is key to unlocking the full potential of microbial genomics in understanding and combating microbial diseases.
 
 
-## Sampling Considerations for Microbial Genomics
+### Sampling Considerations for Microbial Genomics
 
 Proper sampling is crucial in microbial genomics to ensure that the data obtained accurately represents the bacterial isolate being studied. This process varies depending on the source of the sample, such as clinical isolates, environmental isolates, and isolates from animal models.
 
-### Collecting Samples
+#### Collecting Samples
 
-#### Clinical Isolates
+##### Clinical Isolates
 - **Source**: Typically obtained from human tissues, fluids (like blood, urine), or swabs (throat, skin).
 - **Considerations**:
   - Ensure sterile collection to prevent contamination.
   - Timing is crucial, especially in infection outbreaks.
   - Ethical considerations and patient consent are paramount.
 
-#### Environmental Isolates
+##### Environmental Isolates
 - **Source**: Soil, water, air, or surfaces in various environments.
 - **Considerations**:
   - Diverse microbial community; hence, selective culturing might be necessary.
   - Consider environmental factors (pH, temperature, humidity) at the time of collection.
   - Potential for contamination with foreign material is high.
 
-#### Isolates from Animal Models
+##### Isolates from Animal Models
 - **Source**: Similar to clinical isolates but from animals used in research.
 - **Considerations**:
   - Ethical considerations and adherence to animal welfare regulations.
   - Sampling should minimize stress or harm to the animal.
   - Consider the microbiome of the animal and its impact on the isolate.
 
-### Culturing/Purifying Isolates
+#### Culturing/Purifying Isolates
 
 - **Objective**: To obtain a pure culture of the bacterial isolate.
 - **Methods**:
@@ -586,7 +165,7 @@ Proper sampling is crucial in microbial genomics to ensure that the data obtaine
   - Repeated streaking or single colony isolation might be necessary for purity.
   - Validation of the isolate's identity (e.g., through biochemical tests, PCR).
 
-### Preparing for Sequencing
+#### Preparing for Sequencing
 
 - **DNA Extraction**: Efficient extraction methods to obtain high-quality, high-purity genomic DNA.
 - **Quality Control**: Assessing DNA quality (purity and integrity) before sequencing.
@@ -597,38 +176,38 @@ Proper sampling is crucial in microbial genomics to ensure that the data obtaine
 
 In conclusion, each step in the sampling process for microbial genomics is critical. Proper handling, culturing, and preparation of bacterial isolates, tailored to their source and characteristics, are essential for ensuring high-quality genomic data that accurately reflects the organism of interest.
  
-# Sequencing
-## A Brief History of Microbial Sequencing
+## Sequencing
+### A Brief History of Microbial Sequencing
 
 Microbial sequencing has revolutionized our understanding of microorganisms and their role in health, disease, and the environment. Here's a concise timeline of key milestones in the history of microbial sequencing:
 
-### 1977: Sanger Sequencing
+#### 1977: Sanger Sequencing
 - **Development of Sanger Sequencing**: Fred Sanger and colleagues developed the chain-termination method for DNA sequencing. This method was first applied to sequence the genome of the bacteriophage ΦX174.
 
-### 1995: First Bacterial Genome Sequenced
+#### 1995: First Bacterial Genome Sequenced
 - **Haemophilus influenzae Sequenced**: The first complete genome of a free-living organism, the bacterium *Haemophilus influenzae*, was sequenced. This milestone was achieved using Sanger sequencing and marked the beginning of genomics.
 
-### Early 2000s: Shotgun Sequencing
+#### Early 2000s: Shotgun Sequencing
 - **Advent of Shotgun Sequencing**: This period saw the rise of shotgun sequencing, a method that involves breaking DNA into random fragments and then reassembling the sequences. It was used extensively in microbial genomics.
 
-### 2005: Next-Generation Sequencing
+#### 2005: Next-Generation Sequencing
 - **Introduction of Next-Generation Sequencing (NGS)**: NGS technologies emerged, allowing massively parallel sequencing. This led to a significant increase in speed and a reduction in cost, revolutionizing microbial sequencing.
 
-### 2010s: Third-Generation Sequencing
+#### 2010s: Third-Generation Sequencing
 - **Third-Generation Sequencing Technologies**: Technologies such as single-molecule real-time sequencing (PacBio) and nanopore sequencing (Oxford Nanopore) provided longer reads and faster turnaround times, further enhancing microbial genomics research.
 
-### Present and Future
+#### Present and Future
 - **Ongoing Developments**: Microbial sequencing continues to evolve, with improvements in speed, accuracy, and cost. It's now a cornerstone in research and diagnostics, offering insights into microbial diversity, evolution, and pathogenesis.
 
 The journey of microbial sequencing reflects a broader evolution of genomic sciences, with each technological advance opening new frontiers in research and application.
 
-## Currently available technologies
+### Currently available technologies
 
 Microbial genomics has greatly benefited from various sequencing technologies, each offering unique advantages. Below are the key technologies currently in use:
 
-### Short read sequencing technologies
+#### Short read sequencing technologies
 
-#### Illumina Sequencing (Next-Generation Sequencing - NGS)
+##### Illumina Sequencing (Next-Generation Sequencing - NGS)
 - **Overview**: Illumina platforms, known for their high-throughput sequencing, are widely used for microbial genomics. They offer short but highly accurate reads.
 - **Key Features**:
   - High accuracy and throughput.
@@ -639,7 +218,7 @@ Microbial genomics has greatly benefited from various sequencing technologies, e
   - Genomic Complexity: Short reads may not fully resolve complex genomic structures like repeats and structural variants.
   - **Library Preparation and Amplification Bias**: The process of preparing DNA for sequencing can introduce biases and errors if library preparation kits with PCR amplification are utilized.
   
-#### Ion Torrent Sequencing
+##### Ion Torrent Sequencing
 - **Overview**: Ion Torrent systems use semiconductor technology for sequencing. They are known for their speed and are useful in various applications.
 - **Key Features**:
   - Faster turnaround times.
@@ -650,7 +229,7 @@ Microbial genomics has greatly benefited from various sequencing technologies, e
   - Throughput Limitations: Lower throughput compared to Illumina, making it less suitable for large-scale genomics projects.
   - Sensitivity to Starting Material: Like other sequencing technologies, the quality and quantity of the starting DNA material can significantly impact the results.
   
-#### Sanger Sequencing
+##### Sanger Sequencing
 There are lots of different companies that offer equipment that can generate sanger sequencing data, and not all technologies are identical. Be sure to check the specifics of the technology you are using if you choose to generate sanger sequencing data. 
 
 - **Overview**: Sanger sequencing is based on the selective incorporation of chain-terminating dideoxynucleotides (ddNTPs) during DNA replication. It results in DNA fragments of varying lengths that can be separated and read to determine the DNA sequence.
@@ -662,9 +241,9 @@ There are lots of different companies that offer equipment that can generate san
 	- Throughput: Not suitable for large-scale sequencing projects due to lower throughput compared to NGS technologies.
 	- Fragment Size: Limited to sequencing smaller DNA fragments, which can be a constraint for some applications.
 
-### Long read sequencing technologies 
+#### Long read sequencing technologies 
 
-#### Oxford Nanopore Technologies (ONT)
+##### Oxford Nanopore Technologies (ONT)
 - **Overview**: ONT offers portable real-time sequencing with their MinION and other devices. They provide long reads and are highly flexible in terms of deployment.
 - **Key Features**:
   - Real-time sequencing capability.
@@ -675,7 +254,7 @@ There are lots of different companies that offer equipment that can generate san
 	- Data Quality and Quantity: The quality of the data can be variable across runs and library preparation kits, and throughput may be lower than Illumina sequencing, depending on the specific platform and experiment setup.
 	- Dependency on Sample Quality: Long-read technologies like ONT are more sensitive to DNA degradation and require high-quality samples.
   
-#### PacBio Sequencing
+##### PacBio Sequencing
 - **Overview**: Pacific Biosciences (PacBio) provides long-read sequencing, capable of reading longer DNA fragments in a single run.
 - **Key Features**:
   - Long reads improve genome assembly and detection of structural variants.
@@ -686,67 +265,257 @@ There are lots of different companies that offer equipment that can generate san
   - Cost: Generally more expensive per base than Illumina sequencing, which can be a limiting factor for large-scale projects.
   - Longer Run Times: PacBio machines typically have longer run times, which can delay results.
 
-### How do I pick which one to use? 
+#### How do I pick which one to use? 
 Each sequencing technology has its strengths and limitations. The choice of technology depends on the specific requirements of a microbial genomics project, such as read length, accuracy, throughput, and cost.
 
 The continuous evolution of these technologies is expanding the horizons of microbial research, enabling more detailed and comprehensive genomic studies.
  
- 
-# Sequencing quality assessment and control
+## Preparing for analyses
+
+Now that you are comfortable using ssh and navigating through file structures using the terminal, we will proceed with accessing our workshop comute environment and accessing the necessary software tools. 
+
+### Connect to NOTS
+
+First you will ssh into the NOTS server through the jumpstation. 
+
+```
+## Connect to the jumpstation, then immediately ssh into NOTS
+ssh -tY hpc2@radmicrobes.rice.edu ssh nots
+ ```
+
+Once you are connected to NOTS, clone the workshop repository into your home directory. This will give you access to all the files and scripts needed for this session.
+
+```
+## Clone the radmicrobes repository
+git clone https://github.com/treangenlab/radmicrobes.git
+```
+
+### Enter an interactive compute node
+
+Since we are working on a SLURM-managed cluster, we need to request an interactive compute node. This ensures we use dedicated compute resources without overloading the login node.
+
+```
+## Request an interactive session
+srun --partition=commons --pty --export=ALL --ntasks=1 --reservation=workshop --cpus-per-task=8 --mem=15GB --time=04:00:00 /bin/bash
+```
+
+This command:
+ - Requests 8 CPU cores and 15 GB of RAM
+ - Reserves the session for 4 hours
+ - Utilizes the commons partition with a workshop reservation
+ - Once the session starts, you will have a full interactive environment ready for analysis.
+
+### Accessing the conda environment
+
+Most of the bioinformatics tools we will use are already pre-packaged within a Conda environment on the cluster.
+First, load the mamba module:
+
+```
+## Load the mamba module
+module load Mamba/23.11.0-0
+```
+
+Then, activate the provided Conda environment:
+
+```
+## Activate the environment
+conda activate /projects/k2i/session_conda_environments/radmicrobes-s1
+
+```
+
+Once activated, you can verify that the environment is properly configured by checking that one of the installed tools, such as mlst, is available:
+
+```
+## Test to see if SPAdes is accessible
+SPAdes.py -h
+```
+
+If SPAdes prints the following output, you are good to go. If not, please flag down a TA. 
+
+```
+Usage: SPAdes.py [options] -o <output_dir>
+
+Basic options:
+  -o <output_dir>             directory to store all the resulting files (required)
+  --isolate                   this flag is highly recommended for high-coverage isolate and multi-cell data
+  --sc                        this flag is required for MDA (single-cell) data
+  --meta                      this flag is required for metagenomic data
+  --bio                       this flag is required for biosyntheticSPAdes mode
+  --corona                    this flag is required for coronaSPAdes mode
+  --rna                       this flag is required for RNA-Seq data
+  --plasmid                   runs plasmidSPAdes pipeline for plasmid detection
+  --metaviral                 runs metaviralSPAdes pipeline for virus detection
+  --metaplasmid               runs metaplasmidSPAdes pipeline for plasmid detection in metagenomic datasets (equivalent for --meta --plasmid)
+  --rnaviral                  this flag enables virus assembly module from RNA-Seq data
+  --iontorrent                this flag is required for IonTorrent data
+  --test                      runs SPAdes on toy dataset
+  -h, --help                  prints this usage message
+  -v, --version               prints version
+
+Input data:
+  --12 <filename>             file with interlaced forward and reverse paired-end reads
+  -1 <filename>               file with forward paired-end reads
+  -2 <filename>               file with reverse paired-end reads
+  -s <filename>               file with unpaired reads
+  --merged <filename>         file with merged forward and reverse paired-end reads
+  --pe-12 <#> <filename>      file with interlaced reads for paired-end library number <#>.
+                              Older deprecated syntax is -pe<#>-12 <filename>
+  --pe-1 <#> <filename>       file with forward reads for paired-end library number <#>.
+                              Older deprecated syntax is -pe<#>-1 <filename>
+  --pe-2 <#> <filename>       file with reverse reads for paired-end library number <#>.
+                              Older deprecated syntax is -pe<#>-2 <filename>
+  --pe-s <#> <filename>       file with unpaired reads for paired-end library number <#>.
+                              Older deprecated syntax is -pe<#>-s <filename>
+  --pe-m <#> <filename>       file with merged reads for paired-end library number <#>.
+                              Older deprecated syntax is -pe<#>-m <filename>
+  --pe-or <#> <or>            orientation of reads for paired-end library number <#>
+                              (<or> = fr, rf, ff).
+                              Older deprecated syntax is -pe<#>-<or>
+  --s <#> <filename>          file with unpaired reads for single reads library number <#>.
+                              Older deprecated syntax is --s<#> <filename>
+  --mp-12 <#> <filename>      file with interlaced reads for mate-pair library number <#>.
+                              Older deprecated syntax is -mp<#>-12 <filename>
+  --mp-1 <#> <filename>       file with forward reads for mate-pair library number <#>.
+                              Older deprecated syntax is -mp<#>-1 <filename>
+  --mp-2 <#> <filename>       file with reverse reads for mate-pair library number <#>.
+                              Older deprecated syntax is -mp<#>-2 <filename>
+  --mp-s <#> <filename>       file with unpaired reads for mate-pair library number <#>.
+                              Older deprecated syntax is -mp<#>-s <filename>
+  --mp-or <#> <or>            orientation of reads for mate-pair library number <#>
+                              (<or> = fr, rf, ff).
+                              Older deprecated syntax is -mp<#>-<or>
+  --hqmp-12 <#> <filename>    file with interlaced reads for high-quality mate-pair library number <#>.
+                              Older deprecated syntax is -hqmp<#>-12 <filename>
+  --hqmp-1 <#> <filename>     file with forward reads for high-quality mate-pair library number <#>.
+                              Older deprecated syntax is -hqmp<#>-1 <filename>
+  --hqmp-2 <#> <filename>     file with reverse reads for high-quality mate-pair library number <#>.
+                              Older deprecated syntax is -hqmp<#>-2 <filename>
+  --hqmp-s <#> <filename>     file with unpaired reads for high-quality mate-pair library number <#>.
+                              Older deprecated syntax is -hqmp<#>-s <filename>
+  --hqmp-or <#> <or>          orientation of reads for high-quality mate-pair library number <#>
+                              (<or> = fr, rf, ff).
+                              Older deprecated syntax is -hqmp<#>-<or>
+  --sanger <filename>         file with Sanger reads
+  --pacbio <filename>         file with PacBio reads
+  --nanopore <filename>       file with Nanopore reads
+  --trusted-contigs <filename>
+                              file with trusted contigs
+  --untrusted-contigs <filename>
+                              file with untrusted contigs
+
+Pipeline options:
+  --only-error-correction     runs only read error correction (without assembling)
+  --only-assembler            runs only assembling (without read error correction)
+  --careful                   tries to reduce number of mismatches and short indels
+  --checkpoints <last or all>
+                              save intermediate check-points ('last', 'all')
+  --continue                  continue run from the last available check-point (only -o should be specified)
+  --restart-from <cp>         restart run with updated options and from the specified check-point
+                              ('ec', 'as', 'k<int>', 'mc', 'last')
+  --disable-gzip-output       forces error correction not to compress the corrected reads
+  --disable-rr                disables repeat resolution stage of assembling
+
+Advanced options:
+  --dataset <filename>        file with dataset description in YAML format
+  -t <int>, --threads <int>   number of threads. [default: 16]
+  -m <int>, --memory <int>    RAM limit for SPAdes in Gb (terminates if exceeded). [default: 250]
+  --tmp-dir <dirname>         directory for temporary files. [default: <output_dir>/tmp]
+  -k <int> [<int> ...]        list of k-mer sizes (must be odd and less than 128)
+                              [default: 'auto']
+  --cov-cutoff <float>        coverage cutoff value (a positive float number, or 'auto', or 'off')
+                              [default: 'off']
+  --phred-offset <33 or 64>   PHRED quality offset in the input reads (33 or 64),
+                              [default: auto-detect]
+  --custom-hmms <dirname>     directory with custom hmms that replace default ones,
+                              [default: None]
+```
+
+A note for the future, when you are finished with the session, deactivate the environment:
+
+```
+## Deactivate the environment
+conda deactivate
+```
+
+## Copying the fastq data
+
+For this session, we will be using a single sample that has been sequenced on both Illumina and Oxford Nanopore sequencers: sample ARLG-4673. This sample and its linked data can be found here: https://www.ncbi.nlm.nih.gov/biosample/15869132/. For the purposes of our workshop, we have already downloaded the data onto NOTS here: 
+  * Illumina data - /projects/k2i/data/fastq_files/illumina/ARLG-4673_SRR12509049_?.fastq.gz
+  * Oxford Nanopore data - /projects/k2i/data/fastq_files/oxford-nanopore/ARLG-4673_SRR12509049_2.fastq.gz
+
+To copy this data into your home directory on NOTS, run the following commands:
+
+```
+# Make a session 1 folder in your home directory
+mkdir session_1
+
+# Change your directory to the new session_1 folder
+cd session_1
+
+# Copy the folder containing the Illumina reads and Oxford Nanopore reads into your session 1 directory
+cp -r /projects/k2i/data/fastq_files/session_1/illumina/ ./
+cp -r /projects/k2i/data/fastq_files/session_1/oxford_nanopore/ ./
+```
+
+Now we are ready to start our analyses! 
+
+## Sequencing quality assessment and control
 
 The assessment of sequencing data quality is a critical step in microbial genomics. High-quality sequencing data is essential for accurate and reliable genomic analyses and low quality data (including poor sequencing quality, contaminated sequencing results, and low sequencing coverage) can lead to inaccurate or incomplete conclusions. This section discusses why it's important to assess and control the quality of sequencing data.
 
-## Why Quality Assessment is Critical
+### Why Quality Assessment is Critical
 
 High quality sequencing data is critical for all downstream purposes. Garbage in, garbage out. Below are a few examples of where and how low-quality data may impact your results. 
 
 Quality assessment and control in microbial genomics are not just about filtering data; they are about ensuring the reliability and accuracy of the entire genomic analysis process. Poor-quality data can lead to misinterpretations, erroneous conclusions, and potentially costly mistakes, especially in clinical and environmental applications. Therefore, investing time and resources in quality control is essential for the success of any microbial genomics project.
 
-### Accurate Genome Assembly and Annotation
+#### Accurate Genome Assembly and Annotation
 - **High-Quality Reads**: Accurate assembly of microbial genomes requires high-quality reads. Low-quality or erroneous reads can lead to misassemblies, gaps, and incorrect annotations.
 - **Annotation Accuracy**: The quality of sequencing data directly impacts the accuracy of gene prediction and annotation. Errors in sequencing can lead to misidentification of genes, operons, and regulatory elements.
 
-### Reliable Variant and Mutation Analysis
+#### Reliable Variant and Mutation Analysis
 - **Detecting Variations**: In microbial genomics, identifying mutations and variations is vital, especially for pathogen characterization, antibiotic resistance studies, and outbreak tracking.
 - **Error Distinction**: High-quality data ensures that actual biological variations are distinguished from sequencing errors, which is crucial for reliable variant calling.
 
-## Controlling for Low-Quality Data
+### Controlling for Low-Quality Data
 
-### Pre-Processing Steps
+#### Pre-Processing Steps
 - **Trimming**: Removing low-quality ends of reads where errors are more frequent.
 - **Filtering**: Discarding reads that do not meet quality thresholds.
 
-### Quality Control Tools
+#### Quality Control Tools
 - **Quality Metric Assessment**: Utilizing tools like FastQC, MultiQC, or pycoQC for long-read technologies to assess various quality metrics (e.g., Q-scores, GC content, read length distribution).
 - **Visualization**: Employing visualization tools to inspect sequencing artifacts or anomalies.
 
-### Post-Processing Validation
+#### Post-Processing Validation
 - **Assembly Validation**: Using tools like QUAST or Bandage to validate genome assemblies.
 - **Read Mapping**: Mapping reads back to reference genomes or assemblies to check for consistency and coverage.
 
 
-## Short read QC/QA tools
+### Short read QC/QA tools
 While there are many different tools out there for short- and long-read sequencing QC we have selected popular ones for discussion in this workshop. 
 
-### FastQC
+#### FastQC
+
+This is the tool we will be utilizing for our hands-on section. 
 
 FastQC is a widely used tool for checking the quality of raw sequencing data from short-read sequencing platforms. It provides a quick and easy way to assess the quality of your data and identify potential problems. 
 
 FastQC performs quality control checks on raw sequence data coming from high throughput sequencing instruments. It provides a modular set of analyses which you can use to get a quick impression of whether your data has any problems of which you should be aware before doing any further analysis. Proper interpretation of FastQC reports can guide further preprocessing steps, such as trimming and filtering, to ensure that downstream analyses, like assembly and variant calling, are based on high-quality data.
 
-#### Key Features of FastQC:
+##### Key Features of FastQC:
 - **Per-Base Sequence Quality**: Shows the quality score of each base across all reads.
 - **Per-Sequence Quality Scores**: Displays the distribution of average quality scores for reads.
 - **Per-Base Sequence Content**: Checks for bias in the composition of bases at each position.
 - **Sequence Duplication Levels**: Assesses the level of duplication in the sequence data.
 
-#### Installation
+##### Installation
 
 FastQC can be downloaded from [the FastQC website](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). It's available for Windows, MacOS, and Linux. Follow the installation instructions provided on the website.
 
-#### Running FastQC
+##### Running FastQC
 
-##### Command Line Usage
+###### Command Line Usage
 After installation, FastQC can be run from the command line. Here's a basic command:
 
 ```
@@ -755,10 +524,10 @@ fastqc mydatafile.fastq.gz
 
 Replace `mydatafile.fastq.gz` with the name of your actual data file. FastQC can handle both uncompressed `.fastq` and compressed `.fastq.gz` files.
 
-##### Graphical Interface
+###### Graphical Interface
 FastQC also offers a graphical user interface (GUI). You can open the GUI by simply selecting the program from your Applications, or by running `fastqc` without any arguments. Then you can open your sequence files using the GUI.
 
-#### Interpreting FastQC Results
+##### Interpreting FastQC Results
 
 After running FastQC, it will generate an HTML report containing several analysis modules. Key sections to pay attention to:
 
@@ -766,40 +535,89 @@ After running FastQC, it will generate an HTML report containing several analysi
 - **Overrepresented Sequences**: Helps in identifying contamination or highly abundant sequences.
 - **Adapter Content**: Important for checking if sequencing adapters remain in the reads.
 
-#### Considerations for Microbial Genomics
+##### Considerations for Microbial Genomics
 
 - **Sample Diversity**: Microbial samples can be highly diverse. Look out for unusual base composition in initial cycles.
 - **GC Content**: Microbial genomes can have varied GC content, which can affect sequencing quality. Generally, bacterial species have fixed GC content and an average GC content other than what is expected may be an indication of other problems such as contamination. 
 
-### FastQC Alternatives
+#### FastQC Alternatives
 
-#### Raspberry
+##### Raspberry
 While FastQC is an incredibly powerful tool, alternative command-line tools to FastQC, such as [Raspberry](https://github.com/CEG-ICRISAT/Raspberry), provide significant advantages in high-throughput computational pipelines, particularly for their focus on file-based outputs that facilitate automated analysis without the need for HTML or manual visual inspection. Raspberry, while not updated in more than 9 years, exemplifies this approach. It generates comprehensive reports in text or other machine-readable formats, enabling seamless integration into larger automated sequencing pipelines. This capability is particularly valuable in large-scale genomics projects where visual inspection of each sample's quality report is impractical. Tools like Raspberry allow for rapid, automated quality checks, flagging potential issues for further review. This efficiency is crucial in projects with high sample throughput, where prompt quality assessment can significantly accelerate the overall workflow and ensure consistent data quality across large datasets. Such tools extend the utility of quality control steps in sequencing, making them more adaptable to varied and demanding research environments in microbial genomics and beyond.
 
-#### MultiQC 
-[MultiQC](https://github.com/ewels/MultiQC), is another tool for handling large-scale sequencing projects, particularly due to its ability to aggregate results from multiple samples into a single, comprehensive report. This aggregation is especially useful in microbial genomics, where researchers often deal with vast datasets comprising numerous samples. MultiQC efficiently compiles data from a variety of quality control tools, including FastQC, into an integrated summary. This consolidated reporting significantly streamlines the quality control process, allowing for quick, at-a-glance evaluation of multiple datasets. This feature is crucial in identifying batch-wide trends or systematic issues that might not be evident when inspecting individual reports. Furthermore, MultiQC's user-friendly interface and interactive graphs enhance the interpretability of complex data, making it easier to communicate findings to collaborators or non-specialists. By enabling efficient, large-scale data processing while ensuring detailed and accessible output, MultiQC becomes an essential tool in modern high-throughput sequencing workflows, aiding in the robust and efficient processing of large microbial genomics datasets.
+##### MultiQC 
+[MultiQC](https://github.com/ewels/MultiQC), is another tool for handling large-scale sequencing projects, particularly due to its ability to aggregate results from multiple samples into a single, comprehensive report. This aggregation is especially useful in microbial genomics, where researchers often deal with vast datasets comprising numerous samples. MultiQC efficiently compiles data from a variety of quality control tools, including FastQC, into an integrated summary. This consolidated reporting significantly streamlines the quality control process, allowing for quick, at-a-glance evaluation of multiple datasets. This feature is crucial in identifying batch-wide trends or systematic issues that might not be evident when inspecting individual reports. Furthermore, MultiQC's user-friendly interface and interactive graphs enhance the interpretability of complex data, making it easier to communicate findings to collaborators or non-specialists. By enabling efficient, large-scale data processing while ensuring detailed and accessible output, MultiQC becomes an essential tool in modern high-throughput sequencing workflows, aiding in the robust and efficient processing of large microbial genomics datasets. MultiQC can also aggregate reports from QUAST, BUSCO, and many other tools.
 
-## Long read QC/QA
+### Long read QC/QA
 Many of the computational tools that enable QC/QA of short-read sequencing data are not useful for assessing long-read sequencing data due to differences in base quality encoding, read length differences present in long-reads, and challenges in visualizing long-read QC/QA data. Below are a few options for assessing the quality of ONT and PacBio data. 
 
-### NanoPlot and associated scripts
-[NanoPlot]](https://github.com/wdecoster/NanoPlot), is an excellent tool for quality assessment of long-read sequencing data. Designed specifically to handle the unique characteristics of long-read data, such as those generated by Oxford Nanopore or PacBio sequencing technologies, NanoPlot provides in-depth and insightful analysis of sequencing quality. It generates detailed plots and statistics, giving researchers a comprehensive overview of data attributes like read length distribution, quality scores, and GC content. This level of detail is particularly beneficial for long-read sequencing, where quality parameters can significantly impact downstream applications like genome assembly or structural variant analysis. The ability of NanoPlot to visually represent complex data makes it easier to identify potential issues and ensures that subsequent analyses are based on reliable and high-quality data. In an era where long-read sequencing is becoming increasingly prevalent, tools like NanoPlot are indispensable for ensuring that the full potential of this technology is realized in microbial genomics and other research areas reliant on long-read sequencing data.
+#### NanoPlot and associated scripts
+[NanoPlot](https://github.com/wdecoster/NanoPlot), is an excellent tool for quality assessment of long-read sequencing data. Designed specifically to handle the unique characteristics of long-read data, such as those generated by Oxford Nanopore or PacBio sequencing technologies, NanoPlot provides in-depth and insightful analysis of sequencing quality. It generates detailed plots and statistics, giving researchers a comprehensive overview of data attributes like read length distribution, quality scores, and GC content. This level of detail is particularly beneficial for long-read sequencing, where quality parameters can significantly impact downstream applications like genome assembly or structural variant analysis. The ability of NanoPlot to visually represent complex data makes it easier to identify potential issues and ensures that subsequent analyses are based on reliable and high-quality data. In an era where long-read sequencing is becoming increasingly prevalent, tools like NanoPlot are indispensable for ensuring that the full potential of this technology is realized in microbial genomics and other research areas reliant on long-read sequencing data.
 
 
-### pycoQC	
+#### pycoQC	
 Similar to the discussion above of MultiQC and Raspberry as compared to FastQC, [pycoQC](https://github.com/a-slide/pycoQC) is particularly useful due to its ability to aggregate results from multiple samples into a single, comprehensive report. This is facilitated by the export of json files for each sample that can then be combined. pycoQC computes a range of metrics from the sequencing run, including read length distribution, read quality scores, output over time, and error rates, which are crucial for assessing the overall quality and yield of Nanopore sequencing experiments. This aids researchers in quickly identifying any issues related to sequencing quality or performance, thereby enabling timely adjustments to sequencing protocols or sample preparations.
 
-# Assessment of our reads
+## Assessment of our reads
 
-Now that we have a brief overview of why we need to perform QC/QA on microbial genomic sequencing data, let's perform this QC on data from our test sample - ARLG-4673. The files for these analyses can be found within the [Files](Files) section of this repository. 
+Now that we have a brief overview of why we need to perform QC/QA on microbial genomic sequencing data, let's perform this QC on data from our test sample - ARLG-4673.
 
-## Short reads
+### Short reads
 
 Let's start with our short reads. To begin with, we are going to use FastQC to assess the quality of our raw Illumina sequencing data. 
 
-### FastqQC
+#### FastqQC
+
+For our workshop, we will be running the following commands:
+
+```
+# Change your directory
+cd illumina/
+
+# Make an output directory for fastqc to use
+mkdir ARLG-4673_fastqc
+
+# Run fastqc 
+fastqc -o ARLG-4673_fastqc *fastq.gz
+```
+
+This will run fastqc on both R1 and R2 for the sample, and put the output into our defined output folder - ARLG-4673_fastqc
+
+If we look in that directory we can see the output:
+
+```
+#List the contents of the output folder
+ls -l ARLG-4673_fastqc/
+```
+
+This lists the following files:
+  * ARLG-4673_SRR12509049_1_fastqc.html
+  * ARLG-4673_SRR12509049_1_fastqc.zip
+  * ARLG-4673_SRR12509049_2_fastqc.html
+  * ARLG-4673_SRR12509049_2_fastqc.zip
+
+The HTML files are what we would usually look at if this were being run on our laptop or desktop computer, but for now we will be looking at the fastqc output within the zip file. 
+
+To access this data, we want to change our directory to the file output and then unzip the files.
+
+```
+# Change your directory
+cd ARLG-4673_fastqc/
+
+# Unzip the two fastqc output files
+unzip ARLG-4673_SRR12509049_1_fastqc.zip
+unzip ARLG-4673_SRR12509049_2_fastqc.zip
+```
+
+If you print the output of the data.txt files in each of these directories, they will show you information on the quality of your samples. Within the workshop, we will go through this data using the graphical user interface (GUI) to further demonstrate how we perform QC. 
 
 I am going to use the GUI for FastQC to demonstrate how we can utilize this data to assess quality. 
+
+##### Fastqc graphical user interface
+
+The standalone software can be used to analyze the fastq files directly, or you can run fastqc by commandline and open up the .html files. We will be using the HTML files, but if you want to use the standalone software, you can do so as follows: 
+
+###### Using the Fastqc standalone software
 
 To start with, lets select the files we want to use for our assessment. We are using the raw Illumina sequencing data found within the `Files -> illumina_reads -> raw` folder. I selected both of these files to be read in by using the shift key while I selected the second file in the selection window. 
 
@@ -821,7 +639,9 @@ Reverse Read
 
 Within each of these selections, you have multiple tabs that provide information that you can utilize to assess the quality of your reads. 
 
-#### Basic Statistics
+If we are using the HTML files, we just have to open the files using a web browser such as FireFox to view the output.
+
+##### Basic Statistics
 
 R1 basic statistics
 <p align="center">
@@ -835,7 +655,7 @@ R2 basic statistics
 
 This tab displays summary statistics such as the number of reads, the observed sequence length, and the %GC content. These values are generally identical for the total number of reads, and are very similar for the other two values. 
 
-#### Per base sequence quality
+##### Per base sequence quality
 
 This tab is often the most helpful tab for understanding the overall quality of your data, and paired with the `Sequence Length Distribution` tab, provides the most information that can help you assess the quality of your data. 
 
@@ -849,9 +669,9 @@ R2 per base statistics
 <img src="Images/fastqc_r2_base_quality.png" width="800" align="center"> 
 </p>
 
-Looking at these, there are a few signatures that catch my attention, the first observation is that the read quality at the end of both reads is decreasing (as represented by the emergence of the yellow boxes, and the subsequent movement down the y-axis for the yellow boxes as well as tahe red dashes that denote the mean quality score). The second observation, I see is that there appear to be stepwise decreases in the data quality as denoted by the top of the figures on the right where you see the green background start to show above the yellow boxes. This likely means our read length choice was longer than our average insert size for our library, and there will be sequencing adapter contamination within our data. We will confirm this when we look at the `Sequence Length Distribution` tab. 
+Looking at these, there are a few signatures that catch my attention, the first observation is that the read quality at the end of both reads is decreasing (as represented by the emergence of the yellow boxes, and the subsequent movement down the y-axis for the yellow boxes as well as the red dashes that denote the mean quality score). The second observation, I see is that there appear to be stepwise decreases in the data quality as denoted by the top of the figures on the right where you see the green background start to show above the yellow boxes. This likely means our read length choice was longer than our average insert size for our library, and there will be sequencing adapter contamination within our data. We will confirm this when we look at the `Sequence Length Distribution` tab. 
 
-#### Per sequence quality scores 
+##### Per sequence quality scores 
 
 R1 per base statistics
 <p align="center">
@@ -865,7 +685,7 @@ R2 per base statistics
 
 This further reinforces that we are seeing a stepwise decrease in our sequencing data as we can see peaks that are not all the way right on the figure. That said, this is better represented in the `Sequence length distribution` tab. 
 
-#### Per base sequence content
+##### Per base sequence content
 
 R1 per base statistics
 <p align="center">
@@ -881,7 +701,7 @@ This image generally shows the GC content broken down by the four different base
 
 Note: the strange base spikes are the beginning are normal, and reflect a different interval of the x-axis. Each base in the first 10 bases of each read has its own column, while the rest of the columns are averages across a 5-base sliding window. 
 
-#### Per sequence GC content
+##### Per sequence GC content
 
 R1 per base statistics
 <p align="center">
@@ -895,7 +715,7 @@ R2 per base statistics
 
 The takeaway here is to look at the average GC content and make sure it is consistent with the bacteria you think you have sequenced. If the GC content is different than expected, or if you see a bimodal distribution, this can be a sign of contamination that will need to be assessed later in the bioinformatics process.
 
-#### Sequence length distribution
+##### Sequence length distribution
 
 This is the second most informative tab in my opinion and is very useful in conjunction with the `Per base sequence quality` tab. 
 
@@ -913,19 +733,19 @@ This is where the assessment gets interesting. We see different patterns in read
 
 **For the next three tabs, I am going to forego including the images as these can vary drastically depending on a large number of factors such as library preparation method, and sequencing read length. 
 
-#### Sequence Duplication levels
+##### Sequence Duplication levels
 This tab will be vastly different depending on if you use a PCR-based library preparation method, or if you use a PCR-free based library preparation method. Since we chose a PCR-free library preparation method for our data generation, we see very few duplicated sequences. If you have used a PCR-based library preparation method, this is a critical tab as it will tell you how biased your data is by the same overrepresented PCR fragments, which represent redundant sequencing data that can bias downstream analyses. 
 
 
-#### Overrepresented sequences
+##### Overrepresented sequences
 Within WGS data, I have only found this tab useful to identify a large amount of adapter contamination that represents primer dimers and poor library preparation cleanup. 
 
-#### Adapter content
+##### Adapter content
 This is a section that should be able to represent adapter content within your sequencing data, but I have found this does not always identify adapter contamination, particularly if you are using a library preparation kit from a third party company. I tend to only open this tab when there is a red X, and I find the `Overrepresented sequences` tab more useful for this as well. 
 
 Overall, our data looks very good, but the sequence length distribution that is shorter than our read length implies there is likely adapter contamination within our sequencing data that has not been caught by FastQC. To remove this contamination, we will utilize the tool `Trimmomatic`.
 
-### Trimmomatic
+#### Trimmomatic
 
 Now that we have completed our initial assessment of our sequencing results and concluded the sequencing quality is acceptable to move forward, now we move on to `Trimmomatic` to remove any adapter contamination, low-complexity regions, and poor sequencing quality. 
 
@@ -972,25 +792,25 @@ java -jar trimmomatic-0.39.jar PE -threads 4 input_forward.fq.gz input_reverse.f
 
 By adding in our file structure and data, this becomes: 
 ```
-trimmomatic PE Files/illumina_reads/raw/ARLG-4673_R1.fastq.gz Files/illumina_reads/raw/ARLG-4673_R2.fastq.gz ARLG-4673_R1_paired.fastq.gz ARLG-4673_R1_unpaired.fastq.gz ARLG-4673_R2_paired.fastq.gz ARLG-4673_R2_unpaired.fastq.gz ILLUMINACLIP:/usr/local/opt/trimmomatic/share/trimmomatic/adapters/NexteraPE-PE.fa:2:30:10:2:True LEADING:3 TRAILING:3 MINLEN:36 
+trimmomatic PE ARLG-4673_SRR12509049_1.fastq.gz ARLG-4673_SRR12509049_2.fastq.gz ARLG-4673_R1_paired.fastq.gz ARLG-4673_R1_unpaired.fastq.gz ARLG-4673_R2_paired.fastq.gz ARLG-4673_R2_unpaired.fastq.gz ILLUMINACLIP:/projects/k2i/session_conda_environments/radmicrobes-s1/share/trimmomatic/adapters/NexteraPE-PE.fa:2:30:10:2:True LEADING:3 TRAILING:3 MINLEN:36 
 ```
 
 <p align="center">
 <img src="Images/trimmomatic.png" width="1000" align="center"> 
 </p>
 
-Note that if you want to run this yourself, you will have to update the location of the adapters, as well as the adapter choice to match your Illumina sequencing method.  
+Note that if you want to run this outside of this workshop on your own data, you will have to update the location of the adapters, as well as the adapter choice to match your Illumina sequencing method. Adapter files (like NexteraPE-PE.fa) are usually included in Trimmomatic install under adapters/. 
 
-**The paired reads are what we will utilize moving forward for our short-read assembly walkthrough**
+**The trimmomatic processed paired reads are what we will utilize moving forward for our short-read assembly walkthrough**
 
-#### FastqQC of our trimmed reads
+##### FastqQC of our trimmed reads
 
 For the sake of brevity (this section is already getting VERY long), I am not going to run FastQC again on the trimmed reads, but I encourage you to do so, focusing on the `Per base sequence quality` tab, and the `Per sequence quality scores` tabs, which both now reflect the removal of the adapter contamination from our data, which reduces the overall quality of the sequencing data. 
 
-## Long reads
+### Long reads
 Now let's move onto  our long reads. We are going to use NanoPlot to assess the quality of our raw Illumina sequencing data. 
 
-### NanoPlot	
+#### NanoPlot	
 As we are only assessing the quality of a single ONT sample, NanoPlot is a great choice and it will generate a range of figures, as well as a single HTML report that includes all of those figures. 
 		
 The usage of NanoPlot is:		
@@ -1123,23 +943,23 @@ Another fantastic benefit of ONT long reads is there is not an association with 
 Overarchingly, our data quality is exceptional for an R9.4 flowcell based ONT sequencing run, and because read trimming and quality adjustment are included in the `flye` assembler, we do not have to perform trimming like we do with short reads and `trimmomatic`.
 		
 		
-# Assembly 
-## Short read assembly
+## Assembly 
+### Short read assembly
 Short-read assembly is a critical process in genomics, especially pivotal in the analysis of data generated from high-throughput sequencing technologies like Illumina. These technologies produce millions of small DNA fragments, typically ranging from 75 to 300 base pairs, known as "short reads." The challenge in short-read assembly lies in accurately piecing together these reads to reconstruct the original genome sequence. This process is akin to solving a massive jigsaw puzzle, where each read represents a piece of the puzzle. The assembly algorithms work by finding overlaps between reads and merging them to extend into longer sequences, known as contigs. These contigs are then further assembled to reconstruct the entire genomic sequence. Short-read assembly is particularly effective for organisms with relatively small and less complex genomes. However, it can be challenging in genomes with high repetitive content or large structural variations, as short reads may not span these repetitive regions completely. Despite these challenges, short-read assembly is a cornerstone of genomic research, enabling a wide array of applications from identifying genetic variants associated with diseases to understanding microbial diversity in various environments. With advancements in computational algorithms and tools, short-read assembly continues to evolve, offering greater accuracy and efficiency in genomic sequencing and analysis.
 
-### Spades
+#### SPAdes
 
 For our short-read assembly, we will be utilizing the SPAdes genome assembler. This assembler has MANY features, most of which we will not be using in the course of this workshop. SPAdes has been actively developed for many years and has been extended to viruses, plasmids, metagenomics, SARS-CoV-2, and meta-Hi-C. All fantastic, but unnecessary for our use for single bacterial genomes. 
 
-The usage of spades is:
+The usage of SPAdes is:
 
 ```
-spades.py --help
+SPAdes.py --help
 SPAdes genome assembler v3.15.5
 ```
 
 ```
-Usage: spades.py [options] -o <output_dir>
+Usage: SPAdes.py [options] -o <output_dir>
 
 Basic options:
   -o <output_dir>             directory to store all the resulting files (required)
@@ -1239,23 +1059,53 @@ Advanced options:
 The command we are using is:
 
 ```
-spades.py -t 8 --isolate --only-assembler -1 ARLG-4673_R1_paired.fastq.gz -2 ARLG-4673_R2_paired.fastq.gz -o ARLG-4673_spades_out
+SPAdes.py -t 8 --isolate --only-assembler -1 ARLG-4673_R1_paired.fastq.gz -2 ARLG-4673_R2_paired.fastq.gz -o ARLG-4673_SPAdes_out
 ```
 
 This utilizes the following parameters:
 - t - Threads. I chose 8 to run relatively quickly on my laptop
-- isolate - the setting that tells spades this is a single bacterial genome
-- only-assembler - benchmarking of spades has shown that when utilizing `trimmomatic` for adapter contamination removal and quality filtering, it is best to skip the built in steps in spades that address the same issues. This has been shown in benchmark experiments to be the approach with the highest accuracy. 
+- isolate - the setting that tells SPAdes this is a single bacterial genome
+- only-assembler - benchmarking of SPAdes has shown that when utilizing `trimmomatic` for adapter contamination removal and quality filtering, it is best to skip the built in steps in SPAdes that address the same issues. This has been shown in benchmark experiments to be the approach with the highest accuracy. 
 - 1 - the paired read 1 file
 - 2 - the paired read 2 file
--o - the output location for the spades output
+-o - the output location for the SPAdes output
 
 
 
-## Long read assembly
+### Long read assembly
 Long-read assembly is a crucial technique in genomics, particularly valuable for its ability to overcome some of the limitations presented by short-read sequencing technologies. Utilizing platforms such as Oxford Nanopore and PacBio, long-read sequencing generates significantly longer DNA sequences, often exceeding tens of thousands of base pairs in length. This attribute allows long-read assembly methods to more effectively navigate complex genomic regions, such as those with high repetitive content or large structural variations, which are often challenging for short-read assemblies. The extended length of these reads provides greater continuity and can span entire genomic regions, enabling a more accurate and comprehensive reconstruction of the genome. This is particularly beneficial for assembling large and complex genomes, resolving structural variants, and identifying epigenetic modifications. Long-read assembly has also revolutionized the study of microbial genomics, allowing for more detailed insights into microbial diversity and evolution, as well as the comprehensive characterization of pathogen genomes. However, challenges with long-read sequencing include a higher raw error rate and increased cost per base compared to short-read sequencing. Despite these challenges, the continued advancements in long-read sequencing technologies and assembly algorithms are making this approach increasingly accessible and reliable, opening new frontiers in genomics research.
 
-### Flye
+#### Downsampling our data
+
+Before we move into the assembly step, we currently have ~572x coverage in our long read data (based upon the NanoPlot output). This is WAY more than we need for this workshop, and the vast majority of microbial genomics purposes. While having ultra-deep coverage can seem advantageous, it often leads to increased memory usage, longer run times, and assembly graph complexity without improving assembly quality.
+
+To address this, we can downsample the reads to a reasonable coverage depth prior to assembly.
+
+Rasusa is a command-line tool designed to randomly subsample reads from FASTQ files to a specified genome coverage or target number of bases.
+
+It is particularly useful for ONT datasets that often exceed several hundred times genome coverage.
+  * Downsampling helps:
+  * Reduce memory requirements for assembly
+  * Decrease runtime
+  * Simplify assembly graphs without sacrificing accuracy
+
+We will run rasusa using the following command: 
+
+```
+# Running rasusa to downsample the data to 50x coverage
+rasusa reads --coverage 50 --genome-size 5.5m --output ARLG-4673_subsampled.fastq.gz ARLG-4673_SRR13289850.fastq.g
+```
+
+Where:
+
+  * --coverage specifies the target coverage (e.g., 50x)
+  * --genome-size estimates the genome size (e.g., 5.5m for Klebsiella pneumoniae)
+  * --input is your full ONT FASTQ file
+  * --output specifies the output FASTQ file containing the subsampled reads
+
+Now that we have reduced the sequencing depth, we can move on to our Flye assembly. 
+
+#### Flye
 
 ```
 flye --help
@@ -1336,66 +1186,122 @@ You can run Flye polisher as a standalone tool using
 --polish-target option.
 ```
 
-
 The command we are using is:
 
 ```
-flye --nano-raw Files/oxford_nanopore_reads/ARLG-4673_ONT.fastq.gz --out-dir ARLG-4673_flye --threads 8
+flye --nano-raw ARLG-4673_subsampled.fastq.gz --out-dir ARLG_4673_flye --threads 8
 ```
 
 This utilizes the following parameters:
-- nano-raw - the parameter to tell flye we are using raw ONT data
+- nano-raw - the parameter to tell flye we are using raw ONT data (**this parameter can be update to newer models with data generated with more recent flowcells**)
 - threads I chose 8 to run relatively quickly on my laptop
--out-dir - the output location for the spades output
+-out-dir - the output location for the SPAdes output
 
-# Assembly QC/QA
+## Assembly QC/QA
 
+### Quast
+QUAST (Quality Assessment Tool for Genome Assemblies) is a critical tool for evaluating the quality of microbial genome assemblies. It provides a wide range of metrics including total genome length, number of contigs, N50/L50 values, GC content, and — when a reference is provided — misassemblies and genome fraction coverage.
+We will use QUAST to assess the assemblies we generated from:
+  * Short-read data (SPAdes assembly)
+  * Long-read data (Flye assembly)
 
-## Quast
-Now, for the sake of time, we are going to do the old put a turkey into an oven, and take an already cooked turkey out of the oven right next to it. We are going to look at the quast results for the flye assembly itself, and then assess the flye assembly generated by Dr. Shropshire's [flye_hybrid_assembly_pipeline_](https://github.com/wshropshire/flye_hybrid_assembly_pipeline) that has been polished to reference quality. 
+#### Quast for the short-read assembly
 
-### Quast of the raw flye generated assembly
-
-
-
-The command we are using is:
+First, we will assess the short-read-only assembly created by SPAdes.
 
 ```
-quast.py -t 4 -o ARLG-4673_flye_assembly_quast_output Files/assemblies/flye_long_read_assembly/flye_assembly.fasta.gz
+# Call quast on the short-read assembly
+quast -t 8 -o ARLG-4673_SPAdes_assembly_quast_output ARLG-4673_SPAdes_out/contigs.fasta
 ```
 
+Where:
+  * -t 8 specifies 8 threads
+  * -o ARLG-4673_SPAdes_quast_output sets the output directory
+
+ARLG-4673_SPAdes_out/scaffolds.fasta is the assembled genome file generated by SPAdes
+This will generate an output folder (ARLG-4673_SPAdes_quast_output) containing a summary text file and an interactive HTML report.
+
+There are multiple output files you can look at but we will check the report.txt file under the QUAST output directory.  
+
+Quast Summary Statistics
 <p align="center">
-<img src="Images/quast_raw_flye.png" width="1000" align="center"> 
+<img src="Images/quast_SPAdes.png" width="1000" align="center"> 
+</p>	
+		
+From this report, we can see that there are 443 contigs, which is a bit more than we want, but is within the acceptable range. We can aslo see that the total assembly size is 5.6Mb, which is what we expect for *Klebsiella pneumoniae*. 
+
+#### Quast for the long-read assembly
+
+Next, we will assess the long-read-only assembly created by Flye.
+
+```
+# Call quast on the long-read assembly
+quast -t 8 -o ARLG_4673_flye_assembly_quast_output ARLG_4673_flye/assembly.fasta
+```
+
+There are multiple output files you can look at but we will check the report.txt file. 
+
+Quast Summary Statistics
+<p align="center">
+<img src="Images/quast_flye.png" width="1000" align="center"> 
+</p>	
+		
+From this report, we can see that there are 7 contigs, which is much better than our SPAdes assembly. As forshadowing, that number of contigs comes with a tradeoff in accuracy of the assembly (to be further described in later sessions). We can aslo see that the total assembly size is 5.6Mb, which is what we expect for *Klebsiella pneumoniae*. 
+
+### BUSCO assessment of the assemblies
+
+BUSCO (Benchmarking Universal Single-Copy Orthologs) is a widely used tool to assess genome completeness by checking for the presence of a curated set of genes expected to be single-copy and present in near-universal form across related organisms.
+
+BUSCO can be used on both:
+  * Short-read assemblies (e.g., SPAdes output)
+  * Long-read assemblies (e.g., Flye output)
+  * BUSCO searches for:
+  * Complete genes (single-copy)
+  * Duplicated genes (indicating possible contamination or assembly artifacts)
+  * Fragmented genes (incomplete assemblies)
+  * Missing genes (gaps, misassemblies)
+
+#### Running BUSCO
+
+BUSCO can be run using the following command:
+
+```
+busco -i your_assembly.fasta -o busco_output_folder -m genome -l enterobacterales_odb10 -c 8
+```
+
+Where:
+-i = input file (your assembled genome)
+-o = output directory
+-m = mode (we're using "genome" because we're evaluating a genome assembly)
+-l = lineage dataset (use a dataset appropriate for your organism, here Enterobacterales for K. pneumoniae)
+-c = number of threads
+
+##### BUSCO on our assemblies
+
+For the SPAdes short-read assembly:
+```
+busco -i ARLG-4673_SPAdes_out/scaffolds.fasta -o ARLG-4673_SPAdes_busco -m genome -l enterobacterales_odb10 -c 8
+```
+
+BUSCO Summary Statistics - SPAdes assembly
+<p align="center">
+<img src="Images/busco_SPAdes.png" width="1000" align="center"> 
 </p>	
 
-We can see here that we have 7 total contigs for a total genome length of 5,344,176. This is in line with what we expect for full genome size from *Klebsiella pneumoniae* but we are unsure at this time if these contigs are all circularized and if they are circularized or not. To assess that, we need to utilize Bandage (discussed below), and the `flye` assembly_info.txt file. That file gives us the following output:
+While there are no strict cutoffs for BUSCO scores, we are looking for high 90% values for completeness to assure we have a high quality assembly. We can see from the output that our assembly is 98.9% complete, indicating our short-read assembly is high quality. 
 
+For the Flye long-read assembly
 ```
-#seq_name	length	cov.	circ.	repeat	mult.	alt_group	graph_path
-contig_23	5344176	332	Y	N	1	*	23
-contig_24	140863	252	Y	N	1	*	24
-contig_25	55595	790	Y	Y	2	*	25
-contig_2	6883	142	N	Y	35	*	*,2,*
-contig_10	5070	360	N	Y	90	*	*,10,*
-contig_21	4582	459	N	Y	114	*	*,21,*
-contig_6	3754	138	N	Y	27	*	*,6,*
+busco -i ARLG_4673_flye/assembly.fasta -o ARLG-4673_flye_busco -m genome -l enterobacterales_odb10 -c 8
 ```
 
-From this we can see that flye does not think the chromosome (the largest contig) is circularized, and we have a number of plasmids that contain repeats. 
-
-If we jump to the end of our assessment of our files following Dr. Shropshire's [flye_hybrid_assembly_pipeline_](https://github.com/wshropshire/flye_hybrid_assembly_pipeline), we cut these numbers down to the chromosome and 4 plasmids (some of the plasmids in the initial flye output were duplications, which is a known issue with flye and high-copy number plasmids). 
-
+BUSCO Summary Statistics - Flye assembly
 <p align="center">
-<img src="Images/quast_polished_flye.png" width="600" align="center"> 
-</p>
+<img src="Images/busco_flye.png" width="1000" align="center"> 
+</p>	
 
+As described above, there are no strict cutoffs for BUSCO scores, we are looking for high 90% values for completeness to assure we have a high quality assembly. We can see from the output that our assembly is 98.9% complete, indicating our short-read assembly is high quality. 
 
-Consider this a teaser for next time!  
-
-I recommend you attend the next workshop we offer where I will discuss an updated version of the flye assembly pipeline that Dr. Shropshire and I are working on that directly addresses many of the steps included in Dr. Shropshire's flyest pipeline, and adds a number of new tools to assess genome completeness and correct for genome assembly artifacts. 
-
-### To be discussed in the workshop!
-#### [Bandage](https://rrwick.github.io/Bandage/)
-#### [Busco](https://busco.ezlab.org/) and [CheckM](https://ecogenomics.github.io/CheckM/)
+This value is potentially misleading though, as it is only off of an unpolished long-read assembly. Come back next time and we will have additional details on how to perform polishing to ensure the highest accuracy possible for long-read based assemblies. This often includes the need for short-read polishing, but as the technology continues to advance this is becoming less necessary. 
 
 
