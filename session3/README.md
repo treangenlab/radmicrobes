@@ -375,6 +375,8 @@ samtools view -f 4 -c alignment/illumina_sorted.bam
 ```
 `-f 4`: Keep only reads with flag 4 (unmapped reads)
 
+More information on SAM/BAM flags: https://broadinstitute.github.io/picard/explain-flags.html
+
 **2) Get Coverage at Each Position**
 ```bash
 # Coverage at each position
