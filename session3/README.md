@@ -39,7 +39,7 @@ gunzip GCF_000009885.1_ASM988v1_genomic.gff.gz
 **Environment preparation**
 ```bash
 # Requesting an interactive session
-srun --partition=commons --mem=16G --ntasks=4 --export=ALL --time=04:00:00 --pty bash -i
+srun --partition=commons --reservation=workshop --mem=16G --ntasks=4 --export=ALL --time=04:00:00 --pty bash -i
 
 # Loading the mamba module
 module load Mamba/23.11.0-0
@@ -553,7 +553,7 @@ samtools depth -a alignment/ont_sorted.bam | \
 - More uniform coverage than Illumina (fewer GC biases)
 - Often spans complex and difficult regions (repeats, insertion sequences)
 - May show distinctive error patterns (more indels than substitutions)
-- In* K. pneumoniae*, longer reads better resolve genomic islands and phage insertions
+- In *K. pneumoniae*, longer reads better resolve genomic islands and phage insertions
 
 ### Optimized Variant Calling for *Klebsiella pneumoniae* (Haploid) Using Long Reads
 
