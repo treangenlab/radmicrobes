@@ -697,6 +697,9 @@ If a field starts with SVTYPE=, print it (e.g., SVTYPE=INS, SVTYPE=DEL).
 Copy the alignment and variant files to your computer
 **Step 1: Load the data**
 ```bash
+# Change back to our session3_clair enviroment
+mamba activate /home/hpc9/.conda/envs/session3_clair
+
 # Use a pre-built SnpEff database to annotate our variants of interest.
 java -Xmx4g -jar /home/hpc9/.conda/envs/session3_clair/share/snpeff-5.2-1/snpEff.jar -c /home/hpc9/.conda/envs/session3_clair/share/snpeff-5.2-1/snpEff.config -v Klebsiella_pneumoniae_ASM988v1 variants/illumina_filtered.vcf > variants/illumina_variants_filtered_annotated.vcf
 java -Xmx4g -jar /home/hpc9/.conda/envs/session3_clair/share/snpeff-5.2-1/snpEff.jar -c /home/hpc9/.conda/envs/session3_clair/share/snpeff-5.2-1/snpEff.config -v Klebsiella_pneumoniae_ASM988v1 variants/ont_variants_filtered.vcf > variants/ont_variants_filtered_annotated.vcf
@@ -750,9 +753,6 @@ Now let's compare the results from both technologies to understand their strengt
 ### Comparing Variant Calls
 
 ```bash
-# Change back to our session3_clair enviroment
-mamba activate /home/hpc9/.conda/envs/session3_clair
-
 # How many variants were called by each technology?
 echo "Illumina variants: $(grep -v "#" variantsillumina_filtered_annotated.vcf | wc -l)"
 echo "ONT variants: $(grep -v "#" variants/ont_variants_filtered_annotated.vcf | wc -l)"
