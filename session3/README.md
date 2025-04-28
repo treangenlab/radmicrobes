@@ -563,7 +563,7 @@ samtools depth -a alignment/ont_sorted.bam | \
 - More uniform coverage than Illumina (fewer GC biases)
 - Often spans complex and difficult regions (repeats, insertion sequences)
 - May show distinctive error patterns (more indels than substitutions)
-- In* K. pneumoniae*, longer reads better resolve genomic islands and phage insertions
+- In *K. pneumoniae*, longer reads better resolve genomic islands and phage insertions
 
 ### Optimized Variant Calling for *Klebsiella pneumoniae* (Haploid) Using Long Reads
 
