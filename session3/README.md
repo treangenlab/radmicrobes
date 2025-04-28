@@ -754,7 +754,7 @@ Now let's compare the results from both technologies to understand their strengt
 
 ```bash
 # How many variants were called by each technology?
-echo "Illumina variants: $(grep -v "#" variantsillumina_filtered_annotated.vcf | wc -l)"
+echo "Illumina variants: $(grep -v "#" variants/illumina_filtered_annotated.vcf | wc -l)"
 echo "ONT variants: $(grep -v "#" variants/ont_variants_filtered_annotated.vcf | wc -l)"
 
 # Find variants called by both technologies
