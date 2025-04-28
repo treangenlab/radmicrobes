@@ -44,7 +44,7 @@
       
       * preparing dataset
       
-      * Running Roary
+      * Running Roary and panaroo
       
       * Output files
       
