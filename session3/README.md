@@ -270,7 +270,9 @@ trimmomatic PE reads/illumina_R1.fastq.gz reads/illumina_R2.fastq.gz \
 **Command Structure:**
 
 `PE`: Indicates paired-end mode
+
 `Input files`: reads/illumina_R1.fastq.gz and reads/illumina_R2.fastq.gz
+
 `Output files`:
 reads/illumina_R1_trimmed.fastq.gz: Forward reads that still have pairs
 reads/illumina_R1_unpaired.fastq.gz: Forward reads that lost their pairs
@@ -479,9 +481,13 @@ freebayes -f reference/GCF_000009885.1_ASM988v1_genomic.fna -p 1 -m 20 alignment
 **What is this command doing?**
 
 - `-p 1` specifies ploidy (bacteria are typically haploid)
+
 - `-m 20`: ensures that only reads with a mapping quality of 20 are used
+
 - Variant calling combines evidence across multiple reads
+
 - *K. pneumoniae* typically has 5,000-10,000 SNVs compared to reference
+
 - Common sources of false positives: sequencing errors, alignment artifacts
 
 **Step 2: Filter variants**
@@ -496,16 +502,22 @@ bcftools stats illumina_filtered.vcf > illumina_variants_stats.txt
 **What is this command doing?**
 
 `bcftools`: A toolkit for variant calling and manipulating VCF files
+
 `filter`: The subcommand used to include or exclude variants based on specified criteria
+
 `-i`: The "include" flag that specifies which variants to keep
+
 `'QUAL>20 && INFO/DP>10'`: The filtering expression:
 
 `QUAL>20`: Only keep variants with a quality score greater than 20
 &&: Logical AND operator (both conditions must be true)
+
 `INFO/DP>10`: Only keep variants with a depth of coverage greater than 10 reads
 
 `variants/illumina_variants.vcf:` The input VCF file containing all variant calls
+
 `>`: Redirect output to a file
+
 `variants/illumina_filtered.vcf`: The output file that will contain only the filtered variants that passed the quality thresholds
 
 **Key variant calling concepts:**
@@ -694,6 +706,7 @@ grep -v "^#" variants/sniffles.vcf | awk -F';' '{for(i=1;i<=NF;i++){if($i~/^SVTY
 *Purpose*: Skip header lines (lines starting with #) in the VCF file.
 *Why*: VCF headers (metadata) are irrelevant for counting variants.
 *Output*: Streams only variant records (data lines) to the next command.
+
 2. `awk -F';' '{for(i=1;i<=NF;i++){if($i~/^SVTYPE=/){print $i}}}'`
 *Purpose*: Extract the SVTYPE field from the INFO column (8th column in VCF).
 How:
@@ -701,6 +714,7 @@ How:
 Loops through all fields (`NF` = number of fields) in the INFO column.
 If a field starts with SVTYPE=, print it (e.g., SVTYPE=INS, SVTYPE=DEL).
 *Output*: Streams SVTYPE=INS, SVTYPE=DEL, etc., one per line.
+
 3. `cut -d'=' -f2`
 *Purpose*: Isolate the SV type (value after =).
 *How*:
@@ -733,6 +747,12 @@ java -Xmx4g -jar /home/hpc9/.conda/envs/session3_clair/share/snpeff-5.2-1/snpEff
 ## 6. Visualization with IGV
 
 1. Copy the files of interest to your computer (alignment and variant calls)
+```bash
+# From your lcomputer run something like this to copy e.g. all the alignment files.
+mkdir -p alignment
+scp -o ProxyJump=hpcX@radmicrobes.rice.edu "hpcX@nots:/home/hpcX/alignment/*" ./alignment
+
+```
 2. Load the reference genome with annotation.
 3. Load the alignment files and examine.
 4. Load the variant call and compare.
@@ -795,12 +815,19 @@ echo "Illumina-only variants: $(grep -v "#" variants/illumina_only.vcf | wc -l)"
 echo "ONT-only variants: $(grep -v "#" variants/ont_only.vcf | wc -l)"
 ```
 **What are these commands doing?**
+
 `bedtools`: A powerful toolkit for genomic arithmetic operations. Performs intersection, subtraction, and other comparisons between genomic datasets.
+
 `intersect`: Finds overlapping features between two datasets.
+
 `subtract`: Removes features in dataset B from dataset A.
+
 `-a`: Specifies the first input file (primary dataset).
+
 `-b`: Specifies the second input file (comparison dataset).
+
 `> file.vcf`: Redirects output to a new VCF file.
+
 These commands create: 
   - `common_variants.vcf` (intersection output)
   - `illumina_only.vcf` (first subtraction output, variants found only in the Illumina reads)
