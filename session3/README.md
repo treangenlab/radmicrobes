@@ -735,14 +735,6 @@ If a field starts with SVTYPE=, print it (e.g., SVTYPE=INS, SVTYPE=DEL).
 ## 5. Variant annotation with SnpEff
 
 
-### Setting Up IGV
-Copy the alignment and variant files to your computer.
-
-To install IGV on your computer, you can go to this website: https://igv.org/download/html/oldtempfixForDownload.html
-
-You can also run it online from here: https://igv.org/
-
-**Step 1: Load the data**
 ```bash
 # Change back to our session3_clair enviroment
 mamba activate /home/hpc9/.conda/envs/session3_clair
@@ -754,6 +746,15 @@ java -Xmx4g -jar /home/hpc9/.conda/envs/session3_clair/share/snpeff-5.2-1/snpEff
 ```
 
 ## 6. Visualization with IGV
+
+### Setting Up IGV
+Copy the alignment and variant files to your computer.
+
+To install IGV on your computer, you can go to this website: https://igv.org/download/html/oldtempfixForDownload.html
+
+You can also run it online from here: https://igv.org/
+
+
 
 1. Copy the files of interest to your computer (alignment and variant calls)
 ```bash
