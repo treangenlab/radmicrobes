@@ -327,13 +327,13 @@ Once activated, you can verify that the environment is properly configured by ch
 
 ```
 ## Test to see if SPAdes is accessible
-SPAdes.py -h
+spades.py -h
 ```
 
 If SPAdes prints the following output, you are good to go. If not, please flag down a TA. 
 
 ```
-Usage: SPAdes.py [options] -o <output_dir>
+Usage: spades.py [options] -o <output_dir>
 
 Basic options:
   -o <output_dir>             directory to store all the resulting files (required)
