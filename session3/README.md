@@ -303,7 +303,7 @@ reads/illumina_R2_unpaired.fastq.gz: Reverse reads that lost their pairs
 ```bash
 # Now let's align our paired-end Illumina reads
 mkdir alignment
-bwa mem -t 4 reference/GCF_000009885.1_ASM988v1_genomic.fna reads/illumina_R1.fastq.gz reads/illumina_R2.fastq.gz | \
+bwa mem -t 4 reference/GCF_000009885.1_ASM988v1_genomic.fna reads/illumina_R1_trimmed.fastq.gz reads/illumina_R2_trimmed.fastq.gz | \
     samtools sort -o alignment/illumina_sorted.bam -
 samtools index alignment/illumina_sorted.bam
 ```
