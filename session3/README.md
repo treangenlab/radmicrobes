@@ -39,7 +39,7 @@ gunzip GCF_000009885.1_ASM988v1_genomic.gff.gz
 **Environment preparation**
 ```bash
 # Requesting an interactive session
-srun --partition=commons --reservation=workshop --mem=16G --ntasks=4 --export=ALL --time=04:00:00 --pty bash -i
+srun --partition=commons --reservation=workshop --mem=16G --ntasks=1 --cpus-per-task=8 --export=ALL --time=04:00:00 --pty bash -i
 
 # Loading the mamba module
 module load Mamba/23.11.0-0
