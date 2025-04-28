@@ -32,7 +32,7 @@ Sampling, Sequencing, QC, and Assembly Part II
 Genome Assembly to Alignment to SNPs Part I  
 **[Dr. Todd Treangen](https://treangenlab.com/) & [Dr. Michael Nute](https://treangenlab.com/profiles/mnute/)** (Department of Computer Science, Rice University)
 
-**12:30 PM – 1:10 PM**:  
+**12:35 PM – 1:15 PM**:  
 RAD Lunch Talks:
 
 - **12:35 PM – 12:55 PM**:  
