@@ -1,4 +1,4 @@
-# Microbial Reference Genomes, Variant Calling, and Multiple Genome Alignment
+# Genome Assembly to Multiple Genome Alignment to SNPs
 
 <details>
  <summary>
