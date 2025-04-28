@@ -29,7 +29,7 @@
 
      * the gff file
 
-   * Gene Ontology and InterproScan (adding functions)
+   * Gene Ontology Functional annotation
      
    * Visualization
   
@@ -359,7 +359,7 @@ more my_genome.gff| grep "KPC"
 <details>
 <summary>
 
- ### Gene Ontology and InterproScan (adding functions) <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20">
+ ### Gene Ontology Functional Annotation <img src="https://github.com/treangenlab/radmicrobes/assets/28576450/b4033000-380f-416a-aeec-ab7385412a6b" width="20" height="20">
 </summary> 
 
 The Gene Ontology (GO) serves as a framework and set of concepts for delineating the functions of gene products across various organisms. Tailored for supporting the computational representation of biological systems, GO annotations establish associations between specific gene products and GO concepts. Together, these annotations create statements relevant to the function of the respective genes.
