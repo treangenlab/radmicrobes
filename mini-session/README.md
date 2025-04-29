@@ -33,15 +33,15 @@ __Results!__
 This will create many output files for you to which the .gff3 is the annotated genome file that BCM Dan talked about. It also outputs a .png of what the genome looked like
 
 
-![ARLG-4673_assembly](kleb_pic.png)
+![ARLG-4673_assembly](ARLG-4673_assembly.png)
 
 ## Genome Visualization with ProkSee
 
 We can also use [ProkSee](https://proksee.ca/) to get a nice visualization through an online GUI.
 
-Download the file [github link]()
+Download the file [assembled genome link](Akkermansia_muciniphila_ABX.fna)
 
-And the reference [reference link]()
+And the reference [reference link](GCF_000020225.1_ASM2022v1_genomic.fna)
 
 Now go to the website at [proksee.ca](https://proksee.ca/)
 
