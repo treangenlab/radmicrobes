@@ -100,18 +100,26 @@ Strain Typing and Genomic Epidemiology Part II
 
 ---
 
-**12:15 PM – 1:15 PM**:  
+**12:15 PM – 1:00 PM**:  
 RAD Lunch and Learn:  
 *Genome-resolved Metagenomics Using New Long-Read Sequencing Methods*  
 **Dr. Daniel Portik** (PacBio)
 
 ---
+**1:00 PM – 1:15 PM**:  
+Break
+
+---
 
 ### [RAD Session 5: 2h45h]
 
-**1:15 PM – 2:45 PM**:  
+**1:15 PM – 2:30 PM**:  
 Pan Genomes and Functional Annotation Part I  
 **Dr. Rodrigo de Paula Baptista** (Houston Methodist Research Institute)
+
+**2:30 PM – 2:45 PM**:  
+Visualization of bacterial genome annotations
+**Dr. Austin Marshall** (Houston Methodist Research Institute)
 
 **2:45 PM – 3:00 PM**:  
 Break
@@ -122,5 +130,5 @@ Pan Genomes and Functional Annotation Part II
 
 ---
 
-**4:15 PM – 4:30 PM**:  
+**4:15 PM**:  
 RAD Wrap-up and Concluding Remarks (Todd & Rodrigo)
