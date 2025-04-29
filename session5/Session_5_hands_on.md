@@ -11,8 +11,8 @@ module load Mamba/23.11.0-0
 
 ### Coping files for the hands-on
 ```
-mkdir /scratch/hpc<your user number>
-cd /scratch/hpc<##>
+mkdir /scratch/$USER
+cd /scratch/$USER
 cp -r /projects/k2i/data/session5/ .
 ```
 
@@ -28,9 +28,9 @@ cp -r /projects/k2i/data/session5/ .
 ```
 mamba activate /projects/k2i/session_conda_environments/S5_prokka_roary
 
-prokka --outdir /scratch/hpc<##>/hand_son_prokka --prefix my_genome --rfam /scratch/hpc<##>/session5/dataset/ARLG-10777_022435095.1_assembly.genomic.fna
+prokka --outdir /scratch/$USER/hand_son_prokka --prefix my_genome --rfam /scratch/$USER/session5/dataset/ARLG-10777_022435095.1_assembly.genomic.fna
 
-cd /scratch/hpc<##>/hands_on_prokka
+cd /scratch/$USER/hands_on_prokka
 ls 
 ```
 
@@ -126,7 +126,7 @@ Extension	| Description
 ```
 mamba activate /projects/k2i/session_conda_environments/S5_extra/
 
-bakta /scratch/hpc##/session5/dataset/ARLG-10777_022435095.1_assembly.genomic.fna --prefix ARLG-10777 -o /scratch/hpc##/ARLG-10777_bakta --db /projects/k2i/databases/db-light/
+bakta /scratch/$USER/session5/dataset/ARLG-10777_022435095.1_assembly.genomic.fna --prefix ARLG-10777 -o /scratch/$USER/ARLG-10777_bakta --db /projects/k2i/databases/db-light/
 ```
 
 #### Compare gffs from prokka and bakta 
@@ -140,7 +140,7 @@ more <prokka.gff> | cut -s -f 3| sort| uniq -c
 
 ```
 mamba activate /projects/k2i/session_conda_environments/S5_toolset/
-minimap2 -ax splice -uf -k14 /projects/k2i/data/session5/dataset/ARLG-10777_022435095.1_assembly.genomic.fna /projects/k2i/data/session5/dataset/SRR9733835.fastq.gz > ./aln.sam
+minimap2 -ax splice -uf -k14 /scratch/$USER/session5/dataset/ARLG-10777_022435095.1_assembly.genomic.fna /scratch/$USER/session5/dataset/SRR9733835.fastq.gz > ./aln.sam
 samtools sort -o aln.s.bam aln.sam 
 samtools index aln.s.bam 
 ```
@@ -150,7 +150,7 @@ you can download the fna, gff, bam and ba.bai to your computer and open IGV in y
 ```
 # From your lcomputer run something like this to copy e.g. all the alignment files.
 mkdir -p IGV
-scp -o ProxyJump=hpcXX@radmicrobes.rice.edu "hpcXX@nots:/scratch/hpcXX/session5/Results/dRNA/*" ./IGV
+scp -o ProxyJump=hpcXX@radmicrobes.rice.edu "hpcXX@nots:/scratch/$USER/session5/Results/dRNA/*" ./IGV
 ```
 
 Open IGV https://igv.org/app/
@@ -159,7 +159,7 @@ Open IGV https://igv.org/app/
 
 ```
 mamba activate /projects/k2i/session_conda_environments/S5_prokka_roary
-roary -p 5 -n -e -v /scratch/hpc##/session5/dataset/gffs/*.gff
+roary -p 5 -n -e -v /scratch/$USER/session5/dataset/gffs/*.gff
 ```
 
 **Flag explanation**
@@ -186,7 +186,7 @@ gene_presence_absence.csv | Table with information of gene presence and absense
 **Basic usage**
 ```
 mamba activate /projects/k2i/session_conda_environments/S5_toolset/
-panaroo -i /scratch/hpc##/session5/dataset/gffs/*.gff -o ./panaroo_results/ --clean-mode strict -a core --aligner mafft
+panaroo -i /scratch/$USER/session5/dataset/gffs/*.gff -o ./panaroo_results/ --clean-mode strict -a core --aligner mafft
 ```
 **Flag explanation**
 
@@ -214,7 +214,7 @@ panaroo -i /scratch/hpc##/session5/dataset/gffs/*.gff -o ./panaroo_results/ --cl
 **Basic usage:**
 ```
 mamba activate /projects/k2i/session_conda_environments/S5_toolset/
-raxml-ng --msa <path to roary or panaroo>/core_gene_alignment.aln --model GTR+G --all --bs-trees 1000
+raxml-ng --msa <path to roary or panaroo results>/core_gene_alignment.aln --model GTR+G --all --bs-trees 1000
 ```
 **Flag explanation**
 
@@ -238,13 +238,13 @@ Eggnog Bacteria db is located at ```/projects/k2i/databases/eggnog/```
 
 ```
 #testing with annotated proteins
-emapper.py -i /scratch/hpc##/session5/dataset/bakta_protein_sub.faa -o /scratch/hpc##/eggnog_p_test --data_dir /projects/k2i/databases/eggnog
+emapper.py -i /scratch/$USER/session5/dataset/bakta_protein_sub.faa -o /scratch/$USER/eggnog_p_test --data_dir /projects/k2i/databases/eggnog
 
 <img width="1507" alt="image" src="https://github.com/user-attachments/assets/d27f3a80-e9fc-4ade-bb61-eca65e19d09b" />
 
 
 #testing with a genome (will not finish in the workshop - takes a long time for whole genomes)
-emapper.py -m diamond --itype genome --genepred prodigal -i <genome.fasta> -o test --output_dir /scratch/hpc##/eggnog_g_test --data_dir /projects/k2i/databases/eggnog
+emapper.py -m diamond --itype genome --genepred prodigal -i <genome.fasta> -o test --output_dir /scratch/$USER/eggnog_g_test --data_dir /projects/k2i/databases/eggnog
 ```
 
 ### Extra work if time permits 
@@ -260,7 +260,7 @@ emapper.py -m diamond --itype genome --genepred prodigal -i <genome.fasta> -o te
 #### Run tMHG-Finder
 
 ```
-tmhgf find -g /scratch/hpc##/session5/dataset/tmhgf_genomes/ -o /scratch/hpc##/tMHG_OUTPUT_DIR
+tmhgf find -g /scratch/$USER/session5/dataset/tmhgf_genomes/ -o /scratch/$USER/tMHG_OUTPUT_DIR
 ```
 
 
