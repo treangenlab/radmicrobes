@@ -308,13 +308,6 @@ head ./results/*kleborate/*txt
 
 As mentioned, this is not an exhaustive list of strain-level analysis tools by any means. One great repository of tools is hosted through the Technical University of Denmark called [Center for Genomic Epidemiology](https://www.genomicepidemiology.org). We do not have time to go over all tools available, but they do have some great tools from simple typing schemes such as plasmid typing [*e.g.*, PlasmidFinder](https://cge.food.dtu.dk/services/PlasmidFinder/) or full blown workflows such as phylogenetic analysis using [MinTyper](https://cge.food.dtu.dk/services/MINTyper/). One tool I have found useful is [KmerResistance](https://cge.food.dtu.dk/services/KmerResistance/). KmerResistance uses **k-mer alignment (KMA)** of short- or long-reads against redundant databases. Using a 'ConClave' sorting algorithm for non-unique matches, `kmerresistance` can identify with good sensitivity/specificity orthologous genes that may not elsewise be resolved in short-read assemblies where similar genes often get collapsed into a consensus. I like this tool so much, that I've incorporated it into my own tool that estimates copy number variants called [convict](https://github.com/wshropshire/convict). Instructions for installation are [here](https://bitbucket.org/genomicepidemiology/kma/src/master/), but I've set up `kmerresistance` to work in this conda environment. Let's quickly run through kmerresistance, using the ARLG-3180 short-read fastq files we used from session one. 
 
-<<<<<<< HEAD
-`
-cd ./results
-
-kmerresistance -i /projects/k2i/data/fastq_files/ARLG-3180_SRR12509439_1.fastq.gz /projects/k2i/data/fastq_files/ARLG-3180_SRR12509439_2.fastq.gz -o ARLG-3180_kmerresistance -s_db /projects/k2i/databases/kma_databases/species_db/bacteria.ATG -t_db /projects/k2i/databases/kma_databases/resfinder_db/resfinder_db
-`
-=======
 ```
 kmerresistance \
   -i /projects/k2i/data/fastq_files/ARLG-3180_SRR12509439_1.fastq.gz /projects/k2i/data/fastq_files/ARLG-3180_SRR12509439_2.fastq.gz \
@@ -322,8 +315,6 @@ kmerresistance \
   -s_db /projects/k2i/databases/kma_databases/species_db/bacteria.ATG \
   -t_db /projects/k2i/databases/kma_databases/resfinder_db/resfinder_db
 ```
->>>>>>> 9564ed22fd16014ca6112c5379b31bcbd0f492a9
-
 With short reads alone, this output indicates the likely organism (*i.e.*, *K. pneumoniae*) in addition to the AMR profile. Importantly, like many database tools that use some form of an alignment-based detection algorithm, you can use this tool with your own bespoke database to search for any genomic signature of your interest. 
 
 Let's explore through some of the output and compare to the AMRFinderPlus output. 
