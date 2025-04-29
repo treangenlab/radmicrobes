@@ -2,7 +2,7 @@
 
 ## Request an interactive session
 ```
-srun --partition=commons --pty --export=ALL --ntasks=1 --reservation=workshop --cpus-per-task=8 --mem=15GB --time=04:00:00 /bin/bash
+srun --partition=commons --pty --export=ALL --ntasks=1 --reservation=workshop --cpus-per-task=8 --mem=15GB --time=08:00:00 /bin/bash
 ```
 ## Load mamba
 ```
@@ -230,6 +230,22 @@ raxml-ng --msa <path to roary or panaroo>/core_gene_alignment.aln --model GTR+G 
 * Trees available at github session5/Files/roary_files/2025_hands_on
 * Bigger trees are available at github session5/Files/roary_files/
 
+### Run eggNOG-mapper
+
+Eggnog Bacteria db is located at ```/projects/k2i/databases/eggnog/```
+
+<img width="1104" alt="image" src="https://github.com/user-attachments/assets/6c580a62-4feb-4008-b4c7-dcd207ed700a" />
+
+```
+#testing with annotated proteins
+emapper.py -i /scratch/hpc##/session5/dataset/bakta_protein_sub.faa -o /scratch/hpc##/eggnog_p_test --data_dir /projects/k2i/databases/eggnog
+
+<img width="1507" alt="image" src="https://github.com/user-attachments/assets/d27f3a80-e9fc-4ade-bb61-eca65e19d09b" />
+
+
+#testing with a genome (will not finish in the workshop - takes a long time for whole genomes)
+emapper.py -m diamond --itype genome --genepred prodigal -i <genome.fasta> -o test --output_dir /scratch/hpc##/eggnog_g_test --data_dir /projects/k2i/databases/eggnog
+```
 
 ### Extra work if time permits 
 
@@ -247,16 +263,4 @@ raxml-ng --msa <path to roary or panaroo>/core_gene_alignment.aln --model GTR+G 
 tmhgf find -g /scratch/hpc##/session5/dataset/tmhgf_genomes/ -o /scratch/hpc##/tMHG_OUTPUT_DIR
 ```
 
-#### Run eggNOG
 
-Eggnog Bacteria db is located at ```/projects/k2i/databases/eggnog/```
-
-<img width="1104" alt="image" src="https://github.com/user-attachments/assets/6c580a62-4feb-4008-b4c7-dcd207ed700a" />
-
-```
-#testing with annotated proteins
-emapper.py -i <prokka.faa> -o /scratch/hpc##/eggnog_p_test --data_dir /projects/k2i/databases/eggnog
-
-#testing with a genome
-emapper.py -m diamond --itype genome --genepred prodigal -i <genome.fasta> -o test --output_dir /scratch/hpc##/eggnog_g_test --data_dir /projects/k2i/databases/eggnog
-```
