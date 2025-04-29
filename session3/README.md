@@ -4,6 +4,8 @@ by: Daniel Paiva Agustinho, PhD
 ## Workshop Overview
 This 2-2.5 hour hands-on workshop covers the fundamentals of genomic alignment and variant discovery using bacterial genome data (*Klebsiella pneumoniae*). We'll work with both short-read (Illumina) and long-read (Oxford Nanopore) sequencing data.
 
+Slides to the presentation: https://docs.google.com/presentation/d/1KpHGxNbADwgOrXc8AUEHuES2A834biOWY9SfqBA2w50/edit?usp=sharing
+
 **Prerequisites:**
 - (Very) Basic command line knowledge
 - Familiarity with basic genomic concepts
