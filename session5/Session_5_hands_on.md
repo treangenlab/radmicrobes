@@ -240,10 +240,11 @@ Eggnog Bacteria db is located at ```/projects/k2i/databases/eggnog/```
 #testing with annotated proteins
 mamba activate /projects/k2i/session_conda_environments/S5_extra/
 emapper.py -i /scratch/$USER/session5/dataset/bakta_protein_sub.faa -o /scratch/$USER/eggnog_p_test --data_dir /projects/k2i/databases/eggnog
+```
 
 <img width="1507" alt="image" src="https://github.com/user-attachments/assets/d27f3a80-e9fc-4ade-bb61-eca65e19d09b" />
 
-
+```
 #testing with a genome (will not finish in the workshop - takes a long time for whole genomes)
 emapper.py -m diamond --itype genome --genepred prodigal -i <genome.fasta> -o test --output_dir /scratch/$USER/eggnog_g_test --data_dir /projects/k2i/databases/eggnog
 ```
