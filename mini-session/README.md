@@ -39,8 +39,8 @@ This will create many output files for you to which the .gff3 is the annotated g
 
 We can also use [ProkSee](https://proksee.ca/) to get a nice visualization through an online GUI.
 
+To download the following files, the links below will lead you to the file page and there is a button in the top right with a down arrow into a tray/box, click that for each of these, it should download the file onto your local machine. 
 Download the file [assembled genome link](Akkermansia_muciniphila_ABX.fna)
-
 And the reference [reference link](GCF_000020225.1_ASM2022v1_genomic.fna)
 
 Now go to the website at [proksee.ca](https://proksee.ca/)
