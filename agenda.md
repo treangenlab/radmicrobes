@@ -118,7 +118,7 @@ Pan Genomes and Functional Annotation Part I
 **Dr. Rodrigo de Paula Baptista** (Houston Methodist Research Institute)
 
 **2:30 PM – 2:45 PM**:  
-Visualization of bacterial genome annotations
+Visualization of bacterial genome annotations  
 **Dr. Austin Marshall** (Houston Methodist Research Institute)
 
 **2:45 PM – 3:00 PM**:  
