@@ -26,12 +26,7 @@
      *  [Snippy](#snippy)
 * [Phylogenetics](#phylogenetics)
   * [Introduction and Terminology](#introduction-and-terminology)
-     * [Dissecting a Tree](#dissecting-a-tree)
-     * [Maximum Parsimony vs. Maximum Likelihood](#maximum-parsimony-vs-maximum-likelihood)
-  * [Inferring Phylogenies Using Maximum-Likelihood Parameterization](#inferring-phylogenies-using-maximum-likelihood-parameterization)
-     * [More complexities to address mutational heterogeneity](#more-complexities-to-address-mutational-heterogeneity)
-  * [Why so many models and which to choose?](#why-so-many-models-and-which-to-choose)
-  * [Additional model variations and approaches](#additional-model-variations-and-approaches)
+  * [Phylogenetics Primer](#phylogenetics-primer)
   * [Summary of Key Points](#summary-of-key-points)
      * [Example 1 - Distance based phylogeny](#example-1---distance-based-phylogeny)
      * [Example 2 - Maximum-likelihood Inferred Phylogeny](#example-2---maximum-likelihood-inferred-phylogeny)
@@ -365,9 +360,9 @@ During session two, Dr. Treangen went over variant calling in great detail. Ther
 
 Phylogenetics is simply put a catch-all term to infer evolutionary relationships using some form of distance measurement to infer the evolutionary history within a population. The field of bacterial phylogenetics employs molecular data, often derived from nucleic acids or proteins, to construct evolutionary trees that depict the genetic relatedness and divergence patterns among bacterial species or strains. 
 
-### Phylogeny Primer
+### Phylogenetics Primer
 
-Please see: 
+Please see: [RAD_Phylogenetics_Primer.pdf](https://github.com/treangenlab/radmicrobes/blob/b6b6f712d2ff2af56ff823bfe1d9d9bd02b69ad1/session4/RAD_Genomics_2025_Session4_Phylogenetics_v0.5.pdf)
 
 ### Summary of Key Points
 
