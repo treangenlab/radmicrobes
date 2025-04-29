@@ -21,8 +21,14 @@ Extra arguments:
 * `--meta` if input is metagenomic sample
 
 ```
+# Restart interactive shell (if not already activated)
+srun --pty --partition=commons --reservation=workshop --ntasks=1 --cpus-per-task 8 --time=04:00:00 $SHELL
+
 # Make conda env and install bakta
-conda create -n bakta -c bioconda bakta
+mamba create -n mini-session -c bioconda bakta
+
+# Activate the conda environment
+conda activate mini-session
 
 # Run bakta with pre-installed database 
 bakta --db /scratch/hpc39/bakta_db/db-light --threads 8 --gram - --species "Klebsiella pneumoniae" --compliant --output ARLG-4673 /scratch/hpc39/ARLG-4673_assembly.fasta
@@ -43,6 +49,5 @@ To download the following files, the links below will lead you to the file page 
 Download the file [assembled genome link](Akkermansia_muciniphila_ABX.fna)
 And the reference [reference link](GCF_000020225.1_ASM2022v1_genomic.fna)
 
-Now go to the website at [proksee.ca](https://proksee.ca/)
-
+Go to the website at [proksee.ca](https://proksee.ca/)
 Now just follow along with me!
