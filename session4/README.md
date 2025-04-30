@@ -26,12 +26,7 @@
      *  [Snippy](#snippy)
 * [Phylogenetics](#phylogenetics)
   * [Introduction and Terminology](#introduction-and-terminology)
-     * [Dissecting a Tree](#dissecting-a-tree)
-     * [Maximum Parsimony vs. Maximum Likelihood](#maximum-parsimony-vs-maximum-likelihood)
-  * [Inferring Phylogenies Using Maximum-Likelihood Parameterization](#inferring-phylogenies-using-maximum-likelihood-parameterization)
-     * [More complexities to address mutational heterogeneity](#more-complexities-to-address-mutational-heterogeneity)
-  * [Why so many models and which to choose?](#why-so-many-models-and-which-to-choose)
-  * [Additional model variations and approaches](#additional-model-variations-and-approaches)
+  * [Phylogenetics Primer](#phylogenetics-primer)
   * [Summary of Key Points](#summary-of-key-points)
      * [Example 1 - Distance based phylogeny](#example-1---distance-based-phylogeny)
      * [Example 2 - Maximum-likelihood Inferred Phylogeny](#example-2---maximum-likelihood-inferred-phylogeny)
@@ -55,7 +50,11 @@ By this point everyone should be able to `ssh` into the NOTS server:
 # First ssh into the jumpstation and then login to NOTS
 ssh -tY hpc2@radmicrobes.rice.edu ssh nots
 
+<<<<<<< HEAD
 # Clone this git repository into your scratch directory, i.e., /scratch/<your_hpc_id>, so that you have all the files and scripts necessary for the latter parts of this session
+=======
+# Clone this git repository into your scratch directory, i.e., /scratch/<your_hpc_username>, so that you have all the files and scripts necessary for the latter parts of this session
+>>>>>>> ae0142eb3c90f06025abb11385ecb5de5ad208fa
 git clone https://github.com/treangenlab/radmicrobes.git
 ```
 
@@ -183,7 +182,7 @@ Each of these databases curate specific genus/species combinations of taxa with 
 A colleague has sent you bacterial genome assemblies in fasta file format and wants you to determine what bacterial species it is. We are now going to leverage the PubMLST API tool with a very simple python script that Dr. Keith Jolley, [one of the primary developers of BIGSdb](https://doi.org/10.1186/1471-2105-11-595), wrote that queries fasta assemblies against the ribosomal Multilocus Sequence Type (rMLST) database through the PubMLST RESTful API using the ```curl``` command.
 
 ```
-cd ~/radmicrobes/session4/Scripts
+cd /scratch/hpc2/radmicrobes/session4/Scripts
 python3 ./api_species_download.py -f ./../Files/assemblies/ARLG-3180_consensus_assembly.fasta
 ```
 
@@ -295,7 +294,7 @@ Let's go through the output to see what we can deduce from these two organisms.
 
 #### Kleborate
 
-There are many *ad hoc* tools available to do analysis on your favorite organism of interest. [Kleborate](https://github.com/klebgenomics/Kleborate) has become a 'go-to' resource for *Klebsiella* genomics. Developed by the [Kat Holt lab](https://holtlab.net/), this python-based tool provides a wealth of information in addition to what AMRFinderPlus outputs, including assembly quality control (QC), MLST, AMR and virulence composite scores, and 'K' and 'O'-locus serotyping prediction using [Kaptive](https://github.com/klebgenomics/Kaptive). Let's run `kleborate-v2.3.2` with the `--all` parameter, which includes both resistance and serotyping prediction:
+There are many *ad hoc* tools available to do analysis on your favorite organism of interest. [Kleborate](https://github.com/klebgenomics/Kleborate) has become a 'go-to' resource for *Klebsiella* genomics. Developed by the [Kat Holt lab](https://holtlab.net/), this python-based tool provides a wealth of information in addition to what AMRFinderPlus outputs, including assembly quality control (QC), MLST, AMR and virulence composite scores, and 'K' and 'O'-locus serotyping prediction using [Kaptive](https://github.com/klebgenomics/Kaptive). Let's run `kleborate-v3.1.3` which includes both resistance and serotyping prediction:
 
 ```
 # Make sure you're in the Files directory 
@@ -308,13 +307,6 @@ head ./results/*kleborate/*txt
 
 As mentioned, this is not an exhaustive list of strain-level analysis tools by any means. One great repository of tools is hosted through the Technical University of Denmark called [Center for Genomic Epidemiology](https://www.genomicepidemiology.org). We do not have time to go over all tools available, but they do have some great tools from simple typing schemes such as plasmid typing [*e.g.*, PlasmidFinder](https://cge.food.dtu.dk/services/PlasmidFinder/) or full blown workflows such as phylogenetic analysis using [MinTyper](https://cge.food.dtu.dk/services/MINTyper/). One tool I have found useful is [KmerResistance](https://cge.food.dtu.dk/services/KmerResistance/). KmerResistance uses **k-mer alignment (KMA)** of short- or long-reads against redundant databases. Using a 'ConClave' sorting algorithm for non-unique matches, `kmerresistance` can identify with good sensitivity/specificity orthologous genes that may not elsewise be resolved in short-read assemblies where similar genes often get collapsed into a consensus. I like this tool so much, that I've incorporated it into my own tool that estimates copy number variants called [convict](https://github.com/wshropshire/convict). Instructions for installation are [here](https://bitbucket.org/genomicepidemiology/kma/src/master/), but I've set up `kmerresistance` to work in this conda environment. Let's quickly run through kmerresistance, using the ARLG-3180 short-read fastq files we used from session one. 
 
-<<<<<<< HEAD
-`
-cd ./results
-
-kmerresistance -i /projects/k2i/data/fastq_files/ARLG-3180_SRR12509439_1.fastq.gz /projects/k2i/data/fastq_files/ARLG-3180_SRR12509439_2.fastq.gz -o ARLG-3180_kmerresistance -s_db /projects/k2i/databases/kma_databases/species_db/bacteria.ATG -t_db /projects/k2i/databases/kma_databases/resfinder_db/resfinder_db
-`
-=======
 ```
 kmerresistance \
   -i /projects/k2i/data/fastq_files/ARLG-3180_SRR12509439_1.fastq.gz /projects/k2i/data/fastq_files/ARLG-3180_SRR12509439_2.fastq.gz \
@@ -322,8 +314,6 @@ kmerresistance \
   -s_db /projects/k2i/databases/kma_databases/species_db/bacteria.ATG \
   -t_db /projects/k2i/databases/kma_databases/resfinder_db/resfinder_db
 ```
->>>>>>> 9564ed22fd16014ca6112c5379b31bcbd0f492a9
-
 With short reads alone, this output indicates the likely organism (*i.e.*, *K. pneumoniae*) in addition to the AMR profile. Importantly, like many database tools that use some form of an alignment-based detection algorithm, you can use this tool with your own bespoke database to search for any genomic signature of your interest. 
 
 Let's explore through some of the output and compare to the AMRFinderPlus output. 
@@ -374,175 +364,15 @@ During session two, Dr. Treangen went over variant calling in great detail. Ther
 
 Phylogenetics is simply put a catch-all term to infer evolutionary relationships using some form of distance measurement to infer the evolutionary history within a population. The field of bacterial phylogenetics employs molecular data, often derived from nucleic acids or proteins, to construct evolutionary trees that depict the genetic relatedness and divergence patterns among bacterial species or strains. 
 
-#### Dissecting a Tree
+### Phylogenetics Primer
 
-A phylogenetic tree is a hierarchical representation of your modelled data to represent taxa within a population. Trees are composed of:
-
-+ **tips** (*i.e.*, 'leaves' which represent your observed data),
-+ **internal nodes** (*i.e.*, divergence points)
-+ **branches** (*i.e.*, connections),
-+ and sometimes a **root**.  
-  
-<p align="center">
-<img src="https://github.com/treangenlab/radmicrobes/blob/main/session4/Images/SimpleTree1.png" width="500" height="300">
-</p>
-
-One note: there is a lot of synonymous nomenclature describing parts of trees, as anybody from biologists to mathematicians to arborists may work with trees regularly.  For instance, branches can also be called **edges** in graph vernacular.  Leaves can also be thought of as an external node.  Branches can also be be classified as internal if both ends are connected to either internal nodes or the root, or external if it terminates at a leaf.
-
-There are a few important points to always keep in mind when interpreting trees:
-
-+ The observed (sequenced) samples are on branch tips.
-
-+ Time runs from root to tip
-
-+ The order of the leaves don’t really mean anything
-  + The spacing between branches also doesn't mean anything
-  + Order and spacing of leaves are always arbitrary; Branches can always be swapped (or rotated about an internal node)
-
-<p align="center">
-<img src="https://github.com/treangenlab/radmicrobes/blob/main/session4/Images/SimpleTree1_rotated.png" width="500" height="300">
-</p>
-
-<p align="center">This tree is the same as the previous one</p>
-
-The internal nodes will represent the Most Recent Common Ancestor (MRCA), or Last Common Ancestor (LCA).  It is important to realize that since the actual observed samples are on the tips, the LCA is hypothetical.  Another common misinterpretation is that proximal leaves are closely related.  This may not be the case, depending on how the tree is drawn.  Always trace the leaves back down the branches and look to the MRCA.
-
-#### Constructing a Phylogenetic Tree
-
-Generally, can be divided into two methods:
-
-+ Distance-matrix based - algorithmic
-+ Directly from sequences - constructs phylogenetic inferences
-
-Distance-matrix based methods include the Unweighted-Pair Group Method with Arithmetic Mean (UPGMA), the Fitch-Margoliash (FM) algorithm, or Neighbor-Joining (NJ) methods.  They rely heavily on pairwise distances between sample sequences - this is problematic *(why?)* - and so are rarely used on their own.  Instead, these methods are useful in building heuristic initial starting trees for the methods discussed below.
-
-Phylogenetic inference methods can be broadly classed into maximum parsimony and maximum likelihood methods, and will be expanded on in the next subsection.
-
-### Maximum Parsimony vs. Maximum Likelihood
-
-#### Maximum parsimony
-
-Generally, parsimony describes when a minimum of change is required.  
-
-Thus in the phylogenetic context, out of all possible trees, the tree which meets the maximum parsimony criteria will group the samples in such a way that the least amount of evolutionary change is required.  That is, as every divergence point represents at least a single nucleotide change, the maximum parsimony tree will have the least total number of substitution events as one traces the topology of the tree from root to tips.  
-
-*Claim: this necessarily means that a maximum parsimony tree will always be an underestimation of the true amount of evolutionary change.  Why might this be true?*
-
-Maximum parsimony methods assume the concepts of homologous similarity - that identical alleles had to come from a common ancestor, and homoplasy (such as convergent evolution, parallel evolution, or reversal) are rare.
-
-#### Maximum likelihood
-
-Given:
-
-1.) A sample set of sequences, and
-
-2.) A nucleotide substitution (evolutionary) model,
-
-Maximum Likelhood (ML) phylogenetic inference methods will build a multitude of trees, recursively computing the probabilities for the tree topology and branch lengths.  The ML method will generally start with a small (n=4) tree, analyzed, then samples are iteratively added one at a time to the tree.  With each addition, alternative topologies are explored and assessed for likelihood using local rearrangement methods such as:
-
-+ Nearest-neighbor interchange (NNI)
-+ Subtree prune and regraft (SPR)
-+ Tree bisection and reconnection (TBR)
-
-In order to compute the likelihood, the branch lengths are computed for *each* topological variant by summing the log-likelihood for *each* nucleotide at *each* site (position).
-
-This is computationally expensive!
-
-**ML with Bootstrapping (Felsenstein 1985)**
-
-Generally, bootstrapping as a statistical method that involves random subsampling with replacement.  It is useful for estimating the statistical error when sampling distribution is unknown.
-
-In the phylogenetic context, bootstrapping estimates the reliability (consistency) of the resultant (majority-rule) consensus tree.  
-
-With each subsampling, an ML tree is constructed.  This processs is repeated 100, sometimes 1000 times.  Then all of the tree topologies are compared in a frequentist manner - these values are sometimes included on phylogenetic tree figures as 'branch support'.
-
-One thing to note: the final resultant tree might not be the overall maximum-likelihood tree.
-
-### Inferring Phylogenies Using Maximum-Likelihood Parameterization
-
-As stated before, given a sample set of sequences, ML methods will also require an evolutionary model.  What is meant by this?  Let's look at the simplest (most constrained) substitution model as illustration.
-
-**Jukes-Cantor (1969)**
-
-The Jukes-Cantor (JC69) model assumes that the rate of nucleotide substitution is the same for all pairs, and that the base nucleotide frequency is equal in the population.  
-
-(insert image here)
-
-See also: Felsenstein (1981).  This is like the JC69 model, in that the substitution rates are equal, but with unequal base frequency.
-
-**Kimura (1980)**
-
-The Kimura (K80) model recognizes that the rate of transitions are not equal to tranversion rate.  Transitions are intragroup changes, such as A <-> G (purines), or C <-> T (pyrimidines).  Transversions would be either of the purines changing into either of the pyrimidines.  Consistent with biochemical intution, we do observe that transitions are more frequent than transversions.
-
-(insert image here)
-
-See also: Hasegawa-Kishino-Yano (1985).  This is like the K80 model (unequal transition vs. transversion rates), but includes unequal base frequency.
-
-**The above two models might be thought of as "historical" by some.  We will skip ahead to more contemporary, more complex, and less constrained models below.**
-
-**General Time-Reversible (GTR) substitution model (Tavare 1986)**
-
-The GTR model is like the HKY model, but each possible nucleotide substitution has it's own exchangibility rate, along with unequal base frequencies.
-
-"The Generalised time reversible (GTR) is the most general neutral, independent, finite-sites, time-reversible model possible.”
-
-(Of course it is, it has the most parameters).
-
-This model is probably the most popular at the moment.  
-
-**+Gamma (Yang 1994)**
-
-This is more of a modification that may be applied to any model, though you may commonly see this model along with the aforementioned GTR model as GTR+gamma.
-
-In short, the gamma modification removes the assumption of per-site independence for mutations.  That is, a +gamma model:
-+ allows for a model of rate heterogeneity in mutations across sites (ie: not all sites have equivalent nor independent mutational rates)
-+ applies standard gamma distribution with a shape parameter (alpha), itself usually estimated from the sample data
-
-In practice, usually a *discrete* (categorized) gamma distribution is used
-
-#### More complexities to address mutational heterogeneity
-
-*Why only use just one model?*
-
-Partitioning (categorization) - apply specific models for a site or regions along a sequenced
-
-Mixture models - assign a model (out of a user-specified selection) on a per-site basis
-
-**!! Some caution may need to be exercised to avoid potential over-parameterization !!**
-
-### Why so many models and which to choose?
-
-Tractibility. The ML criterion is a NP-hard problem (as Mike Nute stated yesterday during Session 2).
-
-We need to balance between robustness and efficiency.  There are always practical limitations such as computational resources, memory consumption, time, which are increasingly evident in the area of "big data" (larger datasets, deeper sequencing, etc.)
-
-But, software packages can help!  Credit to the mountain of work underlying their development, testing, optimization and validation that enables analytic accessibility on large-scale genomic sequencing projects.
-
-#### Common file formats for Trees
-
-Newick
-
-Nexus
-
-PHYLIP
-
-### Additional model variations and approaches
-
-**Heuristics and Approximations**
-
-+Gamma -> +CAT (rate categorization)
-etc
-
-**Hybrids and Combinatorial approaches**
-
- * [FastTree](http://www.microbesonline.org/fasttree/)
+Please see: [RAD_Phylogenetics_Primer.pdf](https://github.com/treangenlab/radmicrobes/blob/b6b6f712d2ff2af56ff823bfe1d9d9bd02b69ad1/session4/RAD_Genomics_2025_Session4_Phylogenetics_v0.5.pdf)
 
 ### Summary of Key Points
 
   * Inferential methods (ML, Bayesian) are statistically consistent.
   * GTR is probably the most popular model
   * At least some form of rate heterogeneity modelling should be employed
-  * A number of software suites for phylogenetic estimation include features and tools designed to help with "optimal" model selection for your dataset.
 
 #### Example 1 - Distance based phylogeny 
 

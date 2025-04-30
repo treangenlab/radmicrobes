@@ -1,4 +1,4 @@
-# Microbial Reference Genomes, Variant Calling, and Multiple Genome Alignment
+# Genome Assembly to Multiple Genome Alignment to SNPs
 
 <details>
  <summary>
@@ -6,145 +6,131 @@
  ## Session Summary</summary>
  <p></p>
 
- * Kick-off (Todd)
-   
- * Fantastic reference genomes and where to find them (hands on: Mike, Natalie)
- 
-   * RefSeq
+* Kick-off (Todd)
        
-   * GenBank
-  
-   * SRA
-     
-* Bespoke Strain-level analyses (lecture: Mike)
+* Bespoke Strain-level analyses (lecture: Mike, Todd)
 
    * Core Genome Alignment
 
    * Whole Genome Alignment
      
-* Multiple Genome Alignment (hands on: Mike, Natalie)
+* Multiple Genome Alignment (hands on: Mike, Rossie)
 
    * Running Parsnp 
  
    * Visualization with Gingr
-     
-* Mapping reads to reference genomes for variant calling (lecture: Daniel)
 
-   * Short-reads
-
-   * Long-reads
+* Bonus: Fantastic reference genomes and where to find them
      
-   * SNVs
-     
-   * SVs
-  
 </details>
 
  <details>
  <summary> 
   
-## Fantastic reference genomes and where to find them (lecture + hands-on) </summary>
-* NCBI
-  * SRA 		 _[https://www\.ncbi\.nlm\.nih\.gov/sra](https://www.ncbi.nlm.nih.gov/sra)_
-  * Taxonomy		 _[https://www\.ncbi\.nlm\.nih\.gov/taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy)_
-  * RefSeq		 _[https://www\.ncbi\.nlm\.nih\.gov/refseq/](https://www.ncbi.nlm.nih.gov/refseq/)_
-* GISAID
-  * EpiCoV		 _[https://www\.gisaid\.org/](https://www.gisaid.org/)_
-* Internal Sources
-* Other Sources
-
-### National Center for Biotechnology Information (NCBI)
-
-_[https://www\.ncbi\.nlm\.nih\.gov/](https://www.ncbi.nlm.nih.gov/)_
-
-![](img/genomedl0.png)
-
-__Sequence of the reference genome in fasta format__
-
-__Gene annotation file in GFF3 format__
-
-__Comprehensive record of the sequence including annotations in genbank format__
-
-![](img/genomedl1.png)
-
-![](img/genomedl2.png)
-
-![](img/genomedl3.png)
-
-<span style="color:#FF0000"> __Formatted search string__ </span>
-
-![](img/genomedl4.png)
-
-### SARS-CoV-2 sequences currently available in GenBank and the Sequence Read Archive (SRA)
-
-Until Wed May 27 14:55:29 EDT 2020
-
-4\,735 GenBank sequences
-
-1 RefSeq sequence
-
-6\,486 SRA Sequences
-
-_[https://www\.ncbi\.nlm\.nih\.gov/genbank/sars\-cov\-2\-seqs/](https://www.ncbi.nlm.nih.gov/genbank/sars-cov-2-seqs/)_
-
-![](img/genomedl5.png)
-
-### NCBI Advance Search Builder
-
-![](img/genomedl6.png)
-
-Refine your search by using Boolean operations
-
-Useful search terms including accession id\, bio project\, organism\, layout \(single vs paired\)\, publication date\, source \(WGS\, Amplicon\, metatranscriptomic\, etc\.\)\, platform \(Illumina vs Nanopore\)\, etc\.
-
-Generating search string that can be used in Entrez API
-
-### Entrez Databases and Retrieval System
-
-Available via  _[http://www\.ncbi\.nlm\.nih\.gov/Entrez/](http://www.ncbi.nlm.nih.gov/Entrez/)_
-
-A part of Biopython package  _[http://biopython\.org/DIST/docs/tutorial/Tutorial\.html](http://biopython.org/DIST/docs/tutorial/Tutorial.html)_
-
-Entrez Programming Utilities Help  _[https://www\.ncbi\.nlm\.nih\.gov/books/NBK25501/](https://www.ncbi.nlm.nih.gov/books/NBK25501/)_
-
-Always tell NCBI who you are by setting  _Entrez\.email _ parameter
-
-NCBI Entrez API allows advanced searches of records in multiple NCBI database as well as retrieving metadata for the records
-
-3 requests per second without an API key\, or 10 requests per second with an API key \(registered account strongly recommended\)
-
-![](img/genomedl7.png)
-
-![](img/genomedl8.png)
-
-### SRA Toolkit
-
-* Entrez package can be used to retrieve small files
-* SRA Toolkit is required to download large read datasets  _[https://trace\.ncbi\.nlm\.nih\.gov/Traces/sra/sra\.cgi?view=software](https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=software)_
-  * prefetch
-    * prefetch \[options\] \<SRA accession>
-  * fastq\-dump
-    * fastq\-dump \[options\] \< accession >
-  * \-\-split\-3 flag or \-\-split\-files must be set\, split spots into individual reads\. With \-\-split\-3 flag\, output would be 1\,2\, or 3 files\.
-    * 1 file means the data is not paired\.
-    * 2 file means the reads are paired\-end reads\.
-    * 3rd file\, often small\, contains unpaired orphaned reads\, typically ignored\.
-
-</details>
-
-
-
- <details>
- <summary>
-  
-## Bespoke Strain-Level Analysis of Bacterial Genomes (lecture)
+## Parsnp 1.0 to Parsnp 2.0 (lecture, part 1: Todd) 
  
 </summary>
 
-## Michael Nute
+### Overview
 
-RAD Microbes 2023
-December 14th, 2023
+[Slides](https://docs.google.com/presentation/d/1qwSSQjpR6APU3fxtVVeoEAhy7gZGgCCkZIy4zCpTBWU/edit?usp=sharing)
+
+Parsnp 2.0 is a command-line tool designed to **rapidly align core genomes** across thousands to hundreds of thousands of microbial genomes.
+
+Key features:
+- **Scalability**: Handles datasets up to 100,000 genomes.
+- **Accuracy**: High-accuray SNP discovery in microbial core genomes.
+- **Speed**: Orders of magnitude faster than traditional whole-genome aligners.
+
+---
+
+### Core Concepts and Methods
+
+#### What is Core-Genome Alignment?
+- Focuses only on **regions shared across all genomes**.
+- Avoids alignment of unique insertions or deletions.
+
+#### Key Innovations in Parsnp 2.0:
+- **Compressed Suffix Graph (CSG)**:
+  - A memory-efficient data structure to index the reference genome.
+  - Enables ultra-fast discovery of **Maximal Unique Matches (MUMs)** across all genomes.
+- **Anchor-Based Alignment**:
+  - Uses MUMs to anchor conserved regions between genomes.
+  - Rapidly builds a multiple alignment without performing expensive pairwise alignments.
+- **Memory and Speed Optimizations**:
+  - Core alignment step reduces alignment size down to key regions enriched in evolutionary signal.
+  - Output compression stores only core genome variants relative to reference.
+
+#### General Workflow:
+1. **Index** the reference genome with a compressed suffix graph (CSG).
+2. **Find MUMs** across all genomes relative to the reference.
+3. **Anchor** alignments based on shared MUMs.
+4. **Align** the sequences between MUM anchors.
+5. **Compress** output SNPs in VCF and harvest variants format.
+
+---
+
+### Highlight: *Klebsiella* Dataset Study
+
+#### Why *Klebsiella pneumoniae*?
+- Major human pathogen, especially in healthcare settings.
+- Highly diverse genome content and large available datasets.
+- Bonus: great for benchmarking large-scale core-genome alignment.
+
+#### Dataset Details:
+- **4,326 genomes** from NCBI RefSeq.
+- Genome sizes: typically 5–6 Mb.
+- Samples include clinical, animal, and environmental isolates.
+
+---
+
+#### Performance Comparison: Parsnp 2.0 vs CoreDector
+
+| Tool          | Runtime on Klebsiella | Peak Memory | Core SNP Recall | Notes |
+|---------------|------------------------|-------------|-----------------|-------|
+| Parsnp 2.0 | ~5 hours                 | ~25 GB      | High (98–99%)    | Only tool that scaled to full dataset |
+| CoreDector    | ~18+ hours               | ~120 GB     | Moderate (92–95%)| Struggled with high diversity; slower |
+
+![parsnp_kleb_alignment](https://github.com/user-attachments/assets/92402d89-bc83-4feb-b8fd-12e63ed2cb3a)
+
+
+- Parsnp 2.0 aligned the 4,326 Klebsiella genomes **~4× faster** than CoreDector.
+- **Lower memory** footprint: Parsnp 2.0 needed <30GB versus CoreDector needing >100GB RAM.
+- **Higher SNP accuracy** across deep phylogenetic clades.
+- Core SNPs discovered were highly consistent with gold-standard alignments.
+- Enabled rapid downstream phylogenetic analysis across >4,000 bacterial strains.
+
+---
+
+### Key Takeaways
+
+- Parsnp 2.0 enables massive microbial core-genome alignments on a laptop.
+- The use of Compressed Suffix Graphs (CSG) and Maximal Unique Matches (MUMs) is key to speed and scalability.
+- The *Klebsiella* dataset demonstrates Parsnp 2.0's robustness across highly diverse genomes.
+
+---
+
+### Explore More
+
+- 🔗 [Parsnp 2.0 GitHub Repository](https://github.com/marbl/parsnp)
+- 📖 [Full Paper in *Bioinformatics*](https://academic.oup.com/bioinformatics/article/40/5/btae311/7667868)
+
+---
+
+</details>
+
+ 
+<details>
+ 
+<summary>
+ 
+## Bespoke Strain-Level Analysis of Bacterial Genomes (lecture, part 2: Mike) 
+</summary>
+
+## Michael Nute and Todd Treangen
+
+RAD Microbes
+April 28th, 2025
 
 ### Whole-Genome Alignment
 
@@ -327,14 +313,9 @@ _These two organisms have very different types of genome plasticity\._
 ## Conclusions
 
 * _Special Thanks To:_
-* The Treangen Lab \(Rice\)
-  * Todd Treangen
-  * Bryce Killie
-  * Kristen Curry
-  * Nick Sapoval
+  * Bryce Kille
   * Yunxi Liu
-  * Yilei Fu
-  * Advait Balaji
+
 * The Savidge Lab \(Baylor College of Medicine\)
   * Qinglong Wu
   * Charlie Seto
@@ -370,10 +351,167 @@ _3\.\) This will give you the standard _  _Gingr_  _ view\. Other options to re\
 
 </details>
 
+ <details>
+ <summary> 
+  
+
+## Run this during lunch talks
+ 
+</summary>
+This parsnp quick start guide covers launching an interactive session on NOTS, installing and activating a Conda environment with Parsnp, and verifying the installation. Each step includes a brief description and links to further documentation (where appropriate).
+
+---
+
+### Step-by-Step Instructions
+
+| Step | Command(s) | Description | Reference |
+| ---- | ---------- | ----------- | --------- |
+| 1 | ```srun --partition=commons --pty --export=ALL --ntasks=1 --reservation=workshop --cpus-per-task=8 --mem=15GB --time=04:00:00 /bin/bash``` | Launch an interactive SLURM job with 1 task, 8 CPUs, 15 GB RAM, 4 h walltime. | [srun docs](https://slurm.schedmd.com/srun.html) |
+| 2 | `module load Mamba/23.11.0-0` | Load the Mamba/Conda module for environment management | — |
+| 3 | `mamba create --name radsession2 bioconda::parsnp` | Create a Conda env named `radsession2` and install Parsnp from Bioconda. | [Bioconda](https://bioconda.github.io) |
+| 4 | `mamba init` | Initialize Conda in your shell startup file (e.g. `.bashrc`). | — |
+| 5 | `source /home/<userid>/.bashrc` | Reload your shell so `conda`/`mamba` commands become available. | — |
+| 6 | `mamba activate radsession2` | Activate the `radsession2` environment (Parsnp on your PATH). | — |
+| 7 | `parsnp -h` | Verify Parsnp is installed by printing its help message. | [Parsnp usage](https://github.com/marbl/parsnp#usage) |
+
+---
+
+### Example Session
+
+```console
+$ srun --partition=commons --pty --export=ALL --ntasks=1 --reservation=workshop --cpus-per-task=8 --mem=15GB --time=04:00:00 /bin/bash
+# (on NOTS compute node)
+$ module load Mamba/23.11.0-0
+$ mamba create --name radsession2 bioconda::parsnp
+$ mamba init
+$ source /home/<userid>/.bashrc
+$ mamba activate radsession2
+(radsession2) $ parsnp -h
+Parsnp v1.5.6
+Usage: parsnp -c <config_file> -d <input_dir> -r <reference.fa> [options]
+```
+
+Place green sticky note on the back of your laptop once you see the below on your screen, else red stick note:
+
+```console
+22:55:13 - INFO - |--Parsnp 2.1.3--|
+
+usage: parsnp [-h] [-r REFERENCE] -d SEQUENCES [SEQUENCES ...] [-g GENBANK [GENBANK ...]] [-o OUTPUT_DIR]
+              [-q QUERY] [-c] [--skip-ani-filter] [-U MAX_MUMI_DISTR_DIST | -mmd MAX_MUMI_DISTANCE] [-F]
+              [-M] [--use-ani] [--min-ani MIN_ANI] [--min-ref-cov MIN_REF_COV] [--use-mash]
+              [--max-mash-dist MAX_MASH_DIST] [-a MIN_ANCHOR_LENGTH] [-m MUM_LENGTH] [-C MAX_CLUSTER_D]
+              [-z MIN_CLUSTER_SIZE] [-D MAX_DIAG_DIFF] [-n {mafft,muscle,fsa,prank}] [-u] [--no-partition]
+              [--min-partition-size MIN_PARTITION_SIZE] [--extend-lcbs]
+              [--extend-ani-cutoff EXTEND_ANI_CUTOFF] [--extend-indel-cutoff EXTEND_INDEL_CUTOFF]
+              [--match-score MATCH_SCORE] [--mismatch-penalty MISMATCH_PENALTY]
+              [--gap-penalty GAP_PENALTY] [--skip-phylogeny] [--validate-input] [--use-fasttree] [--vcf]
+              [--no-maf] [-p THREADS] [--force-overwrite] [-P MAX_PARTITION_SIZE] [-v] [-x] [-i INIFILE]
+              [-e] [-V]
+
+    Parsnp quick start for three example scenarios:
+    1) With reference & genbank file:
+    python Parsnp.py -g <reference_genbank_file1 reference_genbank_file2 ...> -d <seq_file1 seq_file2 ...>  -p <threads>
+
+    2) With reference but without genbank file:
+    python Parsnp.py -r <reference_genome> -d <seq_file1 seq_file2 ...> -p <threads>
+    
+
+options:
+  -h, --help            show this help message and exit
+
+Input/Output:
+  -r REFERENCE, --reference REFERENCE
+                        (r)eference genome (set to ! to pick random one from sequence dir)
+  -d SEQUENCES [SEQUENCES ...], --sequences SEQUENCES [SEQUENCES ...]
+                        A list of files containing genomes/contigs/scaffolds. If the file ends in .txt, each line in the file corresponds to the path to an input file.
+  -g GENBANK [GENBANK ...], --genbank GENBANK [GENBANK ...]
+                        A list of Genbank file(s) (gbk)
+  -o OUTPUT_DIR, --output-dir OUTPUT_DIR
+  -q QUERY, --query QUERY
+                        Specify (assembled) query genome to use, in addition to genomes found in genome dir
+
+Filtering:
+  -c, --curated         (c)urated genome directory, use all genomes in dir and ignore MUMi.
+  --skip-ani-filter     Skip the filtering step which discards inputs based on the ANI/MUMi distance to the reference.
+                        Unlike --curated, this will still filter inputs based on their length compared to the reference
+  -U MAX_MUMI_DISTR_DIST, --max-mumi-distr-dist MAX_MUMI_DISTR_DIST, --MUMi MAX_MUMI_DISTR_DIST
+                        Max MUMi distance value for MUMi distribution
+  -mmd MAX_MUMI_DISTANCE, --max-mumi-distance MAX_MUMI_DISTANCE
+                        Max MUMi distance (default: autocutoff based on distribution of MUMi values)
+  -F, --fastmum         Fast MUMi calculation
+  -M, --mumi_only, --onlymumi
+                        Calculate MUMi and exit? overrides all other choices!
+  --use-ani             Use ANI for genome filtering
+  --min-ani MIN_ANI     Min ANI value required to include genome
+  --min-ref-cov MIN_REF_COV
+                        Minimum percent of reference segments to be covered in FastANI
+  --use-mash            Use mash for genome filtering
+  --max-mash-dist MAX_MASH_DIST
+                        Max mash distance.
+
+MUM search:
+  -a MIN_ANCHOR_LENGTH, --min-anchor-length MIN_ANCHOR_LENGTH, --anchorlength MIN_ANCHOR_LENGTH
+                        Min (a)NCHOR length (default = 1.1*(Log(S)))
+  -m MUM_LENGTH, --mum-length MUM_LENGTH, --mumlength MUM_LENGTH
+                        Mum length
+  -C MAX_CLUSTER_D, --max-cluster-d MAX_CLUSTER_D, --clusterD MAX_CLUSTER_D
+                        Maximal cluster D value
+  -z MIN_CLUSTER_SIZE, --min-cluster-size MIN_CLUSTER_SIZE, --minclustersize MIN_CLUSTER_SIZE
+                        Minimum cluster size
+
+LCB alignment:
+  -D MAX_DIAG_DIFF, --max-diagonal-difference MAX_DIAG_DIFF, --DiagonalDiff MAX_DIAG_DIFF
+                        Maximal diagonal difference. Either percentage (e.g. 0.2) or bp (e.g. 100bp)
+  -n {mafft,muscle,fsa,prank}, --alignment-program {mafft,muscle,fsa,prank}, --alignmentprog {mafft,muscle,fsa,prank}
+                        Alignment program to use
+  -u, --unaligned       Output unaligned regions
+
+Sequence Partitioning:
+  --no-partition        Run all query genomes in single parsnp alignment, no partitioning.
+  --min-partition-size MIN_PARTITION_SIZE
+                        Minimum size of a partition. Input genomes will be split evenly across partitions at least this large.
+
+LCB Extension:
+  --extend-lcbs         Extend the boundaries of LCBs with an ungapped alignment
+  --extend-ani-cutoff EXTEND_ANI_CUTOFF
+                        Cutoff ANI for lcb extension
+  --extend-indel-cutoff EXTEND_INDEL_CUTOFF
+                        Cutoff for indels in LCB extension region. LCB extension will be at most min(seqs) + cutoff bases
+  --match-score MATCH_SCORE
+                        Value of match score for extension
+  --mismatch-penalty MISMATCH_PENALTY
+                        Value of mismatch score for extension (should be negative)
+  --gap-penalty GAP_PENALTY
+                        Value of gap penalty for extension (should be negative)
+
+Misc:
+  --skip-phylogeny      Do not generate phylogeny from core SNPs
+  --validate-input      Use Biopython to validate input files
+  --use-fasttree        Use fasttree instead of RaxML
+  --vcf                 Generate VCF file.
+  --no-maf              Do not generage MAF file (XMFA only)
+  -p THREADS, --threads THREADS
+                        Number of threads to use
+  --force-overwrite, --fo
+                        Overwrites any results in the output directory if it already exists
+  -P MAX_PARTITION_SIZE, --max-partition-size MAX_PARTITION_SIZE
+                        Max partition size (limits memory usage)
+  -v, --verbose         Verbose output
+  -x, --recomb-filter, --xtrafast
+                        Run recombination filter (phipack)
+  -i INIFILE, --inifile INIFILE, --ini-file INIFILE
+  -e, --extend
+  -V, --version         show program's version number and exit
+```
+
+</details>
+
 <details>
  <summary>
   
- ## Multiple Genome Alignment (hands-on) </summary>
+ ## Multiple Genome Alignment (hands-on)
+
+</summary>
  <p></p>
 ========
 
@@ -381,7 +519,9 @@ This tutorial is to go over how to use Parsnp for multiple genome alignment (cor
 
 ## <a name ="first">Installation</a> 
 
-Have ParSNP installed. Parsnpcan be run on macOS / linux  
+**NOTE**: The following includes installation instructions for a general machine, although if you have successfully run the commands above under "Run this during lunch", you should have parsnp installed already so you do _not_ need to run these.
+
+Parsnp can be run on macOS / linux using the following commands:
 
 1)Download & install Parsnp on MacOS
 
@@ -416,6 +556,7 @@ To install:
 
 [gingr-Linux64-v1.3.tar.gz](https://github.com/marbl/gingr/releases/download/v1.3/gingr-Linux64-v1.3.tar.gz/)  
    
+## <a name ="second">Hands-On Tutorial</a> 
 
    1) <a name="part3e1">Example 1: 49 MERS Coronavirus genomes </a>
    
@@ -433,7 +574,7 @@ To install:
 
         ![merscmd](https://github.com/marbl/harvest/raw/master/docs/content/parsnp/run_mers.cmd1.png?raw=true)
 
-      * Visualize with Gingr [download](https://github.com/marbl/harvest/raw/master/docs/content/parsnp/run_mers.gingr1.ggr)
+      * Visualize with Gingr [download .ggr file](https://github.com/marbl/harvest/raw/master/docs/content/parsnp/run_mers.gingr1.ggr)
       
         ![mers1](https://github.com/marbl/harvest/raw/master/docs/content/parsnp/run_mers.gingr1.png?raw=true)
 
@@ -464,26 +605,27 @@ To install:
  
    2) <a name="part3e2">Example 2: 31 Streptococcus pneumoniae genomes </a>
    
-     --Download genomes:
-   * `cd $HOME`
-   * `mkdir parsnp_demo2`
-   * `cd parsnp_demo2`
-   *  `wget https://github.com/marbl/harvest/raw/master/docs/content/parsnp/strep31.tar.gz`
-   *  `tar -xvf strep31.tar.gz`
+      Download genomes:
+     
+       * `cd $HOME`
+       * `mkdir parsnp_demo2`
+       * `cd parsnp_demo2`
+       * `wget https://github.com/marbl/harvest/raw/master/docs/content/parsnp/strep31.tar.gz`
+       * `tar -xvf strep31.tar.gz`
     
-     --Run parsnp:
-      
-    parsnp -r ./strep31/NC_011900.fna -d ./strep31 -p 8
+      Run parsnp:
 
-     --Force inclusion of all genomes (-c):
-      
-    parsnp -r ./strep31/NC_011900.fna -d ./strep31 -p 8 -c
+      ```parsnp -r ./strep31/NC_011900.fna -d ./strep31 -p```
 
-     --Enable recombination detection/filter (-x):
+      Force inclusion of all genomes (-c):
       
-    parsnp -r ./strep31/NC_011900.fna -d ./strep31 -p 8 -c -x
+      ```parsnp -r ./strep31/NC_011900.fna -d ./strep31 -p 8 -c```
 
-     --Inspect Output:
+      Enable recombination detection/filter (-x):
+      
+      ```parsnp -r ./strep31/NC_011900.fna -d ./strep31 -p 8 -c -x```
+
+      Inspect Output:
       
          * Multiple alignment: parsnp.xmfa
          * Phylogeny: parsnp.tree
@@ -507,221 +649,148 @@ This last step requires you to download software and is to highlight the ability
 
     File->Open File
 
+### Parsnp Example on Shropshire, et al. Kleb Genomes
+
+We have been using data from the this paper throughout the RAD Microbes seminar, so those genomes have been uploaded to NOTS to run as a test case. The files needed for this are all located in the folder `/projects/k2i/archive_2023/parsnp/parsnp_demo3`, so the first thing to do is to make sure you can see those files. To do this, run the command `ls /projects/k2i/archive_2023/parsnp/parsnp_demo3` and you should see output that looks like this:
+
+```
+(base) [hpc12@loginx2 ~]$ ls /projects/k2i/archive_2023/parsnp/parsnp_demo3
+GCF_000598005.1_ASM59800v1_genomic.fna  GCF_000598005.1_ASM59800v1_genomic.gbff  input_genomes_ex8054_nots.txt  Klebsiella_Genomes  Klebsiella_Genomes.zip
+```
+
+Here, the files beginning with `GCF_` are fasta and genbank annotations from the Kleb reference genome GCF_000598005.1 on RefSeq. The folder `Klebsiella_Genomes` contains fasta files with all of the assemblies from the Shropshire, et al. paper, and the file `input_genomes_ex8054_nots.txt` contains a list of paths to those fasta files. To run Parsnp on these files, use the following command:
+
+```
+parsnp -r /projects/k2i/archive_2023/parsnp/parsnp_demo3/GCF_000598005.1_ASM59800v1_genomic.fna -d /projects/k2i/archive_2023/parsnp/parsnp_demo3/input_genomes_ex8054_nots.txt -g /projects/k2i/archive_2023/parsnp/parsnp_demo3/GCF_000598005.1_ASM59800v1_genomic.gbff -p 2 -o ~/parsnp_kleb
+```
+
+**NOTE:** This will take something like 15-20 minutes to run with only 2 threads, but it should produce an alignment that you can look at and explore in Gingr yourself. However, the output of this has been run and is located on the server at: `/projects/k2i/archive_2023/parsnp/parsnp_demo3/parsnp_kleb/`. 
+
+##### Downloading Outputs Locally to View in Gingr
+
+If you have a mac or linux machine (or windows with WSL and X-server enabled) and have installed Gingr locally, you can download the output of this mutltiple genome alignment using `scp` with the following commands. (Replace `userXX` with your assigned user ID. You will also need the password associated with it.)
+
+```
+scp hpcXX@nots.rice.edu:/projects/k2i/archive_2023/parsnp/parsnp_demo3/parsnp_kleb/parsnp.ggr ./
+scp hpcXX@nots.rice.edu:/projects/k2i/archive_2023/parsnp/parsnp_demo3/parsnp_kleb/parsnp.tree ./
+```
+
+You can then use Gingr to open the ggr file first, and then after that is opened, do "File --> Open Tree" and open the .tree file. This will let you explore the Kleb genomes that we have been looking at in this course.
+
+### Other Parsnp Options & Example Script
+
+There are a variety of different options that can be given to parsnp. The script below contains several different examples of how you might want to run parsnp on the example MERS data. (Note that the command to download and extract the MERS data is duplicated, but it's not very big.)
+
+```
+# Run all Parsnp tests
+curl https://github.com/marbl/harvest/raw/master/docs/content/parsnp/mers_examples.tar.gz -L --output mers_examples.tar.gz
+tar -xzvf mers_examples.tar.gz
+
+# CPU=$(grep -c ^processor /proc/cpuinfo)
+CPU=2
+parsnp -V 
+parsnp -g mers_virus/ref/England1.gbk -d mers_virus/genomes -C 1000 -c -o test-gbk --verbose --use-fasttree --vcf
+parsnp -r ! -d mers_virus/genomes/*.fna -o test-skips --verbose -p $CPU --force-overwrite --skip-phylogeny --skip-ani-filter
+parsnp -r ! -d mers_virus/genomes/*.fna -o test-mash --verbose -p $CPU --skip-phylogeny --use-mash
+# parsnp -r mers_virus/ref/England1.fna -d mers_virus/genomes/*.fna -o test-fastani --verbose -p $CPU --skip-phylogeny --use-ani #Skip for MacOS but fix in future build
+parsnp -r ! -d mers_virus/genomes/*.fna -o test-nopartition --verbose -p $CPU --no-partition --xtrafast
+parsnp -r ! -d mers_virus/genomes/*.fna -o test-minpartition10 --verbose -p $CPU --min-partition-size 10 --xtrafast
+```
+
+If you are able to run any of these, you may try downloading the output `.ggr` file to your local machine and visualizing the results using Gingr.
+
 </details>
-
-<details>
- <summary>
+ <details>
+ <summary> 
   
- ## Mapping reads to reference genomes for variant calling (lecture, Daniel) </summary>
-# Alignment and quality control (QC) of aligning short-read data
+## Bonus: Fantastic reference genomes and where to find them (lecture + hands-on) 
+</summary>
 
-## Mapping reads
+* NCBI
+  * SRA 		 _[https://www\.ncbi\.nlm\.nih\.gov/sra](https://www.ncbi.nlm.nih.gov/sra)_
+  * Taxonomy		 _[https://www\.ncbi\.nlm\.nih\.gov/taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy)_
+  * RefSeq		 _[https://www\.ncbi\.nlm\.nih\.gov/refseq/](https://www.ncbi.nlm.nih.gov/refseq/)_
+* GISAID
+  * EpiCoV		 _[https://www\.gisaid\.org/](https://www.gisaid.org/)_
+* Internal Sources
+* Other Sources
 
-### 1. Index reference genome:
-We first need to index the reference genome itself by using `bwa index`.
+### National Center for Biotechnology Information (NCBI)
 
-```
-bwa index reference.fasta
-```
-This should only take a few seconds since the SARS-Cov-2 genome is tiny.
+_[https://www\.ncbi\.nlm\.nih\.gov/](https://www.ncbi.nlm.nih.gov/)_
 
-### 2. Map reads to genome:
-Next we are ready to start mapping the fastq reads to the genome itself. For this we want to use the `bwa mem` option that is best capable to handle the Illumina paired end reads.
+![](img/genomedl0.png)
 
-```
- bwa mem -t 2 reference.fasta  raw_reads.fastq.gz  raw_reads.fastq.gz > our_mapped_reads.sam
-```
+__Sequence of the reference genome in fasta format__
 
-This executes bwa mem with `2` threads (`-t` parameter) give our previously indexed `reference.fasta` and the two fastq files representing the Illumina paired end reads.
+__Gene annotation file in GFF3 format__
 
-After some time the program ends and we have our first result as : `our_mapped_reads.sam`. This is a standard text file (see SAM file format specification [here](https://samtools.github.io/hts-specs/SAMv1.pdf)) and we can take a look.Here we have a header in this file indicated with `@` and then entries per read per line.
+__Comprehensive record of the sequence including annotations in genbank format__
 
-### 3. Converting a SAM file to a BAM file
+![](img/genomedl1.png)
 
-For subsequent analysis we need to compress (SAM -> BAM) the file. For this we are using [samtools](https://github.com/samtools/samtools) with the option: `view`
+![](img/genomedl2.png)
 
-```
-samtools view -hb our_mapped_reads.sam > our_mapped_reads.bam
-```
+![](img/genomedl3.png)
 
-The options `-h` ensures that the header is kept for the output file and the option `-b` tells `samtools` that we want to obtain the compressed (BAM) version.
+<span style="color:#FF0000"> __Formatted search string__ </span>
 
+![](img/genomedl4.png)
 
-### 4. Sorting a BAM file
+### SARS-CoV-2 sequences currently available in GenBank and the Sequence Read Archive (SRA)
 
-Next we need to sort the file according to read mapping locations. For this we again are using `samtools`, but this time the `sort` option.
+Until Wed May 27 14:55:29 EDT 2020
 
-```
-samtools sort our_mapped_reads.bam > our_mapped_reads.sort.bam
-```
-The output file `our_mapped_reads.sort.bam` is now a sorted and mapped read file that is necessary for subsequent analysis. Keep in mind that this file includes the same information as the previous files, but nowsorted.
+4\,735 GenBank sequences
 
-You can see based on the file sizes that the compression and sorting significantly reduced the file size:
-```
-ll -h our_mapped_reads.*
-```
+1 RefSeq sequence
 
-This should show you that the sam file (`our_mapped_reads.sam`) is the largest file and the compressed and sorted bam file (`our_mapped_reads.sort.bam`) is actually the smallest file.
+6\,486 SRA Sequences
 
-Since these files contain all the same information we don't need to keep the larger files anymore. To remove them from your disk we run:
+_[https://www\.ncbi\.nlm\.nih\.gov/genbank/sars\-cov\-2\-seqs/](https://www.ncbi.nlm.nih.gov/genbank/sars-cov-2-seqs/)_
 
-```
-rm our_mapped_reads.bam
-rm our_mapped_reads.sam
-```
+![](img/genomedl5.png)
 
+### NCBI Advanced Search Builder
 
-### 5. Creating a BAM index file
+![](img/genomedl6.png)
 
-The last step that is necessary for a subsequent analysis is to index the sorted and compressed read file:
-```
-samtools index our_mapped_reads.sort.bam
-```
+Refine your search by using Boolean operations
 
-Thus in the end you should have 2 files: `our_mapped_reads.sort.bam` and `our_mapped_reads.sort.bam.bai`. The latter is the index file.
+Useful search terms including accession id\, bio project\, organism\, layout \(single vs paired\)\, publication date\, source \(WGS\, Amplicon\, metatranscriptomic\, etc\.\)\, platform \(Illumina vs Nanopore\)\, etc\.
 
-## Mapping QC
+Generating search string that can be used in Entrez API
 
-Before we move on to the variant analysis we want to inspect the mapped read file a little to see if all steps worked as expected.
+### Entrez Databases and Retrieval System
 
-First we want to count the mapped and unmapped reads. This can be  done using `samtools view`. For this we need to query / filter the reads based on their sam tag. You can here refresh what each tag stands for: https://broadinstitute.github.io/picard/explain-flags.html
+Available via  _[http://www\.ncbi\.nlm\.nih\.gov/Entrez/](http://www.ncbi.nlm.nih.gov/Entrez/)_
 
-To compute the number of mapped reads we run:
+A part of Biopython package  _[http://biopython\.org/DIST/docs/tutorial/Tutorial\.html](http://biopython.org/DIST/docs/tutorial/Tutorial.html)_
 
-```
-samtools view -c -F 4 our_mapped_reads.sort.bam
-```
- The parameter `-c` tells samtools view, to only count and report that number to you. The parameter `-F 4` tells it to only use reads that are in disagreement with the flag:4 . You can see based on the above [URL](https://broadinstitute.github.io/picard/explain-flags.html) that this flag represents unmapped reads. Thus we are querying not unmapped reads, which is the count of mapped reads.
+Entrez Programming Utilities Help  _[https://www\.ncbi\.nlm\.nih\.gov/books/NBK25501/](https://www.ncbi.nlm.nih.gov/books/NBK25501/)_
 
-Often we want to further filter by using a certain mapping quality threshold. This can be done like this:
+Always tell NCBI who you are by setting  _Entrez\.email _ parameter
 
-```
- samtools view -q 20 -c -F 4 our_mapped_reads.sort.bam
-```
-Here the addition of `-q 20` restricts the reads to have mapping quality of 20 or more that is typically indicative of highly trustful alignments.
-Next we want to compute the number of unmapped reads:
+NCBI Entrez API allows advanced searches of records in multiple NCBI database as well as retrieving metadata for the records
 
-```
- samtools view -c -f 4 our_mapped_reads.sort.bam
- ```
- Note we only need to change the `-F` to a `-f` to query for the Tag: 4.
+3 requests per second without an API key\, or 10 requests per second with an API key \(registered account strongly recommended\)
 
- Using samtools view we can also do other manipulations/queries. For example we can query the reads that are split reads, but only the supplement splits. These reads are going to be useful later for the detection of SV.
+![](img/genomedl7.png)
 
- ```
-samtools view -c -f 2048  our_mapped_reads.sort.bam
- ```
- Again feel free to check out what the tag 2048 means over at  https://broadinstitute.github.io/picard/explain-flags.html
+![](img/genomedl8.png)
 
+### SRA Toolkit
 
- Lastly we can also compute the reads that are mapped on the `+` vs. `-` strand. For some type of analysis, this is an important metric:
- ```
- samtools view -c -q 20 -f 16  our_mapped_reads.sort.bam
- samtools view -c -q 20 -f 0  our_mapped_reads.sort.bam
-```
-This time the `-f 16` filters for reads on the `-` strand and the `-f 0` for reads that mapped to the `+` strand.
+* Entrez package can be used to retrieve small files
+* SRA Toolkit is required to download large read datasets  _[https://trace\.ncbi\.nlm\.nih\.gov/Traces/sra/sra\.cgi?view=software](https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=software)_
+  * prefetch
+    * prefetch \[options\] \<SRA accession>
+  * fastq\-dump
+    * fastq\-dump \[options\] \< accession >
+  * \-\-split\-3 flag or \-\-split\-files must be set\, split spots into individual reads\. With \-\-split\-3 flag\, output would be 1\,2\, or 3 files\.
+    * 1 file means the data is not paired\.
+    * 2 file means the reads are paired\-end reads\.
+    * 3rd file\, often small\, contains unpaired orphaned reads\, typically ignored\.
 
-***
-
-# Variant calling
-Now that we have confidence in our mapped reads file and we know that it's the right format and reads are sorted, we can continue with the variant calling. First, we will call variants for SNV and subsequently for SV.  
-There are many tools that can be used 
-## SNV calling
-For SNV calling we are going to use [FreeBayes](https://github.com/freebayes/freebayes).
-
-Given our mapped read file and our reference fasta file we can execute Lofreq as follow:
-
-```
-freebayes -F 0.75 -! 5 -p 1 --min-mapping-quality 30 -f reference.fasta our_mapped_reads.sort.bam > our_snv.vcf 
-```
-
-This command presents different flags.  `-F` specifies the minimum fraction of alternate allele observations to consider variant sites. `-!` specifies the minimum coverage required to call variants. In this case, we need a minimum of 5 reads supporting the variant for it to be considered. `-p` defines the ploidy of the organism being evaluated. Some microorganisms, like the yeasts *C. albicans* and *S. cerevisiae* and other Eukaryotes are diploids, so you should adjust the this option to "2".  `--min-mapping-quality` specifies a mapping quality requirement of 30. `-f` defines the reference file.
-
-
-In the end the program `FreeBayes` has produced a VCF file as its output: `our_snv.vcf` as defined by the `-o` option. We can open and inspect this file like:
-
-```
-less -S our_snv.vcf
-```
-Note to terminate this process press `q` to close less.
-As we can see the VCF file follows a certain standard as it has first specified meta information as part of the header (`#`). This is then followed by each line showing a single variant.
-
-Take your time to look into this file. Some of the important tags that are defined are `AF` (allele frequency within the sample), `DP4` list of supporting reads for reference and alternative split up over `+/-` strand. What is important to note is that each of these tags have to be defined in the header. Go and look up: `DP` and compare it to `DP4`.
-
-To get a feeling about our file we want to query it a little to summarize our SNV calls.
-First we want to count the total number of SNV in this file:
-```
-grep -vc '#' our_snv.vcf
-```
-This will count the number of lines that don't have an `#` in it. `-v` is inverting the match and `-c` is counting the number of these matches.
-
-If we want to know if there is an imbalance in the nucleotides that has been changed we could use something simple like this:
-```
-grep -v '#' our_snv.vcf | cut -f 5 |sort | uniq -c
-```
-Again we are selecting against the header (`-v '#'`), then extracting column 5 (the alternative nucleotide) and sorting and counting the occurrence of each nucleotide (uniq ) with the `-c` option to count. You should see a clear preference for an `T` and `A` nucleotide that has been inserted.
-
-We can also roughly and quickly see if there are hotspots for SNV along the genome:
-```
-grep -v '#' our_snv.vcf | cut -f 2 | awk '{print int($1/100)*100}'  | sort | uniq -c  | awk '$1 > 5 {print $0 }' | sort -n -k 2,2 | less
-```
-Here we extract similar to before the 2nd column (SNV position) and bin it by 100bp. Next we sort and count the occurrences and filter to have only regions that have more than 5 SNV within their 100bp. Lastly we make sure that the positions of the bins are sorted in the output.
-
-A set of very useful methods are [bcftools](http://samtools.github.io/bcftools/) and [vcftools](https://vcftools.github.io/man_latest.html) to further filter and manipulate these files.
-
-### Variant annotation
-
-
-Variant annotation is the comprehensive analysis and interpretation of genetic variants identified in genomic data. For this purpose, we will use [SnpEff](https://pcingola.github.io/SnpEff/). Leveraging genomic databases and annotations, SnpEff predicts the potential functional impact of variants by annotating their effects on genes, transcripts, and proteins. It  maps variants to genomic elements, such as exons, introns, splice sites, and regulatory regions, while categorizing variations into distinct types, such as missense, nonsense, frameshift, or splice site alterations. SnpEff uses this information to infer how these variations might affect protein function, alter gene regulation, or contribute to disease. The tool further enhances these annotations by cross-referencing with databases containing population frequencies, known disease associations, and evolutionary conservation data, aiding in the comprehensive characterization and understanding of genomic variants and their potential implications.
-
-```
-java -jar snpEff.jar -c snpEff.config -v ASM221672v1 our_snv.vcf > our_snv.ann.vcf
-```
-
-This command will create a new version of the VCF file, containing annotation and impact of each variant. The `-c` option defines a config file containing the assembly used as a reference genome. The `-v` refers to the genome assembly used as the reference genome. 
-
-## SV calling
-Detecting structural variants (SVs) using short-read sequencing data involves several methods, each with its own strengths and limitations. Here are some common methods used to call SVs from short-read data:
-
-Read-pair (or paired-end) mapping: Utilizes information from paired-end reads where the expected distance between two reads mapped to the reference genome differs due to an SV. 
-
-Split-read mapping: Identifies SVs by identifying reads that align partially to different locations due to breakpoints. Tools like Pindel and SPLITREADER utilize this approach.
-
-Assembly-based methods: Assemble reads into longer contiguous sequences (contigs) and align them back to the reference genome to identify structural differences. Tools like TIGRA-SV and SOAPdenovo can be used for de novo assembly.
-
-Depth of coverage analysis: Detects copy number variations (CNVs) by analyzing variations in read depth across the genome. Tools such as CNVnator and Control-FREEC rely on this method.
-
-Hybrid methods: Combine multiple approaches, such as read-pair and split-read mapping or local assembly followed by read alignment, to improve accuracy and sensitivity. Sniffles, Lumpy and Manta are examples of tools using hybrid approaches.
-
-Here, we will adopt Manta to demonstrate how to detect SVs using short reads. 
-
-In the end we want to also identify Structural Variations (SVs). Here we are simply using [Manta](https://github.com/Illumina/manta), which was mainly designed to identify SV across a human genome. It works with almost any organisms however. This tool uses a combination of split reads and paired end approaches to detect SVs.
-
-
-Manta requires two steps:
-
-### 1. Initiate the run:
-```
-configManta.py --bam=our_mapped_reads.sort.bam --referenceFasta=reference.fasta --runDir=Out_Manta
-```
-This should initiate the folder structure and specifies for the subsequent process to use our mapped reads and our reference file. In addition, we specify the output to be written in `Out_Manta`
-
-### 2. Run the analysis:
-```
-python Out_Manta/runWorkflow.py -j 2 -m local -g 10
-```
-
-This will launch the Manta pipeline that we previously configured. `-j` specifies the number of CPU threads (2 in our case), `-m` local indicates that it should not try to run things on different nodes or instances and `-g 30` specifies the available memory for the process in GB.
-
-Manta now searches for abnormal paired-end reads and split-reads across our mapped reads. These will be analyzed together and clustered to identify SV in these samples. After some time, you should see that the program has finished.
-
-Our SV calling results can be found here (Out_Manta/results/variants/). Let us open quickly the output of the highest quality SV files:
-```
-cd  Out_Manta/results/variants/
-ls 
-```
-As you can see we have multiple VCF files. These represent the different stages of Manta and the confidence level for the SV calls. See more information about the Manta output [here](https://github.com/Illumina/manta). 
- 
- <p></p>
- 
+</details>
 
