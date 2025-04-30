@@ -48,7 +48,7 @@ If you have not already done so, please download:
 By this point everyone should be able to `ssh` into the NOTS server:
 ```
 # First ssh into the jumpstation and then login to NOTS
-ssh -tY hpc2@radmicrobes.rice.edu ssh nots
+ssh -tY ${USER}@radmicrobes.rice.edu ssh nots
 
 <<<<<<< HEAD
 # Clone this git repository into your scratch directory, i.e., /scratch/<your_hpc_id>, so that you have all the files and scripts necessary for the latter parts of this session
@@ -182,7 +182,7 @@ Each of these databases curate specific genus/species combinations of taxa with 
 A colleague has sent you bacterial genome assemblies in fasta file format and wants you to determine what bacterial species it is. We are now going to leverage the PubMLST API tool with a very simple python script that Dr. Keith Jolley, [one of the primary developers of BIGSdb](https://doi.org/10.1186/1471-2105-11-595), wrote that queries fasta assemblies against the ribosomal Multilocus Sequence Type (rMLST) database through the PubMLST RESTful API using the ```curl``` command.
 
 ```
-cd /scratch/hpc2/radmicrobes/session4/Scripts
+cd /scratch/${USER}/radmicrobes/session4/Scripts
 python3 ./api_species_download.py -f ./../Files/assemblies/ARLG-3180_consensus_assembly.fasta
 ```
 
@@ -251,7 +251,7 @@ The only required argument is a FASTA/GenBank/E formatted assembly or assemblies
 For a quick example, we are going to use ARLG-3179 and ARLG-3180 assemblies as input for the mlst command using another `for loop` structure. I'm also going to use **wildcard** notation, specifically `*` to have any matching number, string, or special character match following the assigned `for loop` variable up to **.fasta**. 
 
 ```
-cd /scratch/hpc2/radmicrobes/session4/Files
+cd /scratch/${USER}/radmicrobes/session4/Files
 mkdir -p results
 for file in $(cat ./lists/assembly_subset.tsv);do mlst assemblies/${file}_*.fasta >> ./results/kpneumoniae_mlst.tsv;done
 head ./results/kpneumoniae_mlst.tsv
@@ -283,7 +283,7 @@ amrfinder --list_organisms
 From the standard output, one can see that *Klebsiella_pneumoniae* is included as an available organism. In order to properly run AMRFinderPlus with the plus functions, you need to include a nucleotide file (.fna), a protein file (.faa), a gff file (.gff), and specify the organism, `-O`. Additionally set the `--plus` flag as well as the annotation format `-a` which is `prokka` for this case. Here is an example of code you can run with each parameter looping through our two assemblies in their respective prokka directories:
 
 ```
-cd /scratch/hpc2/radmicrobes/session4/Files
+cd /scratch/${USER}/radmicrobes/session4/Files
 
 for file in $(cat ./lists/assembly_subset.tsv);do amrfinder -p ./prokka_dirs/${file}*_dir/${file}*.faa -g ./prokka_dirs/${file}*_dir/${file}*.gff -n ./prokka_dirs/${file}*_dir/${file}*.fna -a prokka --plus -O Klebsiella_pneumoniae --threads 8 -o ./results/${file}_AMRFinderPlus.tsv;done
 
@@ -318,7 +318,7 @@ With short reads alone, this output indicates the likely organism (*i.e.*, *K. p
 
 Let's explore through some of the output and compare to the AMRFinderPlus output. 
 ```
-scp -r -J hpc2@radmicrobes.rice.edu hpc2@nots.rice.edu:/home/hpc2/radmicrobes/session4/Files/results .
+scp -r -J ${USER}@radmicrobes.rice.edu ${USER}@nots.rice.edu:/home/${USER}/radmicrobes/session4/Files/results .
 ```
 
 While non-exhaustive, I hope that these strain-level analysis tools serve as a good starting point for those of you who are getting started in genomic epidemiology analyses. 
@@ -334,7 +334,7 @@ One of the last concepts I want to bring up before jumping into phylogenetics is
 There are a total of 11 *K. pneumoniae* assemblies that are available in the `./Files/assemblies` directory. I'm going to demonstrate how simple it is to create an all-to-all Mash estimated distance matrix: 
 
 ```
-cd /scratch/hpc2/radmicrobes/session4/Files/assemblies
+cd /scratch/${USER}/radmicrobes/session4/Files/assemblies
 
 # Create a reduced sketch file of all 11 assemblies that will be used to estimate distance
 mash sketch -o ./reference -s 100000 *.fasta
@@ -379,15 +379,15 @@ Please see: [RAD_Phylogenetics_Primer.pdf](https://github.com/treangenlab/radmic
 We can use the [BioNJ algorithm](https://academic.oup.com/mbe/article/14/7/685/1119804?login=true) to create a midpoint rooted, neighbor-joining tree inferred from the Mash distance matrix using a simple Rscript from [bacsort](https://github.com/rrwick/Bacsort). 
 
 ```
-cd /scratch/hpc2/radmicrobes/session4/Files/phylogenetics
-Rscript /scratch/hpc2/radmicrobes/session4/RScripts/bionj_tree.R kpneumo.mash.phylip kpneumo.mash.tre
+cd /scratch/${USER}/radmicrobes/session4/Files/phylogenetics
+Rscript /scratch/${USER}/radmicrobes/session4/RScripts/bionj_tree.R kpneumo.mash.phylip kpneumo.mash.tre
 ```
 
 You can now view `kpneumo.mash.tre` in [Gingr](https://github.com/marbl/gingr), which you should have already downloaded yesterday. 
 
 Use scp from your local terminal to transfer:
 ```
-scp -r -J hpc2@radmicrobes.rice.edu hpc2@nots.rice.edu:/home/hpc2/radmicrobes/session4/Files/phylogenetics/kpneumo.mash.tre .
+scp -r -J ${USER}@radmicrobes.rice.edu ${USER}@nots.rice.edu:/home/${USER}/radmicrobes/session4/Files/phylogenetics/kpneumo.mash.tre .
 ```
 
 #### Example 2 - Maximum-likelihood Inferred Phylogeny
