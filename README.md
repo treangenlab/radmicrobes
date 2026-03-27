@@ -1,7 +1,7 @@
 # RAD microbes
-2025 RAD microbes boot camp
+2026 RAD microbes boot camp
 
-DATES: April 28th and 29th, 2025
+DATES: May 4th, 5th, and 6th, 2026
 LOCATION: Room 280, BRC (https://brc.rice.edu/) 
 
 RAD logistics:
@@ -63,14 +63,6 @@ Mike Nute is a Research Scientist at Rice University in Todd Treangen's lab and 
 Todd Treangen is a Associate Professor in the Computer Science department at Rice University. His primary research interests lie at the intersection of computer science and genomics, and his research group is focused on the development of novel computational methods and software tools with relevance to real-time monitoring of microbial community dynamics, infectious disease, and biothreats. Given the computational challenges presented by the metagenomic data deluge, coupled with the time-sensitive nature of problems specific to tracking pandemics and synthetic DNA screening, the Treangen lab strives to develop efficient and accurate computational solutions to emerging problems in these fields. Specifically, his research group focuses on the design, development, and implementation of novel algorithms, heuristics, and data structures to solve emerging computational research questions specific to biosecurity, infectious disease monitoring, and host-associated microbiome characterization. The Treangen lab is also dedicated to the dissemination and development of novel open-source bioinformatics methods, software, and pipelines.
 
 ### Session 3
-
-#### Daniel Paiva Agustinho, PhD
-
-<img width="200" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/72709799/6ed66db5-0b81-4a29-984d-2ed9d39e7b4e)">
-
-Daniel is a Assistant professor at Baylor College of Medicine with over 13 years of dedicated research focusing on human pathogens and host interactions. His journey from wet lab biology to bioinformatics commenced during his PhD, where he analyzed gene expression in host-pathogen interactions. His contributions to microbiology and immunology shed light on complex molecular relationships. As a postdoctoral researcher, Daniel deepened his exploration into host-pathogen interactions, investigating pathogen-triggered immune responses. Transitioning to Baylor College of Medicine, he leads comprehensive metagenomic analyses, specializing in viral evolution studies. His work includes a review article on metagenomics' utility in infectious diseases, and he spearheads the development of pipelines for pathogen detection in clinical samples. Daniel's interdisciplinary approach has significantly advanced our understanding of infectious diseases.
-
-### Session 4
 #### Dr. Will Shropshire, PhD
 
 <img width="200" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/28576450/62d34750-c510-4993-9220-ee3b5de6cd37">
@@ -83,7 +75,7 @@ William Shropshire is an Instructor, research faculty at the University of Texas
 
 An Dinh is a second year PhD student of epidemiology under Dr. Blake Hanson in the Center of Infectious Disease at the UTHealth School of Public Health.  For the past 9 years, he has worked with both short- and long- read sequencing technologies, producing data for large-scale genomic epidemiology studies of antimicrobial resistant pathogens.  His work experience includes laboratory automation, protocol development and optimization, high-throughput data processing, as well as more narrowly-focused small-scale projects. Studies have ranged from transcriptomics, metagenomics, and exploring the use of rapid sequencing of clinical samples for pathogen diagnoses and personalized medicine.  His interests include pushing new technologies and techniques to improve data resolution for AMR surveillance, optimizations of analyses pipelines for microbial genomics, and continuing to test and validate the utility of microbial sequencing in clinical spaces.
 
-### Session 5
+### Session 4
 #### Dr. Rodrigo de Paula Baptista, PhD 
 
 <img width="200" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/28576450/5c815f66-0d01-4bab-87db-800f9b7a8ba3"> 
