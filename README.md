@@ -48,6 +48,13 @@ I am trained as an epidemiologist and have extensive experience in applying adva
 
 Rossie Luo is a 1st year PhD student in the Treangen lab. She worked in the synthetic biology industry for two years before starting her PhD program in Systems, Synthetic and Physical Biology (SSPB) at Rice. Her research is currently focused on microbial metagenomics and strain-level analysis to identify virulence factors. Outside of research, she enjoys nature, running and spending time with her dog.
 
+#### Austin Marshall, PhD
+
+<img width="200" alt="image" src="https://github.com/user-attachments/assets/c49ad13f-b6bb-4fe6-a637-d93f0a1a7365" />
+
+Austin Marshall is a postdoctoral fellow at the Houston Methodist Research Institute and Rice University, working between the Villapol and Treangen Labs. He earned his PhD in 2023 from Clarkson University, where his research focused on environmental bacterial genomics. During the final summer of his doctoral studies, Austin interned at the NASA Johnson Space Center, characterizing the microbiomes of temporally sampled dust collections from the International Space Station. Austin's current research utilizes long-read sequencing and bioinformatic analyses to investigate relationships within the gut-brain axis, specifically aiming to identify how concussions affect the gut microbiome. When not tearing it up on the command line, Austin enjoys fishing, playing with his dog, and gardening with his wife.
+
+
 #### Michael Nute, PhD
 
 <img width="200" alt="image" src="https://github.com/treangenlab/radmicrobes/assets/761469/32dbac1b-04f5-49da-97fa-c33e728b5f2f">
